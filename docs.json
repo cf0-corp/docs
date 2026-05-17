@@ -25,6 +25,10 @@
   "navbar": {
     "links": [
       {
+        "label": "Get support",
+        "href": "mailto:hello@cf0.ai"
+      },
+      {
         "label": "App",
         "href": "https://cf0.ai"
       }
@@ -50,9 +54,19 @@
     }
   },
   "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Status",
+          "icon": "activity",
+          "href": "https://cf0.ai"
+        }
+      ]
+    },
     "tabs": [
       {
-        "tab": "Docs",
+        "tab": "Guides",
+        "icon": "book-open",
         "groups": [
           {
             "group": "Get started",
@@ -98,7 +112,15 @@
         ]
       },
       {
+        "tab": "Examples",
+        "icon": "compass",
+        "pages": [
+          "examples/head-to-head-comparison"
+        ]
+      },
+      {
         "tab": "API reference",
+        "icon": "code",
         "groups": [
           {
             "group": "Overview",
@@ -117,6 +139,13 @@
               "api/skills"
             ]
           }
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "icon": "calendar",
+        "pages": [
+          "changelog"
         ]
       }
     ]

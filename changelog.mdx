@@ -1,0 +1,77 @@
+---
+title: "Changelog"
+description: "Dated releases that shipped to customers. Each entry is a real shipment our customers were notified about — not a roadmap."
+---
+
+cf0 ships in steady, dated releases. Each entry below is a real shipment customers were notified about.
+
+For platform announcements, follow [@cf0ai](https://x.com/cf0ai). For early-access programs and the founding-analyst circle, contact [hello@cf0.ai](mailto:hello@cf0.ai).
+
+---
+
+<Update label="27 April 2026" description="Excel, PowerPoint, custom news, autonomous agents">
+**What's new**
+
+- **Excel and PowerPoint output** — cf0 produces Excel and PowerPoint files integrated with any analysis you run, or with documents you upload.
+- **Coverage page** — configure custom news sources per company, sector, or theme. The agent uses your chosen sources for monitoring and report context.
+- **Fund filings** — N-PORT, N-CSR, and N-PX added. Go deeper on institutional holdings and fund-level disclosures.
+- **Autonomous agents (beta)** — as you analyse companies, cf0 drafts overnight briefs on those names and on the news so the analysis is ready when you start your morning.
+</Update>
+
+<Update label="5 April 2026" description="Org admin controls and team document sharing">
+**What's new**
+
+- **Org dashboard** — admins see how the team is using cf0: who's active, which skills they use, who might need help getting started. Aggregate counts only — thread bodies stay private to the analyst.
+- **Team document sharing** — upload a model or research file and it appears in every analyst's workspace. Analysts can request shares; admins approve with one click.
+- **Shared documents power the AI** — anything your team shares becomes part of cf0's knowledge. Ask about a shared doc and the agent knows where to find it.
+- **Report version history** — scrub through every version of an edited report; restore any prior state.
+- **All uploaded documents are editable** — same workflow as report editing, applied to PDFs and Word docs.
+</Update>
+
+<Update label="5 April 2026" description="Report editing v1, /compact, interrupt, unified document editing">
+**What's new**
+
+- **Report editing v1** — natural-language edits to generated reports with inline diff review and accept/reject controls.
+- **`/compact` slash command** — manually trigger chat compaction to keep context focused on what matters.
+- **Interrupt button** — safely stop the agent after sending a message, without losing your place in the chat.
+- **Unified document editing** — extends the report-edit pipeline to any uploaded document (PDF, DOCX, TXT, MD, HTML). Upload, ask for edits, review changes as inline diffs.
+</Update>
+
+<Update label="1 April 2026" description="Per-chat artifacts and side-by-side report editing">
+**What's new**
+
+- **Per-chat artifacts** — every chat stores its reports, audits, and long-action workflows. Render them in the artifact panel via preview mode or PDF mode.
+- **Side-by-side report editing** — after generating a report, open the chat and use the artifacts dropdown in the sidebar. `@` the file and ask for edits; changes appear inline so you can accept or decline section-by-section.
+- **Frontend stability pass** — fewer transient UI errors on long sessions and mid-stream refreshes.
+- **Richer LLM output** — better visualization of tables, sources, and structured data inline in chat.
+</Update>
+
+<Update label="31 March 2026" description="Interactive observability, clarifying questions, filings ingestion page">
+**What's new**
+
+- **Interactive observability panel** — deep visibility into what the LLM is actually reading from filings, financials, and sources, not just the tools it's calling.
+- **Clarifying-question gates** — the model now pauses to ask for the assumptions that change outputs significantly (WACC, growth rates, terminal multiples) before producing a DCF or valuation.
+- **Filings ingestion page** — view 10-K, 10-Q, 8-K, 13-F, and S-1 filings, and ingest them on demand for new companies.
+- **Longer chat context** — conversations no longer die out via early compaction; long research threads stay coherent.
+- **Speed and accuracy across queries** — broad performance pass on the chat and report paths.
+</Update>
+
+<Update label="24 March 2026" description="Global equities and a major intelligence upgrade">
+**What's new**
+
+- **Global equities** — coverage now extends to public equities outside the US.
+- **Faster queries** — overall response time improved on chat and report generation.
+- **Smarter intelligence** — better reasoning on multi-step questions; fewer drop-offs mid-answer.
+- **Accuracy improvements** — tighter grounding to source documents reduces wrong figures on long conversations.
+- **Quieter deploys** — code updates can now ship without interrupting in-flight chat sessions.
+</Update>
+
+<Update label="20 March 2026" description="Calculation accuracy, SEC speed, document upload">
+**What's new**
+
+- **Calculation accuracy** — fewer wrong numbers, fewer hallucinated figures, better cross-checking against source filings.
+- **SEC data speed** — filings load and stream noticeably faster across 10-K, 10-Q, and 8-K queries.
+- **UI smoothness** — chat ordering fixes (FIFO tool-event pairing) so streamed thinking and tool calls render in true chronological order.
+- **Document upload** — drag-drop documents directly into Lab; sidebar shows uploaded files per chat.
+- **Infrastructure stability** — six tracks of infra gap closure landed together (auth, sandbox lifecycle, S3 reconciliation, deploy hooks).
+</Update>
