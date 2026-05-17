@@ -1,0 +1,120 @@
+---
+title: "Authenticate CF0 API requests"
+description: "CF0 uses Bearer token authentication. Pass your session JWT in the Authorization header on every API request. Tokens are scoped to your organisation."
+---
+
+All CF0 API endpoints require authentication. CF0 uses Bearer token authentication — you pass your session JWT in the `Authorization` header with every request.
+
+## Getting your token
+
+CF0 uses short-lived JWTs for authentication. Your session token is issued when you sign in and automatically renewed by the browser.
+
+<Steps>
+  <Step title="Sign in to CF0">
+    Go to [cf0.ai](https://cf0.ai) and sign in with your account credentials.
+  </Step>
+  <Step title="Retrieve the session token">
+    Open your browser's developer tools, go to **Application → Cookies**, and find the `__session` cookie — that is your session JWT.
+
+    Alternatively, retrieve it programmatically from the CF0 web app:
+
+    ```javascript
+    const token = await window.Clerk.session.getToken();
+    ```
+  </Step>
+  <Step title="Pass the token in the Authorization header">
+    Include the token on every API request:
+
+    ```
+    Authorization: Bearer <your-token>
+    ```
+  </Step>
+</Steps>
+
+## Request header format
+
+```http
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+Content-Type: application/json
+```
+
+## Example request
+
+<CodeGroup>
+
+```bash curl
+curl https://api.cf0.ai/api/auth/me \
+  -H "Authorization: Bearer <your-token>"
+```
+
+```javascript fetch
+const response = await fetch('https://api.cf0.ai/api/auth/me', {
+  headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  },
+});
+const user = await response.json();
+```
+
+```python requests
+import requests
+
+response = requests.get(
+    'https://api.cf0.ai/api/auth/me',
+    headers={'Authorization': f'Bearer {token}'},
+)
+user = response.json()
+```
+
+</CodeGroup>
+
+## Organisation context
+
+Tokens are scoped to your organisation. The API automatically resolves your organisation from your token — you do not need to pass an org identifier separately.
+
+Some endpoints require organisation membership. If your token is not associated with an active organisation, those requests return `HTTP 403` with:
+
+```json
+{ "detail": "Organization required" }
+```
+
+## Session verification endpoint
+
+You can verify a token and retrieve the current user's identity with:
+
+```
+POST /api/auth/session
+GET  /api/auth/me
+```
+
+Both return:
+
+```json
+{
+  "user_id": "usr_abc123",
+  "email": "you@example.com",
+  "name": "Your Name"
+}
+```
+
+## Error responses
+
+| Status | Cause |
+|--------|-------|
+| `401 Unauthorized` | Token is missing, malformed, or expired |
+| `403 Forbidden` | Token is valid but the resource requires organisation membership or admin role |
+
+An expired token returns:
+
+```json
+{ "detail": "Could not validate credentials" }
+```
+
+<Warning>
+Keep your session token secret. Anyone who holds your token can make requests on your behalf. Do not commit tokens to source control or log them.
+</Warning>
+
+## Token expiry
+
+Clerk session tokens expire after a short window (typically 1 minute for JWTs; Clerk renews them automatically in the browser). For long-running integrations, re-fetch the token from your Clerk session before it expires. The `POST /api/auth/session` endpoint verifies the current token and can be used to test freshness.

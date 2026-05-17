@@ -1,0 +1,272 @@
+---
+title: "Skills API: create and invoke workflow templates"
+description: "The Skills API manages reusable research workflow templates. List system skills, create personal or org-wide skills, update them, and toggle their availability."
+---
+
+Skills are reusable research workflow templates stored as Markdown files with YAML frontmatter. When a user types `/skill-name` in the Lab, the AI automatically loads and executes the skill's instructions. The Skills API lets you read, create, update, and delete skills programmatically.
+
+CF0 provides **three skill tiers** with a resolution priority of user → org → system:
+
+| Tier | Description | Who can write |
+|------|-------------|---------------|
+| `system` | Built-in CF0 platform skills (80+) | Read-only for all users |
+| `org` | Organisation-wide skills | Org admins |
+| `user` | Personal skills | Any user |
+
+All Skills endpoints are prefixed with `/api/skills`.
+
+---
+
+## List all skills
+
+```
+GET /api/skills
+```
+
+Returns all skills visible to the authenticated user: system skills, org skills, and personal skills, merged and deduplicated with user > org > system priority.
+
+### Response
+
+<ResponseField name="skills" type="array">
+  Array of skill objects. Each skill includes:
+</ResponseField>
+
+<Expandable title="Skill object fields">
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Skill identifier (kebab-case name) |
+| `name` | string | Same as `id` |
+| `display_name` | string | Human-readable title |
+| `description` | string | Short description |
+| `category` | string | Category grouping, if any |
+| `popular` | boolean | Whether this is a featured skill |
+| `owner_type` | string | `"system"`, `"org"`, or `"user"` |
+| `enabled` | boolean | Whether the skill is enabled for this user |
+| `variables` | array | List of `{{variable}}` placeholder names |
+| `content` | string | Skill body text (without frontmatter) |
+| `created_at` | string | ISO 8601 timestamp |
+| `updated_at` | string | ISO 8601 timestamp |
+
+</Expandable>
+
+```bash
+curl https://api.cf0.ai/api/skills \
+  -H "Authorization: Bearer <your-token>"
+```
+
+---
+
+## Get a skill
+
+```
+GET /api/skills/{skill_id}
+```
+
+Returns full details for a single skill. Resolves user → org → system tier priority.
+
+```bash
+curl https://api.cf0.ai/api/skills/dcf-model \
+  -H "Authorization: Bearer <your-token>"
+```
+
+---
+
+## Create a personal skill
+
+```
+POST /api/skills
+```
+
+Create a new personal skill stored in your user skill library.
+
+### Request body
+
+<ParamField body="name" type="string" required>
+  Kebab-case skill identifier, e.g. `"my-earnings-summary"`. 1–100 characters.
+</ParamField>
+
+<ParamField body="display_name" type="string" required>
+  Human-readable title. 1–200 characters.
+</ParamField>
+
+<ParamField body="description" type="string">
+  Short description of what the skill does. Maximum 500 characters.
+</ParamField>
+
+<ParamField body="content" type="string" required>
+  Skill body text in Markdown. Use `{{variable_name}}` syntax for runtime substitution placeholders.
+</ParamField>
+
+### Response
+
+Returns the created skill object. Returns `HTTP 409` if a skill with this name already exists.
+
+```bash
+curl -X POST https://api.cf0.ai/api/skills \
+  -H "Authorization: Bearer <your-token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "quick-earnings-summary",
+    "display_name": "Quick Earnings Summary",
+    "description": "Summarise the latest earnings call for a given ticker.",
+    "content": "Analyse the most recent earnings call for {{ticker}}. Summarise: revenue, EPS, guidance, and management tone."
+  }'
+```
+
+---
+
+## Update a personal skill
+
+```
+PATCH /api/skills/{skill_id}
+```
+
+Update an existing personal skill. System skills cannot be edited — the endpoint returns `HTTP 403` if you attempt to update one.
+
+### Request body
+
+All fields are optional. Only the fields you provide are updated.
+
+<ParamField body="display_name" type="string">
+  New display name.
+</ParamField>
+
+<ParamField body="description" type="string">
+  New description.
+</ParamField>
+
+<ParamField body="content" type="string">
+  New skill body text.
+</ParamField>
+
+```bash
+curl -X PATCH https://api.cf0.ai/api/skills/quick-earnings-summary \
+  -H "Authorization: Bearer <your-token>" \
+  -H "Content-Type: application/json" \
+  -d '{ "description": "Summarise earnings call highlights and guidance for any ticker." }'
+```
+
+---
+
+## Toggle a skill
+
+```
+PATCH /api/skills/{skill_id}/toggle
+```
+
+Toggle a skill's enabled state. For personal skills, updates the frontmatter. For system skills, updates your per-user preferences without modifying the system skill itself.
+
+### Response
+
+<ResponseField name="id" type="string">Skill ID.</ResponseField>
+<ResponseField name="enabled" type="boolean">New enabled state.</ResponseField>
+
+---
+
+## Delete a personal skill
+
+```
+DELETE /api/skills/{skill_id}
+```
+
+Permanently delete a personal skill. Returns `HTTP 403` if you attempt to delete a system skill.
+
+<ResponseField name="deleted" type="string">The ID of the deleted skill.</ResponseField>
+
+```bash
+curl -X DELETE https://api.cf0.ai/api/skills/quick-earnings-summary \
+  -H "Authorization: Bearer <your-token>"
+```
+
+---
+
+## AI-assisted skill generation
+
+```
+POST /api/skills/generate
+```
+
+Describe a research workflow in plain language and let CF0's AI draft the skill content for you.
+
+### Request body
+
+<ParamField body="description" type="string" required>
+  Natural-language description of the skill you want. 10–1000 characters.
+</ParamField>
+
+```bash
+curl -X POST https://api.cf0.ai/api/skills/generate \
+  -H "Authorization: Bearer <your-token>" \
+  -H "Content-Type: application/json" \
+  -d '{ "description": "A skill that builds a DCF model for any ticker using the last 3 years of financials" }'
+```
+
+Returns a draft skill object with suggested `name`, `display_name`, `description`, and `content`. Review and create it using `POST /api/skills`.
+
+---
+
+## Organisation skills
+
+Org-level skills are managed by org admins and available to all org members.
+
+### List org skills
+
+```
+GET /api/skills/org
+```
+
+Returns all org-wide skills. Available to any org member.
+
+### Get an org skill
+
+```
+GET /api/skills/org/{skill_name}
+```
+
+Returns full content for a single org skill.
+
+### Create an org skill
+
+```
+POST /api/skills/org/{skill_name}
+```
+
+Creates a new org skill. Requires org admin role. Returns `HTTP 409` if the skill already exists — use PUT to update.
+
+Request body is the same as creating a personal skill (`name`, `display_name`, `description`, `content`).
+
+### Update an org skill
+
+```
+PUT /api/skills/org/{skill_name}
+```
+
+Updates an existing org skill. Requires org admin role.
+
+<ParamField body="display_name" type="string">New display name.</ParamField>
+<ParamField body="description" type="string">New description.</ParamField>
+<ParamField body="content" type="string">New skill body text.</ParamField>
+
+### Delete an org skill
+
+```
+DELETE /api/skills/org/{skill_name}
+```
+
+Deletes an org skill. Requires org admin role.
+
+<ResponseField name="deleted" type="string">The name of the deleted skill.</ResponseField>
+
+---
+
+## Skill variables
+
+Skills support `{{variable_name}}` placeholders in their content. When a user invokes a skill with `/skill-name ticker=AAPL`, the variable `ticker` is substituted before the skill is run. Variables are extracted automatically from the skill content and returned in the `variables` field of the skill object.
+
+```markdown
+Analyse {{ticker}}'s balance sheet for the last {{periods}} reporting periods.
+Focus on: debt-to-equity, current ratio, and free cash flow trend.
+```
+
+The `variables` field for this skill would be `["ticker", "periods"]`.

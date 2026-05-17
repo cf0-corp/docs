@@ -1,0 +1,53 @@
+---
+title: "Signing in to CF0 and managing access"
+description: "How to sign in to CF0, accept an organisation invitation, enable two-factor authentication, and recover access when you're locked out."
+---
+
+CF0 uses industry-standard authentication to keep your account secure. You sign in at [cf0.ai](https://cf0.ai), and every session is scoped to your organisation — so you only ever see your firm's data.
+
+## Signing in
+
+Go to [cf0.ai](https://cf0.ai) and click **Log in**. Enter your email address and password to access your workspace. If your organisation has two-factor authentication enabled, you'll be prompted for a verification code after entering your password.
+
+<Info>
+  Access to CF0 requires an active organisation membership. If you don't have an account yet, you'll need an invitation from your organisation's admin.
+</Info>
+
+## Accepting an invitation
+
+When an admin invites you to an organisation, you'll receive an email with a secure invitation link. Follow these steps to join:
+
+<Steps>
+  <Step title="Open the invitation email">
+    Find the invitation email from CF0 and click the **Accept invitation** link. Links expire after a set period — if yours has expired, ask your admin to resend it.
+  </Step>
+  <Step title="Create your account or sign in">
+    If you don't have a CF0 account, you'll be prompted to set a password and complete your profile. If you already have an account with the same email address, sign in with your existing credentials.
+  </Step>
+  <Step title="Join your organisation">
+    Once you've signed in or created your account, you'll automatically join your organisation's workspace and can start using CF0 immediately.
+  </Step>
+</Steps>
+
+## Two-factor authentication
+
+CF0 supports two-factor authentication (2FA) to add an extra layer of security to your account. You can set up 2FA from your account settings after signing in. Supported methods include authenticator apps (such as Google Authenticator or Authy) and SMS codes.
+
+We recommend enabling 2FA, particularly if your account has admin privileges.
+
+## If you're locked out
+
+If you can't access your account:
+
+- **Forgotten password** — click **Forgot password** on the sign-in page and follow the instructions to reset it via your email address.
+- **Lost access to your 2FA method** — use a backup code if you saved one during setup. If you don't have a backup code, contact your organisation's admin to have your account access reviewed.
+- **Invitation link expired** — ask your organisation's admin to send a new invitation.
+- **Removed from an organisation** — contact your admin. If you need to join a different organisation, you'll need a new invitation from that organisation's admin.
+
+<Warning>
+  CF0 support cannot bypass organisation access controls on your behalf. All membership decisions are managed by your organisation's admins.
+</Warning>
+
+## API access
+
+If you need to access CF0 programmatically, you obtain a session token from the CF0 web app. See the [API Reference](/api/authentication) for full details on authenticating API requests.

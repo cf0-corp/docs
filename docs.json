@@ -1,0 +1,110 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "luma",
+  "name": "CF0",
+  "description": "AI-native financial research and due diligence platform for family offices and hedge funds.",
+  "colors": {
+    "primary": "#7c7c7c",
+    "light": "#050505",
+    "dark": "#dddddd"
+  },
+  "favicon": "https://media.brand.dev/a6dbc89b-dbf3-45cc-9a69-324c65172dfe.jpg",
+  "icons": {
+    "library": "lucide"
+  },
+  "styling": {
+    "eyebrows": "breadcrumbs"
+  },
+  "contextual": {
+    "options": ["copy", "view", "assistant", "mcp", "add-mcp"]
+  },
+  "logo": {
+    "light": "https://media.brand.dev/e7b19f7b-ae5e-4051-b240-bd166302c0bd.svg",
+    "dark": "https://media.brand.dev/e7b19f7b-ae5e-4051-b240-bd166302c0bd.svg"
+  },
+  "navbar": {
+    "links": [],
+    "primary": {
+      "type": "button",
+      "label": "Sign in",
+      "href": "https://cf0.ai"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/cf0ai"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Docs",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "account-setup"
+            ]
+          },
+          {
+            "group": "Core Features",
+            "pages": [
+              "features/lab",
+              "features/reports",
+              "features/filings",
+              "features/documents",
+              "features/skills"
+            ]
+          },
+          {
+            "group": "Workspace",
+            "pages": [
+              "workspace/organizations",
+              "workspace/settings",
+              "workspace/dashboard"
+            ]
+          },
+          {
+            "group": "Data & Sources",
+            "pages": [
+              "data/overview",
+              "data/sec-filings",
+              "data/integrations"
+            ]
+          },
+          {
+            "group": "Security & Privacy",
+            "pages": [
+              "security/overview",
+              "security/authentication"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api/overview",
+              "api/authentication"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
+              "api/lab",
+              "api/reports",
+              "api/filings",
+              "api/documents",
+              "api/skills"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

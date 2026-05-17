@@ -1,0 +1,278 @@
+---
+title: "Documents API: upload and manage files"
+description: "The Documents API lets you upload PDFs, spreadsheets, and other files to CF0 for use in research sessions, then list, preview, download, and delete them."
+---
+
+The Documents API manages files in your CF0 research workspace. Uploaded files are stored in CF0's document store and made available to the AI in your Lab sessions. You can also share documents across your organisation.
+
+All Documents endpoints are prefixed with `/api/documents`.
+
+## Supported file types
+
+| Extension | MIME type |
+|---|---|
+| `pdf` | `application/pdf` |
+| `docx` | Word document |
+| `xlsx` | Excel spreadsheet |
+| `csv` | `text/csv` |
+| `pptx` | PowerPoint presentation |
+| `png`, `jpg`, `jpeg` | Images |
+| `txt` | Plain text |
+| `md` | Markdown |
+| `html` | HTML |
+
+Maximum file size: **50 MB**.
+
+---
+
+## Upload a document
+
+```
+POST /api/documents/upload
+```
+
+Upload a file to your personal document store. Accepts `multipart/form-data`.
+
+<Note>
+Scanned PDFs are automatically queued for OCR processing after upload. The `status` field in the response reflects the current processing state.
+</Note>
+
+### Form fields
+
+<ParamField body="file" type="file" required>
+  The file to upload.
+</ParamField>
+
+<ParamField body="entity" type="string">
+  Optional entity name or ticker to associate the document with (e.g. `"NVDA"`).
+</ParamField>
+
+### Response
+
+<ResponseField name="id" type="string">Document ID.</ResponseField>
+<ResponseField name="filename" type="string">Original filename.</ResponseField>
+<ResponseField name="file_type" type="string">Detected file extension.</ResponseField>
+<ResponseField name="size_bytes" type="integer">File size in bytes.</ResponseField>
+<ResponseField name="status" type="string">`"ready"`, `"needs_ocr"`, or `"ocr_running"`.</ResponseField>
+<ResponseField name="created_at" type="string">Upload timestamp (ISO 8601).</ResponseField>
+
+```bash
+curl -X POST https://api.cf0.ai/api/documents/upload \
+  -H "Authorization: Bearer <your-token>" \
+  -F "file=@nvidia-10k-2024.pdf" \
+  -F "entity=NVDA"
+```
+
+**Example response:**
+
+```json
+{
+  "id": "a1b2c3d4e5f6g7h8",
+  "filename": "nvidia-10k-2024.pdf",
+  "file_type": "pdf",
+  "size_bytes": 3145728,
+  "status": "ready",
+  "created_at": "2026-05-17T10:23:00Z"
+}
+```
+
+---
+
+## List documents
+
+```
+GET /api/documents/
+```
+
+Returns all documents uploaded by the authenticated user.
+
+### Response
+
+<ResponseField name="documents" type="array">
+  Array of document objects. Each includes:
+  - `id` — document ID
+  - `filename` — original filename
+  - `file_type` — file extension
+  - `size_bytes` — file size in bytes
+  - `status` — `"ready"`, `"needs_ocr"`, or `"ocr_running"`
+  - `created_at` — upload timestamp
+  - `page_count` — page count (PDF only)
+  - `sheet_names` — sheet names (XLSX only)
+</ResponseField>
+
+```bash
+curl https://api.cf0.ai/api/documents/ \
+  -H "Authorization: Bearer <your-token>"
+```
+
+---
+
+## Search documents
+
+```
+GET /api/documents/search
+```
+
+Search your documents by entity name or filename.
+
+### Query parameters
+
+<ParamField query="q" type="string" required>
+  Search query. Minimum 1 character.
+</ParamField>
+
+```bash
+curl "https://api.cf0.ai/api/documents/search?q=nvidia" \
+  -H "Authorization: Bearer <your-token>"
+```
+
+---
+
+## Get document content (preview)
+
+```
+GET /api/documents/{doc_id}/content
+```
+
+Returns the document content suitable for preview.
+
+- **CSV / XLSX**: returns structured `table` data with `columns` and `rows`
+- **TXT / MD / HTML**: returns raw `content` string
+- **PDF / other**: returns any extracted text stored at ingest time
+
+### Response
+
+<ResponseField name="id" type="string">Document ID.</ResponseField>
+<ResponseField name="filename" type="string">Filename.</ResponseField>
+<ResponseField name="file_type" type="string">File type.</ResponseField>
+<ResponseField name="content" type="string">Extracted text content (non-tabular formats).</ResponseField>
+<ResponseField name="table" type="object">
+  Structured table data for CSV/XLSX. Contains a `sheets` array, each with `name`, `columns`, and `rows`. Capped at 500 data rows per sheet.
+</ResponseField>
+
+```bash
+curl https://api.cf0.ai/api/documents/a1b2c3d4e5f6g7h8/content \
+  -H "Authorization: Bearer <your-token>"
+```
+
+---
+
+## Download raw file
+
+```
+GET /api/documents/{doc_id}/file
+```
+
+Download the original file bytes with the correct `Content-Type`. Use this for rendering PDFs in a viewer or displaying images.
+
+The response includes:
+- `Content-Type` — the detected MIME type
+- `Content-Disposition: inline; filename="..."` — for direct browser display
+- `Cache-Control: private, max-age=3600`
+
+```bash
+curl https://api.cf0.ai/api/documents/a1b2c3d4e5f6g7h8/file \
+  -H "Authorization: Bearer <your-token>" \
+  -o downloaded.pdf
+```
+
+---
+
+## List documents for an entity
+
+```
+GET /api/documents/entity/{entity_id}
+```
+
+Returns all documents associated with a specific entity (e.g. company ticker or ID).
+
+---
+
+## Delete a document
+
+```
+DELETE /api/documents/{doc_id}
+```
+
+Permanently deletes a document from storage.
+
+<ResponseField name="success" type="boolean">`true` if the document was deleted.</ResponseField>
+
+```bash
+curl -X DELETE https://api.cf0.ai/api/documents/a1b2c3d4e5f6g7h8 \
+  -H "Authorization: Bearer <your-token>"
+```
+
+---
+
+## Shared documents
+
+CF0 supports an org-level shared document library. Members can request to share their personal documents with the organisation; admins approve or deny these requests.
+
+### List shared documents
+
+```
+GET /api/documents/shared
+```
+
+Returns active shared documents for the authenticated user's organisation.
+
+<ParamField query="tag" type="string">
+  Filter by tag.
+</ParamField>
+
+### Request sharing
+
+```
+POST /api/documents/share-request
+```
+
+Request that one of your documents be shared with the organisation. Requires the `doc_id` as a form field.
+
+### List your share requests
+
+```
+GET /api/documents/share-requests/mine
+```
+
+Returns all share requests submitted by the authenticated user.
+
+### Admin: list pending requests
+
+```
+GET /api/documents/share-requests/pending
+```
+
+Requires org admin role. Returns all pending share requests for the organisation.
+
+### Admin: approve a request
+
+```
+POST /api/documents/share-requests/{request_id}/approve
+```
+
+Copies the document to shared org storage and marks the request as approved.
+
+### Admin: deny a request
+
+```
+POST /api/documents/share-requests/{request_id}/deny
+```
+
+Marks the request as denied. Optionally accepts a `deny_reason` form field.
+
+### Admin: upload directly to shared
+
+```
+POST /api/documents/upload-shared
+```
+
+Org admins can upload files directly to the shared document library without going through the approval flow. Accepts `multipart/form-data` with `file` and optional `tags` (comma-separated string).
+
+### Admin: revoke a shared document
+
+```
+DELETE /api/documents/shared/{doc_id}
+```
+
+Revokes a shared document — removes the file from shared storage and marks the record as revoked.

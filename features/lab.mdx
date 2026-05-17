@@ -1,0 +1,70 @@
+---
+title: "Lab: AI research chat for financial analysis"
+description: "Ask any financial question in plain English and get AI-generated analysis with charts, tables, and source-traced citations — all in one chat interface."
+---
+
+Lab is CF0's AI chat interface for financial research. You type a question in plain English — "Compare Apple and Microsoft's free cash flow margins over the last five years" — and Lab queries live data sources, runs the analysis, and renders the results directly in the conversation as interactive charts, data tables, and financial metrics. Every number links back to its source.
+
+## What you can do in Lab
+
+<CardGroup cols={2}>
+  <Card title="Ask research questions" icon="message-square">
+    Query financials, earnings, valuations, and market data using natural language — no formulas or SQL required.
+  </Card>
+  <Card title="Get rich visual output" icon="bar-chart-2">
+    Responses include AI-rendered charts, tables, metric cards, and timelines — not just plain text.
+  </Card>
+  <Card title="Trace every number" icon="link">
+    Every data point includes a citation to the exact SEC filing, page, and section it came from.
+  </Card>
+  <Card title="Manage multiple threads" icon="layers">
+    Run separate research threads for different companies or topics and switch between them from the sidebar.
+  </Card>
+</CardGroup>
+
+## Start a conversation
+
+<Steps>
+  <Step title="Open Lab">
+    Click **Lab** in the left sidebar. The chat input opens at the bottom of the screen.
+  </Step>
+  <Step title="Type your question">
+    Enter your question in plain English. For example: "What were Tesla's revenue and gross margin for the last four quarters?"
+  </Step>
+  <Step title="Read the response">
+    Lab streams the response in real time. Charts, tables, and metrics render inline as the AI works through your question.
+  </Step>
+  <Step title="Follow up">
+    Ask follow-up questions in the same thread. Lab retains context across the entire conversation.
+  </Step>
+</Steps>
+
+## Conversation threads
+
+Each research session runs in its own thread. Threads persist so you can close Lab and pick up where you left off.
+
+- **Start a new thread** by clicking **New thread** at the top of the sidebar.
+- **Switch threads** by clicking any existing thread in the sidebar list.
+- **Rename a thread** by clicking the thread name and typing a new label.
+
+<Note>
+  All threads are private to your account. Org admins cannot view individual thread contents.
+</Note>
+
+## Citations and source tracing
+
+Every quantitative claim in a Lab response includes a citation. Click any cited number to see the source: the filing type, company, filing date, and the exact section of the document.
+
+CF0 draws on 25+ financial data sources — including 30 years of SEC filings — and its proprietary parsing pipeline achieves 90%+ accuracy on structured financials.
+
+## Real-time streaming
+
+Lab streams responses token by token as the AI generates them. Charts and tables appear progressively, so you see results as soon as they are ready rather than waiting for a complete response.
+
+## Skills: accelerate recurring workflows
+
+If you run the same type of analysis repeatedly — earnings summaries, debt covenant reviews, comps tables — you can create a Skill to capture that workflow as a reusable prompt template.
+
+<Tip>
+  Invoke any Skill directly from the Lab chat input by typing `/skill-name`. CF0 ships with 80 pre-built system Skills, and you can create your own. See [Skills](/features/skills) for details.
+</Tip>

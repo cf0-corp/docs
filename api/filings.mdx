@@ -1,0 +1,325 @@
+---
+title: "Filings API: search and read SEC filings"
+description: "The Filings API lets you search companies globally, browse SEC and regulatory filings, ingest them into CF0, and read individual filing sections."
+---
+
+The Filings API provides access to CF0's global filing explorer. You can search companies across 10 markets, browse available filings from SEC EDGAR and international regulators, trigger ingestion into CF0's document store, and read individual filing sections as plain text.
+
+All Filings endpoints are prefixed with `/api/filings`.
+
+## Supported markets
+
+CF0 maps ISO 3166-1 alpha-2 country codes to regulatory sources:
+
+| Country code | Source | Regulator |
+|---|---|---|
+| `US` | `sec` | SEC EDGAR |
+| `JP` | `edinet` | EDINET |
+| `KR` | `dart` | DART |
+| `GB` | `fca` | FCA / Companies House |
+| `CA` | `sedar` | SEDAR+ |
+| `IN` | `sebi` | SEBI |
+| `AU` | `asx` | ASX |
+| `HK` | `hkex` | HKEX |
+| `CN` | `cninfo` | CNINFO |
+| `BR` | `cvm` | CVM |
+
+---
+
+## Search companies
+
+```
+GET /api/filings/search
+```
+
+Prefix search across company name, ticker, and aliases. Returns companies from all supported markets.
+
+### Query parameters
+
+<ParamField query="q" type="string" required>
+  Search query. Minimum 1 character.
+</ParamField>
+
+<ParamField query="limit" type="integer">
+  Maximum results to return. Range: 1–100. Default: `20`.
+</ParamField>
+
+### Response
+
+<ResponseField name="results" type="array">
+  Array of matching company objects.
+</ResponseField>
+
+<ResponseField name="total" type="integer">
+  Number of results returned.
+</ResponseField>
+
+<ResponseField name="query_ms" type="number">
+  Server-side query time in milliseconds.
+</ResponseField>
+
+```bash
+curl "https://api.cf0.ai/api/filings/search?q=nvidia&limit=5" \
+  -H "Authorization: Bearer <your-token>"
+```
+
+---
+
+## List markets
+
+```
+GET /api/filings/markets
+```
+
+Returns all supported markets with live company counts.
+
+<ResponseField name="markets" type="array">
+  Array of market objects with country code, name, and company count.
+</ResponseField>
+
+---
+
+## Browse a market
+
+```
+GET /api/filings/market/{country}
+```
+
+Returns a paginated, sortable company list for a single market.
+
+### Path parameters
+
+<ParamField path="country" type="string" required>
+  ISO 3166-1 alpha-2 country code, e.g. `US`, `JP`, `GB`.
+</ParamField>
+
+### Query parameters
+
+<ParamField query="page" type="integer">
+  Page number. Default: `1`.
+</ParamField>
+
+<ParamField query="page_size" type="integer">
+  Companies per page. Range: 1–200. Default: `50`.
+</ParamField>
+
+<ParamField query="sort_by" type="string">
+  Field to sort by. Default: `"market_cap_usd"`.
+</ParamField>
+
+<ParamField query="sort_order" type="string">
+  `"asc"` or `"desc"`. Default: `"desc"`.
+</ParamField>
+
+<ParamField query="sector" type="string">
+  Filter by sector name.
+</ParamField>
+
+---
+
+## Get company
+
+```
+GET /api/filings/company/{country}/{local_id}
+```
+
+Look up a single company by market and local identifier (e.g. CIK for US, EDINET code for JP).
+
+```bash
+curl https://api.cf0.ai/api/filings/company/US/0001045810 \
+  -H "Authorization: Bearer <your-token>"
+```
+
+---
+
+## Get company filings
+
+```
+GET /api/filings/company/{country}/{local_id}/filings
+```
+
+Returns the available filing list for a company. For US companies (`country=US`), this queries SEC EDGAR directly. For other markets, results come from CF0's filing registry with adapter fallback.
+
+Each filing object includes:
+
+<ResponseField name="filing_ref" type="string">Source-specific filing reference ID.</ResponseField>
+<ResponseField name="form_type" type="string">Filing form type, e.g. `10-K`, `10-Q`, `8-K`.</ResponseField>
+<ResponseField name="filing_date" type="string">Date the filing was submitted (ISO 8601).</ResponseField>
+<ResponseField name="report_date" type="string">Period-of-report date.</ResponseField>
+<ResponseField name="title" type="string">Human-readable filing title.</ResponseField>
+<ResponseField name="ingested" type="boolean">`true` if this filing has been ingested into CF0.</ResponseField>
+
+```bash
+curl https://api.cf0.ai/api/filings/company/US/0001045810/filings \
+  -H "Authorization: Bearer <your-token>"
+```
+
+---
+
+## Ingest a filing
+
+```
+POST /api/filings/ingest
+```
+
+Start a background ingestion job to download and process a filing into CF0's document store. Requires organisation membership.
+
+If a job already exists for the same filing, returns the existing job without creating a duplicate.
+
+### Request body
+
+<ParamField body="country" type="string" required>
+  ISO 3166-1 alpha-2 country code.
+</ParamField>
+
+<ParamField body="local_id" type="string" required>
+  Company identifier within the source (e.g. CIK for US, EDINET code for JP).
+</ParamField>
+
+<ParamField body="filing_ref" type="string" required>
+  Source-specific filing reference from the filings list.
+</ParamField>
+
+<ParamField body="company_ticker" type="string">
+  Exchange ticker or local code.
+</ParamField>
+
+<ParamField body="company_name" type="string">
+  Human-readable company name.
+</ParamField>
+
+<ParamField body="filing" type="object">
+  The full filing dict returned by the filings list endpoint. Required for non-US sources.
+</ParamField>
+
+### Response
+
+<ResponseField name="job" type="object">
+  The ingestion job, including `id`, `status`, and `progress_pct`.
+</ResponseField>
+
+<ResponseField name="created" type="boolean">
+  `true` if a new job was created; `false` if an existing job was returned.
+</ResponseField>
+
+```bash
+curl -X POST https://api.cf0.ai/api/filings/ingest \
+  -H "Authorization: Bearer <your-token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "country": "US",
+    "local_id": "0001045810",
+    "filing_ref": "NVDA_10-K_2024-02-21",
+    "company_ticker": "NVDA",
+    "company_name": "NVIDIA Corporation"
+  }'
+```
+
+---
+
+## Get ingestion job
+
+```
+GET /api/filings/ingest/{job_id}
+```
+
+Returns the status of a specific ingestion job.
+
+---
+
+## List active ingestion jobs
+
+```
+GET /api/filings/ingest/active
+```
+
+Returns all active ingestion jobs for the authenticated organisation.
+
+---
+
+## Stream ingestion progress
+
+```
+GET /api/filings/ingest/stream
+```
+
+SSE endpoint that streams ingestion job progress for your organisation.
+
+<Note>
+Because browser `EventSource` cannot send custom headers, this endpoint authenticates via a `token` query parameter instead of the `Authorization` header.
+</Note>
+
+### Query parameters
+
+<ParamField query="token" type="string" required>
+  Your Bearer token (without the `Bearer ` prefix).
+</ParamField>
+
+### SSE events
+
+| Event | Description |
+|-------|-------------|
+| `progress` | Job status changed — includes `job_id`, `status`, `progress_pct`, `company_name` |
+| `complete` | Job finished successfully — includes the full job object |
+| `error` | Job failed — includes `job_id` and `error` message |
+| `heartbeat` | Keep-alive ping, emitted every 30 seconds |
+
+The stream automatically closes after 5 minutes.
+
+```javascript
+const es = new EventSource(
+  `https://api.cf0.ai/api/filings/ingest/stream?token=${token}`
+);
+
+es.addEventListener('progress', (e) => {
+  const { job_id, status, progress_pct } = JSON.parse(e.data);
+  console.log(`Job ${job_id}: ${status} (${progress_pct}%)`);
+});
+
+es.addEventListener('complete', (e) => {
+  console.log('Ingestion complete:', JSON.parse(e.data));
+  es.close();
+});
+```
+
+---
+
+## Get filing sections (table of contents)
+
+```
+GET /api/filings/sections/{country}/{filing_id}
+```
+
+Returns the table of contents for an ingested filing — a list of sections with slugs and titles.
+
+<ResponseField name="sections" type="array">
+  Array of section objects with `item_number` and `title`.
+</ResponseField>
+
+<ResponseField name="filing_id" type="string">The filing ID.</ResponseField>
+<ResponseField name="source" type="string">The regulatory source (e.g. `"sec"`).</ResponseField>
+
+```bash
+curl https://api.cf0.ai/api/filings/sections/US/NVDA_10-K_2024-02-21 \
+  -H "Authorization: Bearer <your-token>"
+```
+
+---
+
+## Read a filing section
+
+```
+GET /api/filings/read/{country}/{filing_id}/{section_id}
+```
+
+Returns the plain-text content of a single filing section.
+
+<ResponseField name="source" type="string">Regulatory source.</ResponseField>
+<ResponseField name="filing_id" type="string">Filing ID.</ResponseField>
+<ResponseField name="section" type="string">Section identifier.</ResponseField>
+<ResponseField name="content" type="string">Full text content of the section in markdown.</ResponseField>
+
+```bash
+curl https://api.cf0.ai/api/filings/read/US/NVDA_10-K_2024-02-21/item-1 \
+  -H "Authorization: Bearer <your-token>"
+```

@@ -1,0 +1,110 @@
+{
+  "projectType": "saas",
+  "projectName": "CF0",
+  "projectDescription": "AI-native financial research and due diligence platform that cuts asset analysis from hours to minutes through AI-powered chat, automated reports, and live financial data.",
+  "theme": "luma",
+  "primaryColor": "#7c7c7c",
+  "lightColor": "#050505",
+  "darkColor": "#dddddd",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Docs",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "account-setup"
+            ]
+          },
+          {
+            "group": "Core Features",
+            "pages": [
+              "features/lab",
+              "features/reports",
+              "features/filings",
+              "features/documents",
+              "features/skills"
+            ]
+          },
+          {
+            "group": "Workspace",
+            "pages": [
+              "workspace/organizations",
+              "workspace/settings",
+              "workspace/dashboard"
+            ]
+          },
+          {
+            "group": "Data & Sources",
+            "pages": [
+              "data/overview",
+              "data/sec-filings",
+              "data/integrations"
+            ]
+          },
+          {
+            "group": "Security & Privacy",
+            "pages": [
+              "security/overview",
+              "security/authentication"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api/overview",
+              "api/authentication"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
+              "api/lab",
+              "api/reports",
+              "api/filings",
+              "api/documents",
+              "api/skills"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "AI-powered financial chat (Lab) with real-time streaming and rich component rendering",
+    "Automated equity research PDF reports with charts, citations, and branded export",
+    "SEC filing browser covering 40,000+ companies across 11+ global markets",
+    "Document upload and analysis supporting PDF, CSV, XLSX, and images",
+    "Custom Skills: reusable prompt templates for firm-specific workflows",
+    "Organisation-level workspaces with role-based access control",
+    "25+ live financial data sources including proprietary SEC pipeline",
+    "Zero data retention — no cross-organisation data sharing",
+    "Usage dashboard with activity analytics"
+  ],
+  "publicApiSurface": [
+    "POST /api/lab/chat — start or continue an AI research session",
+    "GET /api/lab/threads — list conversation threads",
+    "GET /api/lab/threads/{thread_id}/messages — fetch thread messages",
+    "POST /api/reports — generate a new equity research report",
+    "GET /api/reports — list reports",
+    "GET /api/reports/{report_id} — fetch report detail",
+    "GET /api/filings — browse SEC filings",
+    "GET /api/filings/{filing_id}/sections — read filing sections",
+    "POST /api/documents — upload a document",
+    "GET /api/documents — list documents",
+    "GET /api/skills — list available skills",
+    "POST /api/skills — create a custom skill",
+    "GET /api/dashboard — fetch usage analytics",
+    "GET /api/auth/me — current user profile",
+    "POST /api/billing/checkout-session — start subscription checkout",
+    "POST /api/billing/portal-session — open billing portal"
+  ]
+}

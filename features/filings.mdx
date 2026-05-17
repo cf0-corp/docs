@@ -1,0 +1,78 @@
+---
+title: "Browse and search SEC filings on CF0"
+description: "Search 40,000+ companies across 11+ global markets, browse 30 years of SEC filings, and read individual sections with full-text search."
+---
+
+Filings gives you direct access to a curated archive of regulatory filings from companies around the world. You can search by company name or ticker, browse by market, open a specific filing, and navigate its sections — all without leaving CF0. Filing data is read from CF0's proprietary ingestion pipeline and updated regularly.
+
+## Coverage
+
+<CardGroup cols={2}>
+  <Card title="40,000+ companies" icon="building-2">
+    Covers companies across 11+ global markets. Use the market grid on the Filings landing page to see exact company counts per market.
+  </Card>
+  <Card title="30 years of SEC data" icon="calendar">
+    CF0's proprietary SEC pipeline covers three decades of EDGAR filings with structured financial extraction and 90%+ parsing accuracy.
+  </Card>
+</CardGroup>
+
+## Markets
+
+The Filings landing page organises coverage into two tiers:
+
+- **Filing ingestion available** — markets where CF0 has processed and indexed the full filing content, enabling section-level reading and full-text search. Brazil (BR) is the most recently added market.
+- **Directory only** — markets where company and filing metadata is available for browsing, but full-text section search is not yet enabled.
+
+Click any market in the grid to browse its companies.
+
+## Search for a company
+
+<Steps>
+  <Step title="Open Filings">
+    Click **Filings** in the left sidebar.
+  </Step>
+  <Step title="Search by name or ticker">
+    Type a company name or ticker symbol into the search bar at the top. Results appear as you type across all markets.
+  </Step>
+  <Step title="Select a company">
+    Click a result to open the company's filing list.
+  </Step>
+</Steps>
+
+## Browse by market
+
+<Steps>
+  <Step title="Open the market grid">
+    On the Filings landing page, click a market name — for example, **United States** — to open the company list for that market.
+  </Step>
+  <Step title="Browse companies">
+    The company list shows each company's ticker, name, sector, and market cap. Click any row to view its filings.
+  </Step>
+  <Step title="Paginate">
+    Use the **Previous** and **Next** controls at the bottom of the list to move through large markets.
+  </Step>
+</Steps>
+
+## Read a filing
+
+Once you select a company, its filing history appears as a table sorted by date. Each row shows the filing type (10-K, 10-Q, 8-K, etc.), the filing date, and a link to the original document.
+
+<Steps>
+  <Step title="Open a filing">
+    Click **Read** on any filing row. The section reader opens as a panel on the right.
+  </Step>
+  <Step title="Navigate sections">
+    Use the section list in the reader to jump directly to any part of the filing — for example, Item 1A (Risk Factors) or Item 7 (MD&A).
+  </Step>
+  <Step title="Search within the filing">
+    Use the full-text search field inside the reader to find specific terms or passages within the document.
+  </Step>
+</Steps>
+
+<Note>
+  Filing data is sourced from CF0's proprietary pipeline, not fetched live from EDGAR on demand. Data is updated regularly, but there may be a short delay between a company filing with the SEC and its appearance in CF0.
+</Note>
+
+## Use filings in Lab
+
+Any filing you find in Filings can be analysed directly in [Lab](/features/lab). Ask Lab to summarise a 10-K, extract key financial figures, or compare two annual reports — it draws on the same indexed filing content.

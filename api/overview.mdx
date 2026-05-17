@@ -1,0 +1,93 @@
+---
+title: "CF0 REST API reference"
+description: "The CF0 REST API gives programmatic access to research sessions, reports, SEC filings, documents, and workflow skills. All responses are JSON."
+---
+
+The CF0 REST API lets you build integrations on top of CF0's financial research platform. You can stream AI research sessions, retrieve generated reports, search global SEC and regulatory filings, manage uploaded documents, and create or invoke reusable research workflow skills.
+
+## Base URL
+
+All endpoints are served from:
+
+```
+https://api.cf0.ai
+```
+
+## Request format
+
+Send JSON bodies with `Content-Type: application/json`. File upload endpoints use `multipart/form-data` — see [Documents API](/api/documents) for details.
+
+## Response format
+
+All endpoints return JSON. The chat endpoint (`POST /api/lab/chat`) returns a [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) stream with `Content-Type: text/event-stream`. The filings ingestion progress endpoint (`GET /api/filings/ingest/stream`) also streams SSE.
+
+## Authentication
+
+Every request requires a Bearer token in the `Authorization` header:
+
+```
+Authorization: Bearer <your-token>
+```
+
+See [Authentication](/api/authentication) for how to obtain and use your token.
+
+## Error responses
+
+Error responses follow a consistent shape:
+
+```json
+{
+  "detail": "Human-readable error description"
+}
+```
+
+Common HTTP status codes:
+
+| Code | Meaning |
+|------|---------|
+| `400` | Bad request — missing or invalid parameters |
+| `401` | Unauthorized — missing or invalid token |
+| `403` | Forbidden — valid token but insufficient permissions (e.g. org required) |
+| `404` | Resource not found |
+| `409` | Conflict — resource already exists |
+| `413` | Payload too large |
+| `422` | Validation error — request body failed schema validation |
+| `429` | Rate limit exceeded |
+| `500` | Internal server error |
+| `502` | Upstream service error (e.g. LLM call failed) |
+| `503` | Service unavailable |
+
+## Rate limits
+
+Endpoints that trigger AI inference are rate-limited per user:
+
+| Endpoint | Limit |
+|----------|-------|
+| `POST /api/lab/chat` | 12 requests per minute |
+| Section rewrite | 10 requests per minute |
+| Section edit | 6 requests per minute |
+
+Requests that exceed the limit receive `HTTP 429`.
+
+## Endpoint reference
+
+<CardGroup cols={2}>
+  <Card title="Lab" icon="flask-conical" href="/api/lab">
+    Start streaming chat sessions and manage research threads.
+  </Card>
+  <Card title="Reports" icon="file-text" href="/api/reports">
+    List, retrieve, edit, and delete generated research reports.
+  </Card>
+  <Card title="Filings" icon="landmark" href="/api/filings">
+    Search companies and read SEC and global regulatory filings.
+  </Card>
+  <Card title="Documents" icon="paperclip" href="/api/documents">
+    Upload, list, and manage files in your research workspace.
+  </Card>
+  <Card title="Skills" icon="wand-sparkles" href="/api/skills">
+    Create and invoke reusable research workflow templates.
+  </Card>
+  <Card title="Authentication" icon="lock" href="/api/authentication">
+    Bearer token authentication for all API requests.
+  </Card>
+</CardGroup>

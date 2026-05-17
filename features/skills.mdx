@@ -1,0 +1,91 @@
+---
+title: "Automate research workflows with CF0 Skills"
+description: "Skills are reusable prompt templates for recurring research workflows. Invoke any Skill in Lab with a slash command to run your firm's workflows instantly."
+---
+
+Skills are reusable prompt templates that you invoke in [Lab](/features/lab) to run a defined research workflow with a single command. Instead of retyping the same instructions each session, you save them as a Skill — then call it with `/skill-name` whenever you need it. CF0 ships with 80 pre-built system Skills, and you can create your own personal or org-wide Skills for your firm's specific processes.
+
+## System Skills vs custom Skills
+
+<CardGroup cols={2}>
+  <Card title="System Skills" icon="cpu">
+    80 pre-built Skills covering common investment workflows: earnings analysis, debt covenant review, comparable company tables, valuation summaries, and more. Available to every user immediately — no setup required.
+  </Card>
+  <Card title="Custom Skills" icon="pencil">
+    Skills you create yourself, tailored to your firm's exact processes. Personal Skills are private to you; org-wide Skills (created by org admins) are shared with every team member.
+  </Card>
+</CardGroup>
+
+## Invoke a Skill in Lab
+
+Type `/` followed by the Skill name in the Lab chat input and press **Enter**.
+
+```
+/earnings-summary
+```
+
+Lab loads the Skill's prompt template, applies any variable substitutions, and starts the workflow. You can add context after the slash command to fill in template variables — for example, `/earnings-summary AAPL Q3 2024`.
+
+<Tip>
+  Type `/` in Lab to see a list of all available Skills filtered as you type. Scroll through system Skills and your custom Skills in one place.
+</Tip>
+
+## Create a custom Skill
+
+<Steps>
+  <Step title="Open Skills">
+    Click **Skills** in the left sidebar to open the Skills library.
+  </Step>
+  <Step title="Click New skill">
+    Click the **+ New skill** button in the top-right corner of the Skills panel.
+  </Step>
+  <Step title="Name your Skill">
+    Enter a display name and an optional description. The Skill's slug (used for the `/skill-name` invocation) is generated automatically from the display name.
+  </Step>
+  <Step title="Write the prompt template">
+    Write the prompt that Lab will run when this Skill is invoked. You can include plain instructions, structured output requests, or variable placeholders.
+
+    If you are not sure how to write the prompt, describe what the Skill should do and click **Generate with AI** — CF0 will draft the prompt template from your description.
+  </Step>
+  <Step title="Save">
+    Click **Save**. Your Skill appears in the Skills list under **Mine** and is immediately available in Lab.
+  </Step>
+</Steps>
+
+<Tip>
+  Use the **Generate with AI** button to let CF0 write the prompt from a plain-English description of the workflow. You can then edit the generated prompt before saving.
+</Tip>
+
+## Edit or delete a Skill
+
+Select any custom Skill from the Skills list to open it in the detail panel. Click **Edit** to modify the name, description, or prompt content. Click **Delete** to remove it permanently.
+
+<Note>
+  You can only edit or delete Skills you own. System Skills and org Skills (if you are not an org admin) are read-only.
+</Note>
+
+## Org-wide Skills (org admins)
+
+Org admins can create Skills that are shared automatically with every member of the organisation.
+
+<Steps>
+  <Step title="Create the Skill">
+    Follow the same steps as creating a personal Skill, but toggle **Share with org** before saving.
+  </Step>
+  <Step title="Confirm org scope">
+    The Skill is saved under **Org** scope and appears in the Skills list for all team members immediately.
+  </Step>
+</Steps>
+
+Org Skills appear under the **Org** filter in the Skills library. Team members can invoke them with `/skill-name` in Lab but cannot edit or delete them.
+
+## Find Skills
+
+Use the search bar and filter tabs at the top of the Skills library to find what you need:
+
+| Filter | Shows |
+|--------|-------|
+| **All** | Every Skill available to you |
+| **System** | CF0's 80 pre-built Skills |
+| **Org** | Skills created by your org admin |
+| **Mine** | Skills you have created |
