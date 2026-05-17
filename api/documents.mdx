@@ -1,9 +1,9 @@
 ---
 title: "Documents API: upload and manage files"
-description: "The Documents API lets you upload PDFs, spreadsheets, and other files to CF0 for use in research sessions, then list, preview, download, and delete them."
+description: "The Documents API lets you upload PDFs, spreadsheets, and other files to cf0 for use in research sessions, then list, preview, download, and delete them."
 ---
 
-The Documents API manages files in your CF0 research workspace. Uploaded files are stored in CF0's document store and made available to the AI in your Lab sessions. You can also share documents across your organisation.
+The Documents API manages files in your cf0 research workspace. Uploaded files are stored in cf0's document store and made available to the AI in your Lab sessions. You can also share documents across your organisation.
 
 All Documents endpoints are prefixed with `/api/documents`.
 
@@ -49,12 +49,12 @@ Scanned PDFs are automatically queued for OCR processing after upload. The `stat
 
 ### Response
 
-<ResponseField name="id" type="string">Document ID.</ResponseField>
-<ResponseField name="filename" type="string">Original filename.</ResponseField>
-<ResponseField name="file_type" type="string">Detected file extension.</ResponseField>
-<ResponseField name="size_bytes" type="integer">File size in bytes.</ResponseField>
-<ResponseField name="status" type="string">`"ready"`, `"needs_ocr"`, or `"ocr_running"`.</ResponseField>
-<ResponseField name="created_at" type="string">Upload timestamp (ISO 8601).</ResponseField>
+Upload returns immediately with a job handle — the actual ingestion (text extraction, OCR, indexing) runs asynchronously. Poll `GET /api/documents/{doc_id}/status` until `status: "ready"` before using the document in Lab.
+
+<ResponseField name="ok" type="boolean">Always `true` if the upload was accepted.</ResponseField>
+<ResponseField name="doc_id" type="string">Document ID. Use this to poll status, fetch content, or reference the document in Lab.</ResponseField>
+<ResponseField name="workflow_id" type="string">Identifier for the async ingestion workflow.</ResponseField>
+<ResponseField name="run_id" type="string">Identifier for this specific workflow run.</ResponseField>
 
 ```bash
 curl -X POST https://api.cf0.ai/api/documents/upload \
@@ -67,14 +67,35 @@ curl -X POST https://api.cf0.ai/api/documents/upload \
 
 ```json
 {
-  "id": "a1b2c3d4e5f6g7h8",
-  "filename": "nvidia-10k-2024.pdf",
-  "file_type": "pdf",
-  "size_bytes": 3145728,
-  "status": "ready",
-  "created_at": "2026-05-17T10:23:00Z"
+  "ok": true,
+  "doc_id": "a1b2c3d4e5f6g7h8",
+  "workflow_id": "wf-doc-ingest-9p7q3",
+  "run_id": "run-2026-05-17T10-23-00Z-xyz"
 }
 ```
+
+### Poll status
+
+```
+GET /api/documents/{doc_id}/status
+```
+
+Returns the current ingestion state. Poll every 1–3 seconds until `status` is `"ready"` (or `"failed"`).
+
+<ResponseField name="doc_id" type="string">Document ID.</ResponseField>
+<ResponseField name="status" type="string">`"queued"`, `"running"`, `"ready"`, or `"failed"`.</ResponseField>
+<ResponseField name="filename" type="string">Original filename.</ResponseField>
+<ResponseField name="file_type" type="string">Detected file extension (available once status is `"ready"`).</ResponseField>
+<ResponseField name="error" type="string">Failure reason (only present when status is `"failed"`).</ResponseField>
+
+```bash
+curl https://api.cf0.ai/api/documents/a1b2c3d4e5f6g7h8/status \
+  -H "Authorization: Bearer <your-token>"
+```
+
+<Note>
+This is a breaking change from earlier API versions, which returned the full document object synchronously. Clients on the old contract (`{ id, filename, file_type, ... }`) need to switch to `{ ok, doc_id, ... }` plus polling.
+</Note>
 
 ---
 
@@ -207,7 +228,7 @@ curl -X DELETE https://api.cf0.ai/api/documents/a1b2c3d4e5f6g7h8 \
 
 ## Shared documents
 
-CF0 supports an org-level shared document library. Members can request to share their personal documents with the organisation; admins approve or deny these requests.
+cf0 supports an org-level shared document library. Members can request to share their personal documents with the organisation; admins approve or deny these requests.
 
 ### List shared documents
 

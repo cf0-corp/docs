@@ -1,15 +1,15 @@
 ---
 title: "Filings API: search and read SEC filings"
-description: "The Filings API lets you search companies globally, browse SEC and regulatory filings, ingest them into CF0, and read individual filing sections."
+description: "The Filings API lets you search companies globally, browse SEC and regulatory filings, ingest them into cf0, and read individual filing sections."
 ---
 
-The Filings API provides access to CF0's global filing explorer. You can search companies across 10 markets, browse available filings from SEC EDGAR and international regulators, trigger ingestion into CF0's document store, and read individual filing sections as plain text.
+The Filings API provides access to cf0's global filing explorer. You can search companies across 10 markets, browse available filings from SEC EDGAR and international regulators, trigger ingestion into cf0's document store, and read individual filing sections as plain text.
 
 All Filings endpoints are prefixed with `/api/filings`.
 
 ## Supported markets
 
-CF0 maps ISO 3166-1 alpha-2 country codes to regulatory sources:
+cf0 maps ISO 3166-1 alpha-2 country codes to regulatory sources:
 
 | Country code | Source | Regulator |
 |---|---|---|
@@ -138,7 +138,7 @@ curl https://api.cf0.ai/api/filings/company/US/0001045810 \
 GET /api/filings/company/{country}/{local_id}/filings
 ```
 
-Returns the available filing list for a company. For US companies (`country=US`), this queries SEC EDGAR directly. For other markets, results come from CF0's filing registry with adapter fallback.
+Returns the available filing list for a company. For US companies (`country=US`), this queries SEC EDGAR directly. For other markets, results come from cf0's filing registry with adapter fallback.
 
 Each filing object includes:
 
@@ -147,7 +147,7 @@ Each filing object includes:
 <ResponseField name="filing_date" type="string">Date the filing was submitted (ISO 8601).</ResponseField>
 <ResponseField name="report_date" type="string">Period-of-report date.</ResponseField>
 <ResponseField name="title" type="string">Human-readable filing title.</ResponseField>
-<ResponseField name="ingested" type="boolean">`true` if this filing has been ingested into CF0.</ResponseField>
+<ResponseField name="ingested" type="boolean">`true` if this filing has been ingested into cf0.</ResponseField>
 
 ```bash
 curl https://api.cf0.ai/api/filings/company/US/0001045810/filings \
@@ -162,7 +162,7 @@ curl https://api.cf0.ai/api/filings/company/US/0001045810/filings \
 POST /api/filings/ingest
 ```
 
-Start a background ingestion job to download and process a filing into CF0's document store. Requires organisation membership.
+Start a background ingestion job to download and process a filing into cf0's document store. Requires organisation membership.
 
 If a job already exists for the same filing, returns the existing job without creating a duplicate.
 

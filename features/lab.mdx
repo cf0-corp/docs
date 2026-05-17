@@ -1,70 +1,74 @@
 ---
-title: "Lab: AI research chat for financial analysis"
-description: "Ask any financial question in plain English and get AI-generated analysis with charts, tables, and source-traced citations — all in one chat interface."
+title: "Lab — ask anything"
+description: "Lab is where you ask. Plain English in, streaming charts and tables and cited paragraphs out. Agents pull from the brain; UI renders to match the question; every figure traces back to its source."
 ---
 
-Lab is CF0's AI chat interface for financial research. You type a question in plain English — "Compare Apple and Microsoft's free cash flow margins over the last five years" — and Lab queries live data sources, runs the analysis, and renders the results directly in the conversation as interactive charts, data tables, and financial metrics. Every number links back to its source.
+Lab is layer 03 of [the stack](/introduction) — the place an analyst goes to ask a question. Type it in English, get back structured analysis: chart, table, narrative, with citations on every number. There is no template to fill in, no dashboard to build, no formula to write. Lab decides what UI the answer needs and renders it inline.
 
-## What you can do in Lab
+> *"Compare AAPL and MSFT free cash flow margins over the last 5 years and flag any quarter where the gap inverted."*
+
+That is a full Lab prompt. The thread streams a margin time-series chart, a side-by-side table with `tnum`-aligned digits, a paragraph identifying the inversion quarters, and citations linking each margin number to the 10-K or 10-Q it came from. End-to-end: under a minute.
+
+## What ships in a response
 
 <CardGroup cols={2}>
-  <Card title="Ask research questions" icon="message-square">
-    Query financials, earnings, valuations, and market data using natural language — no formulas or SQL required.
+  <Card title="On-demand UI" icon="layout-dashboard">
+    Charts, tables, metric tiles, timelines — whichever component matches the question. Components are real React, not screenshots; you can hover, sort, drill in.
   </Card>
-  <Card title="Get rich visual output" icon="bar-chart-2">
-    Responses include AI-rendered charts, tables, metric cards, and timelines — not just plain text.
+  <Card title="Cited paragraphs" icon="link">
+    Every figure is anchored to a source — the exact filing, page, and section. Click any citation to open the underlying document.
   </Card>
-  <Card title="Trace every number" icon="link">
-    Every data point includes a citation to the exact SEC filing, page, and section it came from.
+  <Card title="Persistent threads" icon="layers">
+    Each session lives in its own thread. Close the tab, come back tomorrow, the context is intact. Switch threads from the sidebar.
   </Card>
-  <Card title="Manage multiple threads" icon="layers">
-    Run separate research threads for different companies or topics and switch between them from the sidebar.
+  <Card title="Slash-command workflows" icon="zap">
+    Type `/` to invoke any Skill — your firm's reusable research moves bound to a slug. See [Skills](/features/skills).
   </Card>
 </CardGroup>
 
-## Start a conversation
+## Run your first thread
 
 <Steps>
   <Step title="Open Lab">
-    Click **Lab** in the left sidebar. The chat input opens at the bottom of the screen.
+    Click **Lab** in the left sidebar.
   </Step>
-  <Step title="Type your question">
-    Enter your question in plain English. For example: "What were Tesla's revenue and gross margin for the last four quarters?"
+  <Step title="Ask in plain English">
+    Type the question. Be specific. "Tesla Q4 2025 revenue and gross margin, with YoY delta" beats "Tell me about Tesla."
   </Step>
-  <Step title="Read the response">
-    Lab streams the response in real time. Charts, tables, and metrics render inline as the AI works through your question.
+  <Step title="Read as it streams">
+    Tokens stream in real time. Charts and tables render progressively — you can read the lead while the model is still building the table below it.
   </Step>
   <Step title="Follow up">
-    Ask follow-up questions in the same thread. Lab retains context across the entire conversation.
+    Lab retains the full thread context. Ask follow-ups by reference: "Now do the same for AMD," or "Pull the relevant 10-K paragraph for the margin inversion."
   </Step>
 </Steps>
 
-## Conversation threads
+## Threads
 
-Each research session runs in its own thread. Threads persist so you can close Lab and pick up where you left off.
+Each Lab session is a thread. Threads persist across sessions and live under your user account.
 
-- **Start a new thread** by clicking **New thread** at the top of the sidebar.
-- **Switch threads** by clicking any existing thread in the sidebar list.
-- **Rename a thread** by clicking the thread name and typing a new label.
+- **New thread** — top of the sidebar
+- **Switch thread** — click any thread in the sidebar list
+- **Rename thread** — click the thread title and type
 
 <Note>
-  All threads are private to your account. Org admins cannot view individual thread contents.
+Thread *content* is private to your user — org admins cannot read individual thread bodies. The **Dashboard** (admin only) shows aggregate activity counts per member, never the messages themselves.
 </Note>
 
 ## Citations and source tracing
 
-Every quantitative claim in a Lab response includes a citation. Click any cited number to see the source: the filing type, company, filing date, and the exact section of the document.
+Every quantitative claim Lab makes links back to a source — the company, filing type (10-K, 10-Q, 8-K, transcript), filing date, and the specific section or table the figure came from. For narrative sections (MD&A, risk factors), Lab reads the raw text and quotes verbatim where precision matters.
 
-CF0 draws on 25+ financial data sources — including 30 years of SEC filings — and its proprietary parsing pipeline achieves 90%+ accuracy on structured financials.
+cf0's structured extraction hits 90%+ accuracy on standard financial statements. Where the model is unsure, it surfaces the source quote so you can verify before citing.
 
-## Real-time streaming
+## Streaming, not waiting
 
-Lab streams responses token by token as the AI generates them. Charts and tables appear progressively, so you see results as soon as they are ready rather than waiting for a complete response.
+Lab streams responses token by token. Charts and tables appear progressively — you see partial output while the model is still working. This matters because it lets you cancel early if the model is going in the wrong direction, before paying for a full response.
 
-## Skills: accelerate recurring workflows
+## Skills
 
-If you run the same type of analysis repeatedly — earnings summaries, debt covenant reviews, comps tables — you can create a Skill to capture that workflow as a reusable prompt template.
+Repeating workflows — earnings recaps, debt covenant checks, sector comp tables, IC memos — become **Skills**. Save the prompt once, invoke with `/skill-name` from any thread.
 
 <Tip>
-  Invoke any Skill directly from the Lab chat input by typing `/skill-name`. CF0 ships with 80 pre-built system Skills, and you can create your own. See [Skills](/features/skills) for details.
+Type `/` in Lab to see all available Skills filtered live. cf0 ships with a catalogue of named system workflows covering the institutional research stack — DCF, LBO, comps, IC memos, earnings recaps, debt covenant reviews, monte carlo — and your org admin can encode any process your team runs. See [Skills](/features/skills).
 </Tip>

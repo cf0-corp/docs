@@ -1,68 +1,102 @@
 ---
-title: "Configure your CF0 account settings"
-description: "Manage your account details, company watchlist, investment profile, and personal skills from the four tabs on the CF0 Settings page."
+title: "Settings"
+description: "Eight tabs cover the full surface — Account, Companies (team management), Profile, Memory, Skills, Brand, Integrations, and Billing."
 ---
 
-The Settings page is where you personalise CF0 to fit your workflow. Open it by clicking your avatar in the top-right corner and selecting **Settings**, or navigating directly to `/settings`. Settings are organised into four tabs: **Account**, **Companies**, **Profile**, and **Skills**.
+The Settings page covers every personalisation and admin lever in cf0. Open it from your avatar in the top-right corner, or navigate directly to `/settings`.
+
+Settings is organised into eight tabs:
+
+| Tab | Scope | What it controls |
+|---|---|---|
+| **Account** | You | Name, email, avatar, password |
+| **Companies** | Org | Team members, invitations, roles (admin only for changes) |
+| **Profile** | You | Role, sectors covered, coverage universe, response language |
+| **Memory** | You | What cf0 remembers about your preferences and prior threads |
+| **Skills** | You + Org | Your personal Skills (and org Skills if you're admin) |
+| **Brand** | Org | Logo, colours, font for branded PDF reports (admin only) |
+| **Integrations** | Org | Third-party connectors — Microsoft 365, Google Workspace, Slack, Notion, Granola |
+| **Billing** | Org | Subscription, invoices, seats (admin only) |
 
 ## Account
 
-The Account tab lets you update your personal details:
+Personal details on your own user record:
 
-- **Name** — the display name visible to your teammates.
-- **Email** — the address associated with your CF0 login. Email changes go through a verification step.
-- **Profile picture** — upload or change your avatar. Your picture appears in team views and the dashboard.
+- **Name** — display name visible to teammates
+- **Email** — login address (changes require email verification)
+- **Profile picture** — your avatar across the app
+- **Password** — change your password (via Clerk)
 
-## Companies
+## Companies (team management)
 
-The Companies tab is your personal company watchlist. Companies you add here are available as context when you run research queries in Lab — CF0 can surface them automatically when you ask questions without specifying a ticker.
+The Companies tab manages your **organisation's team** — members, roles, and invitations. It is **not** a stock watchlist or filing search (your tracked tickers live under **Profile → Coverage**).
+
+If you are an org admin:
 
 <Steps>
-  <Step title="Search for a company">
-    Type a company name or ticker in the search field. CF0 searches across 40,000+ companies in its filings database.
+  <Step title="Invite a teammate">
+    Click **Invite**, enter their email, and choose a role:
+    - **Member** — full feature access within the org
+    - **Admin** — can also manage members, billing, brand, and integrations
   </Step>
-  <Step title="Add to your watchlist">
-    Click **Add** next to any company. It appears immediately in your watchlist.
+  <Step title="Bulk invite">
+    Click **Bulk invite** and paste a list of email addresses. Everyone gets the same role.
   </Step>
-  <Step title="Remove a company">
-    Click the remove icon next to any company in your list to take it off your watchlist.
+  <Step title="Change a role or remove a member">
+    Use the role selector or the remove icon next to any member row.
   </Step>
 </Steps>
 
-<Tip>
-  Add the companies you cover most frequently so Lab can reference them without you having to name them every time.
-</Tip>
+Non-admin members see the team roster but cannot invite, remove, or change roles.
 
-## Profile (Investment Profile)
+## Profile (investment profile)
 
-The Profile tab lets you describe your investment mandate and focus areas. CF0 uses this information to personalise AI responses — Lab tailors its analysis, framing, and data emphasis to your stated strategy.
+Tells cf0 what you cover and how you want answers framed.
 
-Fields you can set include:
-
-- **Investment mandate** — for example, long/short equity, distressed credit, or growth equity.
-- **Sector and geography focus** — the markets and industries you care about most.
-- **Preferred metrics and benchmarks** — guide how CF0 frames comparisons and valuations.
+- **Role** — Analyst, Portfolio manager, Research operations, Other
+- **Sectors** — Technology, Healthcare, Financials, Energy, Consumer Discretionary, Consumer Staples, Industrials, Real Estate, Materials
+- **Coverage** — the tickers you follow. cf0 keeps their filings and data ready so Lab doesn't have to search every time
+- **Language** — English, Portuguese, Spanish, French, German, Chinese. Every Lab response and report is written in this language
 
 <Note>
-  Your investment profile is private to you. It is not shared with other members of your organisation.
+Your investment profile is private to you. It's not shared with other org members.
 </Note>
+
+## Memory
+
+What cf0 remembers about you across sessions — your stated preferences, recurring queries, prior thread context. Review and clear individual entries when needed.
 
 ## Skills
 
-The Skills tab shows the personal skills available in your account. Skills are reusable prompt templates that encode specific research workflows — for example, a one-click earnings analysis or a standardised due diligence checklist.
+Personal Skills you've created (private to you). Enable, disable, edit, or delete from here. Org Skills (shared by an admin) are visible but read-only unless you're an admin yourself.
 
-Here you can:
+To create new Skills, use the dedicated [Skills](/features/skills) page, not this tab.
 
-- **View** your active personal skills.
-- **Enable or disable** skills without deleting them.
-- **Delete** skills you no longer need.
+## Brand (org admin only)
 
-Org-wide skills (shared across your team) are managed by an admin from the dedicated Skills page, not from this tab.
+Controls the look of branded PDF reports — logo, colour scheme, font choices. Every Report your team exports inherits these settings without manual formatting.
 
-## Danger Zone
+Recommended uploads:
+- **Logo** — SVG preferred, PNG acceptable; light + dark variants for theme adaptation
+- **Primary colour** — your firm's accent (used scarcely on covers and section heads)
+- **Typeface** — defaults to the cf0 editorial stack; override if your firm has a brand font
 
-At the bottom of the Settings page is the **Danger Zone**. This section contains irreversible actions, including **Delete account**. Deleting your account permanently removes your profile, query history, and personal data from CF0. Organisation data and shared documents are not affected.
+## Integrations (org admin only)
+
+Connect cf0 to third-party tools your firm already uses. See the [Integrations](/data/integrations) page for the full catalogue and connection flow.
+
+## Billing (org admin only)
+
+Subscription, invoices, payment method, seat count. Non-admin members see the seat count but cannot change plans.
 
 <Note>
-  Account deletion cannot be undone. If you want to leave an organisation without deleting your account, ask your org admin to remove your membership instead.
+Billing is org-scoped on the **Pro plan**. Only admins can manage subscriptions.
+</Note>
+
+## Danger zone
+
+At the bottom of the Settings page, **Delete account** permanently removes your user profile, query history, and personal data. Organisation data and shared documents are not affected.
+
+<Note>
+Account deletion cannot be undone. To leave an organisation without deleting your account, ask your org admin to remove your membership instead.
 </Note>

@@ -1,17 +1,21 @@
 ---
-title: "Upload and analyze documents in CF0"
-description: "Upload PDFs, spreadsheets, and images to your CF0 workspace and make them available for AI analysis in Lab — with team sharing controls for org admins."
+title: "Upload and analyze documents in cf0"
+description: "Upload PDFs, spreadsheets, and images to your cf0 workspace and make them available for AI analysis in Lab — with team sharing controls for org admins."
 ---
 
-Documents lets you bring your own files into CF0 so the AI in Lab can read and analyse them alongside live financial data. You can upload PDFs, spreadsheets, and images, browse your workspace filesystem, and — if you are an org admin — approve documents for sharing across your team.
+Documents lets you bring your own files into cf0 so the AI in Lab can read and analyse them alongside live financial data. You can upload PDFs, spreadsheets, and images, browse your workspace filesystem, and — if you are an org admin — approve documents for sharing across your team.
 
 ## Supported file types
 
 | Type | Formats |
-|------|---------|
-| Documents | PDF |
+|---|---|
+| Documents | PDF, DOCX |
 | Spreadsheets | CSV, XLSX |
-| Images | PNG, JPG, and other common image formats |
+| Presentations | PPTX |
+| Images | PNG, JPG, JPEG |
+| Text | TXT, MD, HTML |
+
+Maximum file size: **50 MB**. Files larger than that are rejected at upload.
 
 <Note>
   Scanned PDFs and image-heavy documents go through an OCR step after upload. Processing typically takes a few seconds to a minute depending on file size.
@@ -28,7 +32,7 @@ Documents lets you bring your own files into CF0 so the AI in Lab can read and a
   </Tab>
 </Tabs>
 
-CF0 queues each file for ingestion immediately after upload. A confirmation message appears for each file that is successfully queued.
+cf0 queues each file for ingestion immediately after upload. A confirmation message appears for each file that is successfully queued.
 
 ## Document tabs
 
@@ -42,13 +46,13 @@ The Documents page has three tabs:
     Your personal uploads. Only you can see these unless you request to share them with the org.
   </Card>
   <Card title="Workspace" icon="folder">
-    A filesystem browser showing all files available in your CF0 sandbox — including documents, outputs, and working files from Lab sessions.
+    A filesystem browser showing all files available in your cf0 sandbox — including documents, outputs, and working files from Lab sessions.
   </Card>
 </CardGroup>
 
 ## Workspace browser
 
-The **Workspace** tab shows a full filesystem view of your CF0 environment. You can see every file that is available to the AI in your Lab sessions, including uploaded documents and files generated during previous conversations.
+The **Workspace** tab shows a full filesystem view of your cf0 environment. You can see every file that is available to the AI in your Lab sessions, including uploaded documents and files generated during previous conversations.
 
 ## Analyse documents in Lab
 

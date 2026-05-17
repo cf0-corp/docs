@@ -1,53 +1,49 @@
 ---
-title: "Signing in to CF0 and managing access"
-description: "How to sign in to CF0, accept an organisation invitation, enable two-factor authentication, and recover access when you're locked out."
+title: "Signing in"
+description: "How to sign in to cf0, accept an organisation invitation, and recover access when you're locked out. Authentication runs through Clerk; sessions are scoped to your active organisation."
 ---
 
-CF0 uses industry-standard authentication to keep your account secure. You sign in at [cf0.ai](https://cf0.ai), and every session is scoped to your organisation — so you only ever see your firm's data.
+cf0 authentication runs through [Clerk](https://clerk.com). You sign in at [cf0.ai](https://cf0.ai), and every session is scoped to your active organisation — you only ever see your firm's data.
 
 ## Signing in
 
-Go to [cf0.ai](https://cf0.ai) and click **Log in**. Enter your email address and password to access your workspace. If your organisation has two-factor authentication enabled, you'll be prompted for a verification code after entering your password.
+Go to [cf0.ai](https://cf0.ai) and click **Log in**. Enter your email address and password to access your workspace. If your account belongs to multiple organisations, you'll be prompted to pick the one you want to work in.
 
 <Info>
-  Access to CF0 requires an active organisation membership. If you don't have an account yet, you'll need an invitation from your organisation's admin.
+Access to cf0 requires an active organisation membership. If you don't have an account yet, you need an invitation from your organisation's admin — see [Account setup](/account-setup#create-or-join-an-organisation).
 </Info>
 
 ## Accepting an invitation
 
-When an admin invites you to an organisation, you'll receive an email with a secure invitation link. Follow these steps to join:
+When an admin invites you to an organisation, you receive an email with a secure invitation link.
 
 <Steps>
   <Step title="Open the invitation email">
-    Find the invitation email from CF0 and click the **Accept invitation** link. Links expire after a set period — if yours has expired, ask your admin to resend it.
+    Find the invitation from cf0 and click **Accept invitation**. Links expire after a set period — if yours has expired, ask your admin to resend it.
   </Step>
   <Step title="Create your account or sign in">
-    If you don't have a CF0 account, you'll be prompted to set a password and complete your profile. If you already have an account with the same email address, sign in with your existing credentials.
+    If you don't have a cf0 account, you'll be prompted to set a password and complete your profile. If you already have an account with the same email, sign in with your existing credentials.
   </Step>
   <Step title="Join your organisation">
-    Once you've signed in or created your account, you'll automatically join your organisation's workspace and can start using CF0 immediately.
+    Once you've signed in, you join the organisation's workspace automatically and can start using cf0 immediately.
   </Step>
 </Steps>
 
 ## Two-factor authentication
 
-CF0 supports two-factor authentication (2FA) to add an extra layer of security to your account. You can set up 2FA from your account settings after signing in. Supported methods include authenticator apps (such as Google Authenticator or Authy) and SMS codes.
-
-We recommend enabling 2FA, particularly if your account has admin privileges.
+Two-factor authentication can be enabled at the Clerk-instance level by your organisation's account team. If your firm requires 2FA, you'll be prompted to enrol on first sign-in. The cf0 app itself doesn't expose an in-app 2FA enrolment flow today — contact your cf0 account team if you need 2FA enforced for your org.
 
 ## If you're locked out
 
-If you can't access your account:
-
-- **Forgotten password** — click **Forgot password** on the sign-in page and follow the instructions to reset it via your email address.
-- **Lost access to your 2FA method** — use a backup code if you saved one during setup. If you don't have a backup code, contact your organisation's admin to have your account access reviewed.
+- **Forgotten password** — click **Forgot password** on the sign-in page and follow the email reset flow.
+- **Lost access to 2FA** — use a backup code if you saved one during enrolment. If not, contact your organisation's admin or your cf0 account team to review access.
 - **Invitation link expired** — ask your organisation's admin to send a new invitation.
-- **Removed from an organisation** — contact your admin. If you need to join a different organisation, you'll need a new invitation from that organisation's admin.
+- **Removed from an organisation** — contact your admin. To join a different organisation, you need a new invitation from that org's admin.
 
 <Warning>
-  CF0 support cannot bypass organisation access controls on your behalf. All membership decisions are managed by your organisation's admins.
+cf0 support cannot bypass organisation access controls on your behalf. All membership decisions are managed by your organisation's admins.
 </Warning>
 
 ## API access
 
-If you need to access CF0 programmatically, you obtain a session token from the CF0 web app. See the [API Reference](/api/authentication) for full details on authenticating API requests.
+For programmatic access, see [API → Authentication](/api/authentication). API tokens come from your Clerk session via `window.Clerk.session.getToken()` — there are no separate API keys to manage.

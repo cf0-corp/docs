@@ -5,11 +5,11 @@ description: "The Skills API manages reusable research workflow templates. List 
 
 Skills are reusable research workflow templates stored as Markdown files with YAML frontmatter. When a user types `/skill-name` in the Lab, the AI automatically loads and executes the skill's instructions. The Skills API lets you read, create, update, and delete skills programmatically.
 
-CF0 provides **three skill tiers** with a resolution priority of user → org → system:
+cf0 provides **three skill tiers** with a resolution priority of user → org → system:
 
 | Tier | Description | Who can write |
 |------|-------------|---------------|
-| `system` | Built-in CF0 platform skills (80+) | Read-only for all users |
+| `system` | Built-in cf0 platform workflows — DCF, LBO, comps, IC memos, earnings recaps, and more | Read-only for all users |
 | `org` | Organisation-wide skills | Org admins |
 | `user` | Personal skills | Any user |
 
@@ -187,7 +187,7 @@ curl -X DELETE https://api.cf0.ai/api/skills/quick-earnings-summary \
 POST /api/skills/generate
 ```
 
-Describe a research workflow in plain language and let CF0's AI draft the skill content for you.
+Describe a research workflow in plain language and let cf0's AI draft the skill content for you.
 
 ### Request body
 

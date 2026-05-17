@@ -1,41 +1,63 @@
 ---
-title: "Integrate external tools with CF0"
-description: "Connect external data sources and tools to CF0. The integrations panel is in preview — upload documents now to bring external data into your workspace."
+title: "Integrations"
+description: "Connect cf0 to the tools your firm already uses — Microsoft 365, Google Workspace, Slack, Notion, Granola. Data flows into the brain automatically."
 ---
 
-CF0 can connect to external tools and data sources beyond its built-in 25+ financial feeds. Integrations let you bring data from third-party platforms into your CF0 workspace so Lab can reason over it alongside SEC filings, market data, and earnings transcripts.
+Integrations let your firm's existing tooling feed cf0's brain. Once connected, the brain reads from these sources continuously — so when an analyst asks about a customer in Lab, the answer can pull from the Slack thread last week, the Notion deal page, the Gmail introduction from the founder, alongside the SEC filings.
 
-<Info>
-  The full Integrations settings panel is currently in preview and will be available to all users soon. If you need early access, contact the CF0 team directly.
-</Info>
+This is **layer 01 (Inputs)** of [the stack](/introduction), expanded beyond filings.
 
-## Bringing external data into CF0 today
+## Available integrations
 
-While the integrations UI is being finalised, the primary way to bring your own data into CF0 is by uploading documents directly.
+cf0 ships with five connector groups. Set them up under **Settings → Integrations** (org admin only).
+
+<CardGroup cols={2}>
+  <Card title="Microsoft 365" icon="briefcase">
+    Outlook, OneDrive, SharePoint. Firm email and shared documents become searchable by the brain.
+  </Card>
+  <Card title="Google Workspace" icon="folder">
+    Gmail and Google Drive. Customer comms and shared docs flow into the brain.
+  </Card>
+  <Card title="Slack" icon="message-square">
+    Channels you opt in to. Decisions, deal threads, and customer signal become structured context.
+  </Card>
+  <Card title="Notion" icon="book-open">
+    Internal wikis, CRM pages, deal memos. The brain reads page content and tracks updates.
+  </Card>
+  <Card title="Granola" icon="mic">
+    Meeting transcripts. Calls with prospects, customers, and your team become queryable.
+  </Card>
+</CardGroup>
+
+## Connect an integration
 
 <Steps>
-  <Step title="Go to the Documents page">
-    Click **Documents** in the left navigation bar to open your workspace document library.
+  <Step title="Open Settings → Integrations">
+    Org admin role required. Non-admins see the catalogue but cannot connect new sources.
   </Step>
-  <Step title="Upload your files">
-    Drag and drop files onto the upload area, or click **Upload** to browse your local files. CF0 supports:
-    - **PDF** — research reports, pitch decks, agreements, scanned documents
-    - **CSV** — financial models, data exports, cap tables
-    - **XLSX** — Excel workbooks and structured data files
+  <Step title="Click Connect on a toolkit">
+    Each connector opens its OAuth flow in a new window. Sign in with the relevant account and grant cf0 the requested scopes.
   </Step>
-  <Step title="Ask Lab about your documents">
-    Once uploaded, your documents are immediately available as context in Lab. Ask questions like *"Summarise this pitch deck"* or *"What are the key terms in this agreement?"* and Lab will reference your uploaded file.
+  <Step title="Choose scope">
+    For tools with granular access (Slack channels, Notion workspaces, Google Drive folders), pick exactly what cf0 should read. Default to "least privilege" — start narrow, expand once you trust the surface.
+  </Step>
+  <Step title="Verify ingestion">
+    Once connected, cf0 begins reading the source within minutes. Watch the **Inputs activity** indicator at the bottom of the Integrations panel for first-pass progress.
   </Step>
 </Steps>
 
-<Tip>
-  Upload a company's investor presentation or a proprietary data export alongside CF0's live data sources to get analysis that combines both external and structured financial data in a single Lab response.
-</Tip>
+## What the brain does with integration data
 
-## What's coming in integrations
+Connector data is structured and added to the brain alongside SEC filings, transcripts, and uploaded documents. From an analyst's perspective in Lab, there is no separation — a question like *"What did the founder of $TICKER say about Q4 guidance, and how does it compare to the public 10-Q?"* can pull from a Granola meeting transcript, a Slack thread, and the actual filing in a single answer.
 
-The integrations panel will let you connect CF0 to third-party tools via OAuth, so data from those platforms flows into your workspace automatically — without manual uploads. Integration setup will be done through **Settings → Integrations** once the panel is live.
+The brain tracks **provenance** for every fact: which integration it came from, when it was last updated, and the conversation or document it originated in.
 
-<Note>
-  When the Integrations panel launches, any connections you set up will be scoped to your organisation. All members of your org will be able to use connected data sources in Lab.
-</Note>
+## Scope and privacy
+
+- **Org-scoped**: connections live at the organisation level. Every member of the org sees data from connected sources in Lab (subject to your firm's own access policies in the underlying tool).
+- **No training**: cf0 never uses your connected data to train any model.
+- **Revocable**: disconnect any integration at any time from the same panel. The brain stops reading from that source immediately; previously ingested data is purged on the next sync cycle.
+
+## Documents path (for content not in a connector)
+
+If you have material that doesn't live in one of the supported tools — a pitch deck, a one-off PDF, a CSV from your data vendor — upload it directly via [Documents](/features/documents). It joins the same brain context as connector data.

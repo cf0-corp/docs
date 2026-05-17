@@ -1,26 +1,26 @@
 ---
-title: "Authenticate CF0 API requests"
-description: "CF0 uses Bearer token authentication. Pass your session JWT in the Authorization header on every API request. Tokens are scoped to your organisation."
+title: "Authenticate cf0 API requests"
+description: "cf0 uses Bearer token authentication. Pass your session JWT in the Authorization header on every API request. Tokens are scoped to your organisation."
 ---
 
-All CF0 API endpoints require authentication. CF0 uses Bearer token authentication — you pass your session JWT in the `Authorization` header with every request.
+All cf0 API endpoints require authentication. cf0 uses Bearer token authentication — you pass your session JWT in the `Authorization` header with every request.
 
 ## Getting your token
 
-CF0 uses short-lived JWTs for authentication. Your session token is issued when you sign in and automatically renewed by the browser.
+cf0 uses short-lived JWTs for authentication. Your session token is issued when you sign in and automatically renewed by the browser.
 
 <Steps>
-  <Step title="Sign in to CF0">
+  <Step title="Sign in to cf0">
     Go to [cf0.ai](https://cf0.ai) and sign in with your account credentials.
   </Step>
   <Step title="Retrieve the session token">
-    Open your browser's developer tools, go to **Application → Cookies**, and find the `__session` cookie — that is your session JWT.
-
-    Alternatively, retrieve it programmatically from the CF0 web app:
+    Retrieve a fresh API token programmatically from the cf0 web app via the Clerk SDK:
 
     ```javascript
     const token = await window.Clerk.session.getToken();
     ```
+
+    This returns a short-lived JWT scoped to your active organisation. Always call `getToken()` immediately before each request rather than caching the result — tokens expire on the order of a minute and Clerk handles refresh automatically.
   </Step>
   <Step title="Pass the token in the Authorization header">
     Include the token on every API request:
@@ -117,4 +117,6 @@ Keep your session token secret. Anyone who holds your token can make requests on
 
 ## Token expiry
 
-Clerk session tokens expire after a short window (typically 1 minute for JWTs; Clerk renews them automatically in the browser). For long-running integrations, re-fetch the token from your Clerk session before it expires. The `POST /api/auth/session` endpoint verifies the current token and can be used to test freshness.
+Clerk session tokens are short-lived (on the order of a minute) and refreshed automatically by the Clerk SDK in the browser. For long-running server-side integrations, call `getToken()` immediately before each request rather than caching — caching invites silent 401s.
+
+The `POST /api/auth/session` endpoint verifies the current token's freshness if you need to check explicitly.

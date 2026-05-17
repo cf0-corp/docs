@@ -1,14 +1,14 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "luma",
-  "name": "CF0",
-  "description": "AI-native financial research and due diligence platform for family offices and hedge funds.",
+  "name": "cf0",
+  "description": "The financial intelligence stack. Inputs feed a brain that feeds Lab — the place analysts ask anything and ship cited reports in minutes.",
   "colors": {
-    "primary": "#7c7c7c",
-    "light": "#050505",
-    "dark": "#dddddd"
+    "primary": "#1d4ed8",
+    "light": "#2563eb",
+    "dark": "#172554"
   },
-  "favicon": "https://media.brand.dev/a6dbc89b-dbf3-45cc-9a69-324c65172dfe.jpg",
+  "favicon": "/images/favicon.png",
   "icons": {
     "library": "lucide"
   },
@@ -19,15 +19,29 @@
     "options": ["copy", "view", "assistant", "mcp", "add-mcp"]
   },
   "logo": {
-    "light": "https://media.brand.dev/e7b19f7b-ae5e-4051-b240-bd166302c0bd.svg",
-    "dark": "https://media.brand.dev/e7b19f7b-ae5e-4051-b240-bd166302c0bd.svg"
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [],
+    "links": [
+      {
+        "label": "App",
+        "href": "https://cf0.ai"
+      }
+    ],
     "primary": {
       "type": "button",
       "label": "Sign in",
       "href": "https://cf0.ai"
+    }
+  },
+  "seo": {
+    "metatags": {
+      "og:image": "/images/cf0-og.png",
+      "og:site_name": "cf0 docs",
+      "twitter:card": "summary_large_image",
+      "twitter:image": "/images/cf0-og.png",
+      "twitter:site": "@cf0ai"
     }
   },
   "footer": {
@@ -41,7 +55,7 @@
         "tab": "Docs",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Get started",
             "pages": [
               "introduction",
               "quickstart",
@@ -49,7 +63,7 @@
             ]
           },
           {
-            "group": "Core Features",
+            "group": "Core features",
             "pages": [
               "features/lab",
               "features/reports",
@@ -67,7 +81,7 @@
             ]
           },
           {
-            "group": "Data & Sources",
+            "group": "Data & sources",
             "pages": [
               "data/overview",
               "data/sec-filings",
@@ -75,7 +89,7 @@
             ]
           },
           {
-            "group": "Security & Privacy",
+            "group": "Security & privacy",
             "pages": [
               "security/overview",
               "security/authentication"
@@ -84,7 +98,7 @@
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "API reference",
         "groups": [
           {
             "group": "Overview",

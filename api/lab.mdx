@@ -3,7 +3,7 @@ title: "Lab API: start and manage research sessions"
 description: "The Lab API streams AI-powered research conversations over SSE. Start sessions, manage threads, export audit trails, and browse workspace files."
 ---
 
-The Lab API is the core of CF0's research platform. It lets you start streaming AI research sessions, manage conversation threads, and retrieve message history. The primary chat endpoint uses [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) to stream incremental responses.
+The Lab API is the core of cf0's research platform. It lets you start streaming AI research sessions, manage conversation threads, and retrieve message history. The primary chat endpoint uses [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) to stream incremental responses.
 
 All Lab endpoints are prefixed with `/api/lab`.
 
@@ -41,7 +41,7 @@ Rate limit: 12 requests per minute per user. Requests over the limit return HTTP
 </ParamField>
 
 <ParamField body="budget_cap" type="number">
-  Maximum spend in USD for this query. Range: 0.01–10.0. Defaults to 6.0.
+  Maximum spend in USD for this query. Range: 0.01–10.0. Defaults to `null` — the server applies its own default cap (currently around $1.50 per query for standard effort).
 </ParamField>
 
 <ParamField body="disabled_tools" type="array">
@@ -221,7 +221,21 @@ curl "https://api.cf0.ai/api/lab/threads/jr-abc123/audit-trail?format=pdf" \
 GET /api/lab/filesystem
 ```
 
-Lists the files in your CF0 workspace: uploads, artifacts, skills, memories, and sessions. Returns a response with `private` (your personal files) and `shared` (org-shared files) sections.
+Lists the files visible to your cf0 workspace — uploads, artifacts, skills, memories, sessions.
+
+### Response
+
+<ResponseField name="private" type="object">
+  Your personal files and folders (uploads, threads, memory).
+</ResponseField>
+
+<ResponseField name="shared" type="object">
+  Files shared at the organisation level (shared documents, org skills).
+</ResponseField>
+
+<ResponseField name="system_skills" type="object">
+  Map of system-skill identifiers to their metadata. Useful for discovering which slash-command Skills are available in your workspace without calling `/api/skills` separately.
+</ResponseField>
 
 ---
 

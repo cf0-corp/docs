@@ -1,37 +1,55 @@
 ---
-title: "CF0: AI-native research for family offices and funds"
-description: "CF0 is an AI research platform for investment teams — query 25+ live sources, generate PDF reports, and trace every figure to its source filing in minutes."
+title: "cf0 — the financial intelligence stack"
+description: "Inputs feed a brain that feeds Lab. cf0 reads everything your firm reads, remembers it, and lets analysts ask anything in plain English — with citations on every number."
 ---
 
-CF0 is an AI-native financial research platform built for family offices and hedge funds. It pulls from 25+ live data sources — including a proprietary SEC filing pipeline spanning 30 years — and lets your analysts ask complex research questions in plain language, generate branded PDF reports, and trace every number back to its original source. What used to take a full day of data gathering now takes minutes.
+cf0 is **the financial intelligence stack**. Three layers, one moat.
 
-## Key features
+**Inputs** read everything your firm reads: SEC filings, earnings transcripts, customer comms, internal docs. **Brain** compounds those inputs into a wiki that knows your customers, deals, and decisions — and remembers across sessions. **Lab** is where you ask it anything, with agents pulling from the brain and on-demand UI rendering the answer in seconds.
 
-<CardGroup cols={2}>
-  <Card title="Lab" icon="message-square" href="/features/lab">
-    AI-powered chat for financial research. Ask questions across your data sources, get back structured tables, charts, and citations — all in one conversation thread.
+Each layer is a defensible product on its own. The compounding effect — Inputs feeding Brain feeding Lab that ships cited reports — is the part competitors can't replicate by gluing tools together.
+
+## The three layers
+
+<CardGroup cols={3}>
+  <Card title="01 · Inputs" icon="inbox">
+    SEC EDGAR (10-Ks, 10-Qs, 8-Ks, S-1s, proxies), earnings transcripts, customer comms via Slack/Gmail/HubSpot, internal docs in Notion/Drive, news and research feeds. Everything your firm reads or writes about a name flows in, structured.
   </Card>
-  <Card title="Reports" icon="file-text" href="/features/reports">
-    Generate branded equity research PDFs with charts, financial models, and inline citations. Export or share directly with your team.
+  <Card title="02 · Brain" icon="brain">
+    A world-model that compounds. Tracks companies, people, deals, decisions and their rationale, citations, warnings, suggestions, activity, and provenance. Each new source sharpens the next answer.
   </Card>
-  <Card title="Filings" icon="search" href="/features/filings">
-    Browse and search 30 years of SEC filings. Jump to specific sections, run full-text search, and pull structured financials directly into Lab.
-  </Card>
-  <Card title="Documents" icon="upload" href="/features/documents">
-    Upload PDFs, spreadsheets, and images. CF0 parses and indexes them so you can ask questions across your own documents alongside public data.
-  </Card>
-  <Card title="Skills" icon="zap" href="/features/skills">
-    Reusable prompt templates for your firm's recurring workflows. Run a skill with a single click and share it across your whole team.
+  <Card title="03 · Lab" icon="message-square">
+    Ask it anything. Agents pull from the brain, generate the on-demand UI matching the question, and ship cited reports your principals can read in 30 seconds. No dashboards. No templates.
   </Card>
 </CardGroup>
 
-## How it works
+## What ships from Lab
 
-1. **Ask a question in Lab.** Type a research question in plain language — for example, "Compare NVDA and AMD gross margins over the last four quarters." CF0 pulls data from the relevant sources, runs the analysis, and renders the results as structured components.
-2. **Verify every number.** Each data point links back to its source — the exact filing, page, and section. Click any figure to see where it came from.
-3. **Generate a report.** When you're ready to share findings, generate a branded PDF report directly from your Lab session. CF0 assembles the narrative, charts, and citations automatically.
-4. **Save workflows as Skills.** Encode any repeatable research process as a skill so your whole team can run it in one click.
+<CardGroup cols={2}>
+  <Card title="Lab" icon="message-square" href="/features/lab">
+    AI chat for financial research. Ask in plain English, get back structured tables, charts, and citations — all in one streaming thread.
+  </Card>
+  <Card title="Reports" icon="file-text" href="/features/reports">
+    Branded equity research PDFs with charts, financial models, and inline citations. Generated from a Lab thread; editable in place; exportable for distribution.
+  </Card>
+  <Card title="Filings" icon="search" href="/features/filings">
+    Deep SEC coverage with structured 10-K / 10-Q / 8-K extraction, plus directory data across the major global markets your team reaches into. Jump to the exact section a figure came from.
+  </Card>
+  <Card title="Documents" icon="upload" href="/features/documents">
+    Drop in PDFs, spreadsheets, decks, images. cf0 parses and indexes them so Lab can answer questions across your private docs alongside public data.
+  </Card>
+  <Card title="Skills" icon="zap" href="/features/skills">
+    Reusable prompt workflows for your firm's recurring research moves — DCF, comps, earnings recaps, IC memos. Invoke with `/skill-name` in Lab.
+  </Card>
+</CardGroup>
+
+## How a research session runs
+
+1. **Ask in Lab.** Type a question in plain English — for example, *"Compare NVDA and AMD gross margin trajectory over the last eight quarters."* Lab routes the query through the brain, pulls the relevant filings and transcripts, and streams structured output: chart, table, narrative.
+2. **Verify every number.** Each figure links back to its source — the exact filing, page, and section. Click to inspect provenance directly.
+3. **Generate a report.** When the thread is tight enough to share, ask Lab to generate a report. cf0 assembles a branded PDF with sections, charts, and inline citations.
+4. **Encode it as a Skill.** If the workflow is one you'll run again, save it as a Skill. Your whole team can run it with one slash-command.
 
 <Note>
-CF0 never shares your data across organisations and never uses your research to train AI models. Access controls are enforced at the organisation level — your data stays within your workspace.
+cf0 never trains on your data and never shares it across organisations. Filings, documents, and reports are scoped to your org workspace. Access controls run at the org level via Clerk.
 </Note>
