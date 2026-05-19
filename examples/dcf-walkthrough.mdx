@@ -1,0 +1,76 @@
+---
+title: "Run a DCF"
+description: "Build a discounted-cash-flow valuation on a name in one Lab thread, with the WACC built from live market data and a clarifying gate on the assumptions that move the answer."
+---
+
+A standard analyst task: *"Build a DCF on NVDA. Use the last five years of 10-Ks for the historical, current consensus for forward revenue, and a 10% / 7% / 4% three-stage growth schedule. WACC from market data. Show Bear / Base / Bull fair value."*
+
+In Excel that's a half-day with manual data pulls. In cf0 it's three prompts.
+
+## Step 1 — open Lab and ask
+
+Open **Lab** from the left sidebar. Either type the question in plain English, or invoke the system Skill directly:
+
+```
+/dcf NVDA
+```
+
+The Skill runs but cf0 doesn't just ship a number — it pauses on the assumptions that change the answer the most.
+
+<Frame caption="Lab — NVDA DCF with WACC build, three-stage growth schedule, and Bear / Base / Bull fair-value cards. Click any number to see the source.">
+  <img src="/images/lab-nvda-dcf-dark.jpg" alt="cf0 Lab — NVDA DCF analysis" />
+</Frame>
+
+## Step 2 — review the clarifying gates
+
+For a DCF, the inputs that swing fair value most are **WACC**, **terminal growth**, and **forward revenue growth**. cf0 builds defaults from market data and consensus, then asks before committing:
+
+- **WACC** — built from current risk-free rate, equity risk premium, and the company's beta (with the build shown alongside).
+- **Forward revenue growth** — three-stage default with the option to override per stage.
+- **Terminal multiple** — sector median by default; override if your thesis differs.
+
+The model **pauses** at this point. Accept the defaults to keep going, or override and re-run. The output isn't generated until you've signed off on the inputs.
+
+## Step 3 — read the fair-value range
+
+Once the assumptions are committed, Lab streams three cards: **Bear**, **Base**, **Bull**. Each shows the implied fair value, the upside / downside to current market price, and the assumption it's most sensitive to.
+
+Below the cards: the **WACC build & assumptions** card (auditable), the **revenue projection table** with QoQ and YoY deltas, and a **sensitivity matrix** of fair value across WACC × terminal-growth pairs.
+
+Every number cites the underlying filing or data feed. Click any figure to open the source.
+
+## Step 4 — generate a one-pager for the PM
+
+In the same thread:
+
+> *Generate a one-page DCF brief for the PM. Lead with the Bull / Base / Bear range, include the WACC build, the assumptions table, and the sensitivity matrix. Flag the two assumptions the answer is most sensitive to.*
+
+cf0 reads the conversation and drafts the report. Edit any section inline before exporting the PDF. The charts and tables aren't editable — they reflect the live thread data — but the prose is. See [Reports](/features/reports) for the full editor.
+
+## Step 5 — save the workflow as a Skill
+
+If "run a DCF and ship a one-pager" is recurring for your firm, save the thread as a custom Skill scoped to your assumptions:
+
+```
+/save-skill --name firm-dcf --share-org
+```
+
+Now anyone on the team runs the same workflow — same WACC build, same three-stage schedule, same one-pager template — with a slash command and a ticker:
+
+```
+/firm-dcf AAPL
+```
+
+## Layered back to the stack
+
+This example touched every layer of [the stack](/introduction):
+
+- **Data** — NVDA 10-Ks, consensus revenue, current market data feed.
+- **Brain** — the world-model that knew which filings to pull, which beta to apply, which sector multiple to anchor.
+- **Lab** — the surface where the question came in, the WACC build that rendered live, the report draft.
+
+Skills encode the workflow for next time. Citations trace every number to source. Reports go out in your firm's brand template.
+
+## Next walkthrough
+
+→ [Build an IC memo](/examples/ic-memo)

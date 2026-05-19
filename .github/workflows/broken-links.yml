@@ -1,0 +1,25 @@
+name: Broken links
+
+on:
+  pull_request:
+    paths:
+      - "**/*.mdx"
+      - "docs.json"
+  push:
+    branches: [main]
+
+jobs:
+  broken-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Mintlify CLI
+        run: npm install -g mint
+
+      - name: Check broken links
+        run: mint broken-links

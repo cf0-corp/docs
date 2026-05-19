@@ -130,7 +130,8 @@
             "group": "Security & privacy",
             "pages": [
               "security/overview",
-              "security/authentication"
+              "security/authentication",
+              "security/citations-and-audit"
             ]
           }
         ]
@@ -139,7 +140,9 @@
         "tab": "Examples",
         "icon": "compass",
         "pages": [
-          "examples/head-to-head"
+          "examples/head-to-head",
+          "examples/dcf-walkthrough",
+          "examples/ic-memo"
         ]
       },
       {

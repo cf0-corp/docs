@@ -1,0 +1,72 @@
+---
+title: "Build an IC memo"
+description: "Compile an investment-committee memo on a name in one Lab thread — thesis, financials, risks, valuation, and recommendation — ready for the morning meeting."
+---
+
+The IC memo is the unit of communication between an analyst and the committee. A good one takes a day. A bad one takes a week and still gets sent back. cf0's IC memo Skill compiles the standard sections from the same data your team would have pulled by hand.
+
+> *"Build an IC memo on NIO. Bull case is autonomy + China EV penetration. Bear case is balance-sheet pressure and competition from BYD. I want the full thesis, last-eight-quarter financials, sector comps, base-case DCF, key risks, and a recommendation."*
+
+## Step 1 — invoke the IC memo Skill
+
+Open **Lab**. Type:
+
+```
+/ic-memo NIO
+```
+
+Or pass the thesis inline so the agent frames the bull and bear from your view:
+
+```
+/ic-memo NIO --bull "autonomy and China EV penetration" --bear "balance-sheet pressure and BYD competition"
+```
+
+cf0 pulls the historical filings (10-Ks, 10-Qs, recent 8-Ks), the most recent earnings transcript, sector peers (BYD, LI, XPEV, TSLA), and the consensus dataset. It checks the brain for anything your team has previously noted on the name — past Lab threads, uploaded research, customer comms in the integrations you've connected.
+
+## Step 2 — review the draft sections
+
+Lab assembles the memo in the artifact panel as a draft report. Standard sections:
+
+| Section | What it contains |
+|---|---|
+| **Thesis** | One-paragraph bull, one-paragraph bear, framed from the cues you gave |
+| **Company snapshot** | Sector, market cap, revenue, key metrics tile |
+| **Financials** | Eight-quarter revenue / margin / FCF table with QoQ and YoY deltas |
+| **Sector comps** | Peers table with valuation multiples, growth, and margin |
+| **Valuation** | Base-case DCF with WACC build (or pull from a prior `/dcf` thread) |
+| **Key risks** | Top five risks with citation links to the relevant 10-K risk factors |
+| **Catalysts** | Upcoming events (earnings dates, regulatory filings, sector reads) |
+| **Recommendation** | The agent's read; flag if it disagrees with the thesis cues |
+
+Every figure cites the source — click any number to open the underlying 10-Q section or transcript paragraph. See [Citations and audit trail](/security/citations-and-audit) for how provenance is generated and exported.
+
+<Frame caption="A cf0 IC-style cover page in the firm's brand template. The report editor lets you tweak any section inline before exporting the PDF.">
+  <img src="/images/reports-nio-cover.jpg" alt="cf0 IC memo cover — NIO comprehensive investment analysis" />
+</Frame>
+
+## Step 3 — edit, sign off, export
+
+The draft opens in the inline editor. Each section can be edited as prose. Charts and tables pull live from the Lab thread and aren't editable — change them by changing the thread.
+
+Click **Export PDF**. The output renders in your firm's brand template — logo, colours, font, footer — configured under [Settings → Brand](/workspace/settings#brand).
+
+## Step 4 — bring the thread to committee
+
+For the meeting, two practical moves:
+
+- **Open the audit trail** alongside the PDF. The committee gets the polished memo; you keep the trail with every source link in case anyone challenges a number. See [Citations and audit trail](/security/citations-and-audit#exporting-an-audit-trail).
+- **Drop the Lab thread URL** into the committee invite. Members with cf0 access can re-run any cell in the thread or follow up — "what would the recommendation be if WACC were 12%?" — without you in the room.
+
+## Step 5 — encode your firm's IC template
+
+If your committee has a specific section structure (some include a sustainability section, some require a position-sizing recommendation), encode it once as an org Skill:
+
+```
+/save-skill --name firm-ic-memo --share-org --template firm-memo-template
+```
+
+Future memos use your committee's structure verbatim. See [Skills](/features/skills) and [Settings → Brand](/workspace/settings#brand) for templates.
+
+## Next walkthrough
+
+→ [Run a head-to-head](/examples/head-to-head) · [Run a DCF](/examples/dcf-walkthrough)
