@@ -37,28 +37,16 @@ Lab loads the Skill's prompt template, applies any variable substitutions, and s
 ## Create a custom Skill
 
 <Steps>
-  <Step title="Open Skills">
-    Click **Skills** in the left sidebar to open the Skills library.
-  </Step>
-  <Step title="Click New skill">
-    Click the **+ New skill** button in the top-right corner of the Skills panel.
-  </Step>
-  <Step title="Name your Skill">
-    Enter a display name and an optional description. The Skill's slug (used for the `/skill-name` invocation) is generated automatically from the display name.
+  <Step title="Open Skills, click + New skill">
+    The slug used for `/skill-name` invocation is generated from the display name.
   </Step>
   <Step title="Write the prompt template">
-    Write the prompt that Lab will run when this Skill is invoked. You can include plain instructions, structured output requests, or variable placeholders.
-
-    If you are not sure how to write the prompt, describe what the Skill should do and click **Generate with AI** — cf0 will draft the prompt template from your description.
+    Plain instructions, structured-output requests, and `{{variable}}` placeholders all work. Or describe the workflow in English and click **Generate with AI** — cf0 drafts the prompt for you to edit.
   </Step>
   <Step title="Save">
-    Click **Save**. Your Skill appears in the Skills list under **Mine** and is immediately available in Lab.
+    Your Skill appears under **Mine** and is immediately available in Lab.
   </Step>
 </Steps>
-
-<Tip>
-  Use the **Generate with AI** button to let cf0 write the prompt from a plain-English description of the workflow. You can then edit the generated prompt before saving.
-</Tip>
 
 ## Edit or delete a Skill
 
