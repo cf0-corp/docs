@@ -7,6 +7,8 @@ The Reports API provides read and write access to the research reports generated
 
 All Reports endpoints are prefixed with `/api/reports`.
 
+<Snippet file="api-auth-header.mdx" />
+
 <Note>
 All reports endpoints require organisation membership. Requests without a valid `org_id` in the token return `HTTP 403`.
 </Note>
