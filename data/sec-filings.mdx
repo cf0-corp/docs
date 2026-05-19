@@ -8,7 +8,7 @@ keywords: ["SEC", "EDGAR", "filings", "global filings", "ingestion pipeline", "s
 cf0 runs a proprietary pipeline on top of SEC EDGAR and nine international regulators. Filings are parsed into discrete sections; financial figures are extracted into structured tables so Lab can reason over them precisely and cite them exactly. You aren't reading PDFs — you're reading a queryable graph of filings, sections, and figures.
 
 ```mermaid
-%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#1d4ed8", "primaryTextColor": "#ffffff", "primaryBorderColor": "#172554", "lineColor": "#71717a", "fontFamily": "Inter Tight, -apple-system, sans-serif", "fontSize": "13px"}}}%%
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#1d4ed8", "primaryTextColor": "#ffffff", "primaryBorderColor": "#172554", "secondaryColor": "#ffffff", "tertiaryColor": "#fafafa", "lineColor": "#52525b", "textColor": "#18181b", "mainBkg": "#1d4ed8", "secondBkg": "#ffffff", "clusterBkg": "transparent", "clusterBorder": "#e4e4e7", "edgeLabelBackground": "#ffffff", "labelTextColor": "#18181b", "actorBkg": "#1d4ed8", "actorBorder": "#172554", "actorTextColor": "#ffffff", "actorLineColor": "#52525b", "signalColor": "#52525b", "signalTextColor": "#18181b", "labelBoxBkgColor": "#1d4ed8", "labelBoxBorderColor": "#172554", "noteBkgColor": "#fafafa", "noteTextColor": "#18181b", "noteBorderColor": "#e4e4e7", "messageTextColor": "#18181b", "sequenceNumberColor": "#ffffff", "fontFamily": "Inter Tight, -apple-system, sans-serif", "fontSize": "13px"}}}%%
 graph LR
   E1[("SEC EDGAR")] --> P["cf0 pipeline<br/>parse + section split"]
   E2[("9 global regulators<br/>FCA · SEDAR+ · EDINET · DART<br/>SEBI · ASX · HKEX · CNINFO · CVM")] --> P
