@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "luma",
   "name": "cf0",
-  "description": "The financial intelligence stack. Inputs feed a brain that feeds Lab — the place analysts ask anything and ship cited reports in minutes.",
+  "description": "The financial intelligence stack. Data feeds a brain that feeds Lab — the place analysts ask anything and ship cited reports in minutes.",
   "colors": {
     "primary": "#1d4ed8",
     "light": "#2563eb",
@@ -15,8 +15,15 @@
   "styling": {
     "eyebrows": "breadcrumbs"
   },
+  "appearance": {
+    "default": "system",
+    "strict": false
+  },
   "contextual": {
-    "options": ["copy", "view", "assistant", "mcp", "add-mcp"]
+    "options": ["copy", "view", "claude", "chatgpt", "cursor", "mcp", "add-mcp"]
+  },
+  "metadata": {
+    "timestamp": true
   },
   "logo": {
     "light": "/logo/light.png",
@@ -39,13 +46,30 @@
       "href": "https://cf0.ai"
     }
   },
+  "search": {
+    "prompt": "Search the cf0 docs..."
+  },
   "seo": {
+    "indexing": "all",
     "metatags": {
       "og:image": "/images/cf0-og.png",
       "og:site_name": "cf0 docs",
       "twitter:card": "summary_large_image",
       "twitter:image": "/images/cf0-og.png",
       "twitter:site": "@cf0ai"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/examples/head-to-head-comparison",
+      "destination": "/examples/head-to-head",
+      "permanent": true
+    }
+  ],
+  "errors": {
+    "404": {
+      "title": "Page not found",
+      "description": "The page you're looking for has moved or doesn't exist. Try searching, or head back to the docs home."
     }
   },
   "footer": {
@@ -59,7 +83,7 @@
         {
           "anchor": "Status",
           "icon": "activity",
-          "href": "https://cf0.ai"
+          "href": "https://status.cf0.ai"
         }
       ]
     },
@@ -115,7 +139,7 @@
         "tab": "Examples",
         "icon": "compass",
         "pages": [
-          "examples/head-to-head-comparison"
+          "examples/head-to-head"
         ]
       },
       {

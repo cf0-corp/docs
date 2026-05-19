@@ -1,6 +1,6 @@
 ---
-title: "SEC filings — 30 years of structured financials"
-description: "cf0 runs its own pipeline on SEC EDGAR — structured 10-K, 10-Q, and 8-K sections with financials cited to the exact page and line."
+title: "SEC filings"
+description: "cf0 runs its own pipeline on top of SEC EDGAR. Filings come in as structured sections, with extracted financials cited back to the exact page and line they came from."
 ---
 
 cf0 runs a proprietary pipeline on top of SEC EDGAR. Filings are parsed into discrete sections; financial figures are extracted into structured tables so Lab can reason over them precisely and cite them exactly. You aren't reading PDFs — you're reading a queryable graph of filings, sections, and figures.
@@ -8,8 +8,8 @@ cf0 runs a proprietary pipeline on top of SEC EDGAR. Filings are parsed into dis
 ## What's available
 
 <CardGroup cols={2}>
-  <Card title="30 years of history" icon="calendar">
-    Annual reports, quarterly filings, prospectuses, proxies — going back three decades, indexed and searchable.
+  <Card title="On-demand ingestion" icon="calendar">
+    Recent annual reports, quarterly filings, prospectuses, and proxies are parsed on demand. Names not yet in the index can be ingested in-session from EDGAR.
   </Card>
   <Card title="Deep US coverage" icon="building">
     Full SEC EDGAR universe with structured extraction. International filings flow in through directory adapters across the major global markets your team reaches into.
