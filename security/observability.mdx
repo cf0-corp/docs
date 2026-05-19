@@ -18,6 +18,56 @@ Every Lab turn is fully traced. When you ask a question, cf0 captures the system
 
 cf0 tracks per-agent token usage, tool latency, and rate-limit events. Optimisation decisions are data-driven, not anecdotal.
 
+## What a trace looks like
+
+A single Lab turn captures the tools the model could see, the calls it made, and the bytes each call returned. Click to expand a realistic example:
+
+<Expandable title="Trace payload — Lab turn invoking the DCF skill">
+```json
+{
+  "thread_id": "jr-nvda-q3-readthrough",
+  "turn": 4,
+  "timestamp": "2026-05-19T13:41:22Z",
+  "model": "us.anthropic.claude-sonnet-4-6",
+  "system_prompt_tokens": 1820,
+  "tools_available": [
+    "filings.read", "filings.search",
+    "consensus.get_revenue", "consensus.get_eps",
+    "templates.dcf_three_stage", "templates.wacc_build",
+    "charts.timeseries", "charts.sensitivity_tornado"
+  ],
+  "tool_calls": [
+    {
+      "name": "filings.read",
+      "args": { "ticker": "NVDA", "form": "10-K", "section": "Item 7" },
+      "result_bytes": 8412,
+      "latency_ms": 248
+    },
+    {
+      "name": "consensus.get_revenue",
+      "args": { "ticker": "NVDA", "periods": "FY26-FY28" },
+      "result_bytes": 612,
+      "latency_ms": 87
+    },
+    {
+      "name": "templates.dcf_three_stage",
+      "args": { "ticker": "NVDA", "wacc": 0.092, "stages": [0.10, 0.07, 0.04] },
+      "result_bytes": 2104,
+      "latency_ms": 134
+    }
+  ],
+  "model_output_tokens": 1247,
+  "render_calls": [
+    { "component": "fair_value_cards", "variant": "bear_base_bull" },
+    { "component": "sensitivity_tornado", "inputs": 5 }
+  ],
+  "rate_limit": { "remaining_rpm": 9, "reset_in_s": 41 }
+}
+```
+</Expandable>
+
+In the trace above, **every figure that ended up on screen can be walked back to one specific tool call** — `filings.read` for the MD&A passage, `consensus.get_revenue` for the forward projections, `templates.dcf_three_stage` for the fair-value math. That's the audit chain.
+
 ## What you can do with it
 
 - **As an analyst** — open the Trace panel from any thread to see exactly what the model read before it answered.
