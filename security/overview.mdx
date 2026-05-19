@@ -14,7 +14,7 @@ For an analyst at a regulated firm to put their name on a cf0-generated report, 
     Every Lab turn fully traced — system prompts, tools, model I/O, render output. Visible to engineers and analysts.
   </Card>
   <Card title="Guardrails" icon="shield-check" href="/security/guardrails">
-    Python computes the numbers. Sandboxes isolate code. Schemas validate every output. Missing inputs refuse to be fabricated.
+    Deterministic code computes the numbers. Sandboxes isolate execution. Schemas validate every output. Missing inputs refuse to be fabricated.
   </Card>
   <Card title="Citations and audit trail" icon="link" href="/security/citations-and-audit">
     Every figure traces to its source. Threads export as compliance-ready audit trails.
@@ -25,10 +25,10 @@ For an analyst at a regulated firm to put their name on a cf0-generated report, 
 
 | Concern | cf0's answer |
 |---|---|
-| "Where does my data live?" | AWS S3 (canonical record), inside US-East-1. Inference inside AWS Bedrock. |
-| "Who else touches it?" | Clerk, Temporal, Vercel, Tinybird, Langfuse, Pinecone, Anthropic via Bedrock — [full list](/security/data-governance#sub-processors). |
+| "Where does my data live?" | Immutable storage as the canonical record, US region. AI inference inside cf0's cloud perimeter. |
+| "Who else touches it?" | A curated set of sub-processors covering identity, infrastructure, AI inference, and observability — see the [categories](/security/data-governance#sub-processors). The full vendor list is disclosed under the DPA. |
 | "Will it train on my data?" | No. Customer threads, documents, and reports never enter a training set. |
-| "Can I trust the numbers?" | Math runs in Python templates, not LLM inference. Outputs are Pydantic-validated. |
+| "Can I trust the numbers?" | Math runs in deterministic code templates, not AI inference. Outputs pass through schema validation before they reach storage or the UI. |
 | "Can I audit a report?" | Every figure has a numbered footnote linking to the Sources Table; threads export as compliance-ready audit trails. |
 | "What if a number is missing?" | cf0 surfaces the gap rather than inventing it. See the [refuse-to-fabricate doctrine](/security/guardrails#refuse-to-fabricate). |
 | "What about hallucinations?" | Numbers are sandbox-computed. Prose can still drift — citations make every claim traceable and challengeable. |

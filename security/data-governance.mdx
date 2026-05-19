@@ -1,43 +1,43 @@
 ---
 title: "Data governance"
-description: "Where your firm's data lives, what cf0 stores, what it doesn't, and which sub-processors touch each piece."
-keywords: ["data governance", "storage", "sub-processors", "AWS", "Bedrock", "data residency", "no training", "DPA"]
+description: "Where your firm's data lives, what cf0 stores, what it doesn't, and how sub-processors are scoped and disclosed."
+keywords: ["data governance", "storage", "sub-processors", "data residency", "no training", "DPA", "org isolation"]
 ---
 
-cf0 is built so analysts can put their name on the output. That starts with knowing exactly where data lives and who touches it.
+cf0 is built so analysts can put their name on the output. That starts with knowing exactly where data lives and who can touch it.
 
 ## Storage
 
 | What | Where |
 |---|---|
-| Threads, messages, generated reports | AWS S3 — per-org, immutable artifacts |
-| User accounts, org membership, roles | Clerk + Aurora Serverless v2 Postgres |
-| Uploaded documents | AWS S3 — org-scoped |
-| SEC filings index | AWS S3 + Aurora Postgres |
+| Threads, messages, generated reports | Immutable per-org storage, US region |
+| User accounts, org membership, roles | Enterprise identity layer with a relational record |
+| Uploaded documents | Org-scoped object storage, US region |
+| SEC + global filings index | Structured, queryable index |
 
-Threads and reports live in S3 as the canonical record, not in a database or codebase. Deletion is immediate from the user's view; backing storage is purged on the next sync cycle.
+Threads and reports live as an immutable canonical record, not in a mutable database or codebase. Deletion is immediate from the user's view; backing storage is purged on the next sync cycle.
 
 ## Sub-processors
 
-cf0 currently uses:
+cf0 uses a curated set of sub-processors covering:
 
-- **AWS** (S3, ECS, Bedrock) — primary infrastructure, US-East-1
-- **Clerk** — identity and organisation management
-- **Temporal Cloud** — durable workflow orchestration
-- **Vercel** — frontend hosting
-- **Tinybird** — product analytics
-- **Langfuse** — LLM observability (see [Observability](/security/observability))
-- **Pinecone** — vector retrieval index
-- **Anthropic** (via AWS Bedrock) — Claude Sonnet 4.6 and Haiku 4.5 inference
+- **Cloud infrastructure** — primary compute, storage, and AI inference, US region
+- **Identity and access** — enterprise authentication and organisation management
+- **Durable workflow orchestration** — long-running ingestion and processing
+- **Frontend hosting** — global edge delivery
+- **Product analytics** — usage telemetry (no thread or report content)
+- **AI observability** — model I/O tracing (content stays inside the platform perimeter)
+- **Semantic retrieval** — vector index for source lookup
+- **Data feeds** — read-only ingest of filings, market data, transcripts, and macro data; do not process customer data
 
-For data feeds (read-only ingest into cf0's index): Exa, Finnhub, Alpha Vantage, SnapTrade. These don't process customer data.
+The complete sub-processor list — vendor, role, and data scope per processor — is disclosed under the DPA. Contact [filippo@cf0.ai](mailto:filippo@cf0.ai) to request it.
 
 ## Boundaries
 
 - **Org isolation** — every thread, document, and report is scoped to your organisation. There is no cross-org visibility.
 - **No training on your data** — cf0 never uses customer threads, documents, or reports to train any AI model.
-- **Inference inside AWS** — Claude models run on Bedrock; customer data does not leave AWS to reach a model.
+- **Inference inside the platform perimeter** — AI inference runs inside cf0's cloud infrastructure; customer data does not leave the platform to reach a model.
 
 ## Compliance
 
-For regulated workflows or a DPA, contact [filippo@cf0.ai](mailto:filippo@cf0.ai).
+For regulated workflows, the DPA, or sub-processor disclosure, contact [filippo@cf0.ai](mailto:filippo@cf0.ai).

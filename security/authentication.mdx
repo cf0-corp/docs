@@ -1,10 +1,10 @@
 ---
 title: "Authentication"
-description: "How to sign in to cf0, accept an organisation invitation, and recover access when you're locked out. Authentication runs through Clerk; sessions are scoped to your active organisation."
-keywords: ["sign in", "authentication", "Clerk", "invitation", "password reset", "organisation"]
+description: "How to sign in to cf0, accept an organisation invitation, and recover access when you're locked out. Sessions are scoped to your active organisation."
+keywords: ["sign in", "authentication", "invitation", "password reset", "organisation", "2FA"]
 ---
 
-cf0 authentication runs through [Clerk](https://clerk.com). You sign in at [cf0.ai](https://cf0.ai), and every session is scoped to your active organisation — you only ever see your firm's data.
+cf0 uses enterprise-grade authentication. You sign in at [cf0.ai](https://cf0.ai), and every session is scoped to your active organisation — you only ever see your firm's data.
 
 <Frame caption="The cf0 sign-in surface. Left rail anchors the brand (`Transforms filings, data, and notes into a single research view.`); right rail is the credentials form. Access is invite-only — request access if your firm isn't onboarded yet.">
   <img src="/images/signin-light.png" alt="cf0 sign-in screen — split layout with brand left, credentials form right" />
@@ -36,7 +36,7 @@ When an admin invites you to an organisation, you receive an email with a secure
 
 ## Two-factor authentication
 
-Two-factor authentication can be enabled at the Clerk-instance level by your organisation's account team. If your firm requires 2FA, you'll be prompted to enrol on first sign-in. The cf0 app itself doesn't expose an in-app 2FA enrolment flow today — contact your cf0 account team if you need 2FA enforced for your org.
+Two-factor authentication can be enabled at the platform level by your organisation's account team. If your firm requires 2FA, you'll be prompted to enrol on first sign-in. The cf0 app itself doesn't expose an in-app 2FA enrolment flow today — contact your cf0 account team if you need 2FA enforced for your org.
 
 ## If you're locked out
 

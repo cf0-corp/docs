@@ -11,11 +11,11 @@ cf0 connects to 25+ live financial data sources so research is grounded in curre
 flowchart LR
   subgraph public [" Public "]
     direction TB
-    S1["SEC + global filings<br/>10 regulators"]
-    S2["Earnings transcripts"]
-    S3["Market data<br/>prices · vol · cap"]
-    S4["Alt data<br/>macro · ESG · supply chain"]
-    S5["News & events"]
+    SRC1["SEC + global filings<br/>10 regulators"]
+    SRC2["Earnings transcripts"]
+    SRC3["Market data<br/>prices · vol · cap"]
+    SRC4["Alt data<br/>macro · ESG · supply chain"]
+    SRC5["News & events"]
   end
   subgraph private [" Your firm "]
     direction TB
@@ -27,11 +27,11 @@ flowchart LR
     P6["Uploaded documents"]
   end
   L["Lab<br/>cites every figure"]
-  S1 --> L
-  S2 --> L
-  S3 --> L
-  S4 --> L
-  S5 --> L
+  SRC1 --> L
+  SRC2 --> L
+  SRC3 --> L
+  SRC4 --> L
+  SRC5 --> L
   P1 --> L
   P2 --> L
   P3 --> L
@@ -41,7 +41,7 @@ flowchart LR
 
   classDef src fill:#ffffff,stroke:#e4e4e7,color:#18181b
   classDef lab fill:#1d4ed8,stroke:#172554,color:#ffffff
-  class S1,S2,S3,S4,S5,P1,P2,P3,P4,P5,P6 src
+  class SRC1,SRC2,SRC3,SRC4,SRC5,P1,P2,P3,P4,P5,P6 src
   class L lab
 ```
 

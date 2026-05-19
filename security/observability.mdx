@@ -1,10 +1,10 @@
 ---
 title: "Observability"
 description: "Every Lab turn is fully traced — system prompts, tools, model I/O, rendered output. Visible to engineers and, increasingly, to the analyst in-product."
-keywords: ["observability", "tracing", "Langfuse", "audit", "model I/O", "tool calls", "latency"]
+keywords: ["observability", "tracing", "audit", "model I/O", "tool calls", "latency"]
 ---
 
-Every Lab turn is fully traced. When you ask a question, cf0 captures the system prompt, the tools called, the model inputs and outputs, the tool execution results, and what was rendered. Traces stream into [Langfuse](https://langfuse.com) and surface back inside the product via the in-app Trace panel.
+Every Lab turn is fully traced. When you ask a question, cf0 captures the system prompt, the tools called, the model inputs and outputs, the tool execution results, and what was rendered. Traces surface inside the product via the in-app Trace panel and export with the audit trail.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"primaryColor": "#1d4ed8", "primaryTextColor": "#ffffff", "primaryBorderColor": "#172554", "lineColor": "#71717a", "fontFamily": "Inter Tight, -apple-system, sans-serif", "fontSize": "13px"}}}%%
@@ -12,9 +12,9 @@ sequenceDiagram
   autonumber
   participant U as Analyst
   participant L as Lab
-  participant M as Claude (Bedrock)
+  participant M as AI model
   participant T as Tools<br/>(filings · templates · charts)
-  participant F as Langfuse
+  participant F as Trace store
   U->>L: Plain-English question
   L->>M: System prompt + tool defs
   M->>T: Tool call (filings.read, consensus.get…)
@@ -39,53 +39,17 @@ cf0 tracks per-agent token usage, tool latency, and rate-limit events. Optimisat
 
 ## What a trace looks like
 
-A single Lab turn captures the tools the model could see, the calls it made, and the bytes each call returned. Click to expand a realistic example:
+A single Lab turn captures the tools the model could see, the calls it made, and the bytes each call returned. Conceptually, for a DCF turn:
 
-<Expandable title="Trace payload — Lab turn invoking the DCF skill">
-```json
-{
-  "thread_id": "jr-nvda-q3-readthrough",
-  "turn": 4,
-  "timestamp": "2026-05-19T13:41:22Z",
-  "model": "us.anthropic.claude-sonnet-4-6",
-  "system_prompt_tokens": 1820,
-  "tools_available": [
-    "filings.read", "filings.search",
-    "consensus.get_revenue", "consensus.get_eps",
-    "templates.dcf_three_stage", "templates.wacc_build",
-    "charts.timeseries", "charts.sensitivity_tornado"
-  ],
-  "tool_calls": [
-    {
-      "name": "filings.read",
-      "args": { "ticker": "NVDA", "form": "10-K", "section": "Item 7" },
-      "result_bytes": 8412,
-      "latency_ms": 248
-    },
-    {
-      "name": "consensus.get_revenue",
-      "args": { "ticker": "NVDA", "periods": "FY26-FY28" },
-      "result_bytes": 612,
-      "latency_ms": 87
-    },
-    {
-      "name": "templates.dcf_three_stage",
-      "args": { "ticker": "NVDA", "wacc": 0.092, "stages": [0.10, 0.07, 0.04] },
-      "result_bytes": 2104,
-      "latency_ms": 134
-    }
-  ],
-  "model_output_tokens": 1247,
-  "render_calls": [
-    { "component": "fair_value_cards", "variant": "bear_base_bull" },
-    { "component": "sensitivity_tornado", "inputs": 5 }
-  ],
-  "rate_limit": { "remaining_rpm": 9, "reset_in_s": 41 }
-}
-```
-</Expandable>
+| Captured | Example |
+|---|---|
+| Thread | `nvda-q3-readthrough` · turn 4 |
+| Tools called | Filings (10-K, Item 7 MD&A) · Consensus (FY26–FY28 revenue) · DCF template (3-stage growth) |
+| Output rendered | Bear / Base / Bull fair-value cards · Sensitivity tornado |
+| Captured per call | Latency, byte size, input arguments, result summary |
+| Audit chain | Every figure on screen walks back to one specific tool call |
 
-In the trace above, **every figure that ended up on screen can be walked back to one specific tool call** — `filings.read` for the MD&A passage, `consensus.get_revenue` for the forward projections, `templates.dcf_three_stage` for the fair-value math. That's the audit chain.
+**Every figure that ended up on screen can be walked back to one specific tool call** — the MD&A passage to the filings call, the forward projections to the consensus call, the fair-value math to the DCF template. That's the audit chain.
 
 ## What you can do with it
 

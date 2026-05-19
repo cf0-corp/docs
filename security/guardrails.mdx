@@ -1,22 +1,22 @@
 ---
 title: "Guardrails"
-description: "Defense in depth. Python computes the numbers, sandboxes isolate code, schemas validate every model output, missing inputs refuse to be fabricated."
-keywords: ["guardrails", "accuracy", "defense in depth", "sandbox", "E2B", "Pydantic", "refuse to fabricate", "WACC", "methodology gates"]
+description: "Defense in depth. Deterministic code computes the numbers, sandboxes isolate execution, schemas validate every model output, missing inputs refuse to be fabricated."
+keywords: ["guardrails", "accuracy", "defense in depth", "sandbox", "refuse to fabricate", "WACC", "methodology gates"]
 ---
 
 cf0's posture on accuracy is defense in depth. No single layer is asked to be perfect. The model orchestrates; math runs in code; outputs are schema-validated; missing inputs surface as missing, not invented.
 
 ## The model doesn't do math
 
-Financial calculations — DCF, WACC, multiples, sensitivities, monte carlo — route through Python templates, not LLM inference. The model frames the question and reads the result; the result itself comes from a tested code path. cf0's numbers are reproducible: same question, same inputs, same answer.
+Financial calculations — DCF, WACC, multiples, sensitivities, monte carlo — route through deterministic code templates, not AI inference. The model frames the question and reads the result; the result itself comes from a tested code path. cf0's numbers are reproducible: same question, same inputs, same answer.
 
 ## Schema-validated output
 
-Every model output that reaches storage or the UI passes through Pydantic schema validation. Free-form prose that doesn't match a known structure doesn't get persisted. Hallucinated fields are caught before they propagate.
+Every model output that reaches storage or the UI passes through schema validation. Free-form prose that doesn't match a known structure doesn't get persisted. Hallucinated fields are caught before they propagate.
 
 ## Isolated execution sandbox
 
-Any code-execution path runs in an isolated E2B microVM, per user. The sandbox cannot reach the wider cf0 infrastructure or other users' workspaces.
+Any code-execution path runs in an isolated, per-user sandbox. The sandbox cannot reach the wider cf0 infrastructure or other users' workspaces.
 
 ## Refuse to fabricate
 
