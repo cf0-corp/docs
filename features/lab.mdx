@@ -1,9 +1,27 @@
 ---
 title: "Lab"
 description: "Lab is where you ask. Plain English in, streaming charts and tables and cited paragraphs out. Every figure traces back to source data."
+keywords: ["Lab", "research", "AI chat", "citations", "charts", "tables", "threads", "slash command"]
 ---
 
-Lab is layer 03 of [the stack](/introduction) — the surface an analyst goes to when there's a question. Type it in English, get back structured analysis: chart, table, narrative, with citations on every number. No template to fill, no dashboard to build, no formula to write. Lab picks the UI the answer needs and renders it inline.
+Lab is where the research happens — the surface an analyst goes to when there's a question. Type it in English, get back structured analysis: chart, table, narrative, with citations on every number. No template to fill, no dashboard to build, no formula to write. Lab picks the UI the answer needs and renders it inline.
+
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#1d4ed8", "primaryTextColor": "#ffffff", "primaryBorderColor": "#172554", "lineColor": "#71717a", "fontFamily": "Inter Tight, -apple-system, sans-serif", "fontSize": "13px"}}}%%
+graph LR
+  Q["Question<br/>plain English"] --> P["Lab parses<br/>+ plans"]
+  P --> D[("SEC + global filings<br/>+ docs<br/>+ integrations")]
+  D --> A["Streaming answer<br/>chart · table · prose"]
+  A --> C["Citations<br/>on every figure"]
+  A --> R["One click → PDF<br/>(Reports)"]
+
+  classDef io fill:#ffffff,stroke:#d4d4d8,color:#18181b
+  classDef step fill:#1d4ed8,stroke:#172554,color:#ffffff
+  classDef store fill:#fafafa,stroke:#d4d4d8,color:#18181b
+  class Q,A,C,R io
+  class P step
+  class D store
+```
 
 <Frame caption="A Lab thread on an NVDA Q3 earnings preview. Source pills, three metric tiles, inline numbered citations [1][2][3], composer with `/skill` invocation. Brand-canon design surface.">
   <img src="/images/brand/surfaces-lab-chat.png" alt="cf0 Lab — NVDA Q3 earnings preview thread" />

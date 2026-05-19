@@ -1,17 +1,57 @@
 ---
 title: "Overview"
 description: "cf0 connects to 25+ live financial data sources. SEC filings, market data, earnings transcripts, alt data, news. Every number traces back to its origin."
+keywords: ["data sources", "SEC filings", "global filings", "market data", "earnings transcripts", "alternative data", "news"]
 ---
 
 cf0 connects to 25+ live financial data sources so research is grounded in current, structured information — not stale training data. When Lab answers a question or a report assembles, it pulls from these sources in real time and traces every figure back to its origin.
+
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#1d4ed8", "primaryTextColor": "#ffffff", "primaryBorderColor": "#172554", "lineColor": "#71717a", "fontFamily": "Inter Tight, -apple-system, sans-serif", "fontSize": "13px"}}}%%
+flowchart LR
+  subgraph public [" Public "]
+    direction TB
+    S1["SEC + global filings<br/>10 regulators"]
+    S2["Earnings transcripts"]
+    S3["Market data<br/>prices · vol · cap"]
+    S4["Alt data<br/>macro · ESG · supply chain"]
+    S5["News & events"]
+  end
+  subgraph private [" Your firm "]
+    direction TB
+    P1["Microsoft 365"]
+    P2["Google Workspace"]
+    P3["Slack"]
+    P4["Notion"]
+    P5["Granola"]
+    P6["Uploaded documents"]
+  end
+  L["Lab<br/>cites every figure"]
+  S1 --> L
+  S2 --> L
+  S3 --> L
+  S4 --> L
+  S5 --> L
+  P1 --> L
+  P2 --> L
+  P3 --> L
+  P4 --> L
+  P5 --> L
+  P6 --> L
+
+  classDef src fill:#ffffff,stroke:#e4e4e7,color:#18181b
+  classDef lab fill:#1d4ed8,stroke:#172554,color:#ffffff
+  class S1,S2,S3,S4,S5,P1,P2,P3,P4,P5,P6 src
+  class L lab
+```
 
 ## Data categories
 
 <CardGroup cols={2}>
   <Card title="Connectors" icon="plug" href="/data/integrations">
-    Microsoft 365, Google Workspace, Slack, Notion, Granola. Your firm's existing tooling becomes part of the brain.
+    Microsoft 365, Google Workspace, Slack, Notion, Granola. Your firm's existing tooling becomes a queryable source.
   </Card>
-  <Card title="SEC filings" icon="file-text" href="/data/sec-filings">
+  <Card title="SEC + global filings" icon="file-text" href="/data/sec-filings">
     Structured SEC filings with section-level extraction, plus international directory coverage across the major global markets your team reaches into.
   </Card>
   <Card title="Market data" icon="trending-up">

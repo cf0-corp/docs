@@ -1,6 +1,7 @@
 ---
 title: "Data governance"
 description: "Where your firm's data lives, what cf0 stores, what it doesn't, and which sub-processors touch each piece."
+keywords: ["data governance", "storage", "sub-processors", "AWS", "Bedrock", "data residency", "no training", "DPA"]
 ---
 
 cf0 is built so analysts can put their name on the output. That starts with knowing exactly where data lives and who touches it.
@@ -29,7 +30,7 @@ cf0 currently uses:
 - **Pinecone** — vector retrieval index
 - **Anthropic** (via AWS Bedrock) — Claude Sonnet 4.6 and Haiku 4.5 inference
 
-For data feeds (read-only ingest into the brain): Exa, Finnhub, Alpha Vantage, SnapTrade. These don't process customer data.
+For data feeds (read-only ingest into cf0's index): Exa, Finnhub, Alpha Vantage, SnapTrade. These don't process customer data.
 
 ## Boundaries
 

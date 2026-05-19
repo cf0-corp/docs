@@ -1,9 +1,30 @@
 ---
-title: "SEC filings"
-description: "cf0 runs its own pipeline on top of SEC EDGAR. Filings come in as structured sections, with extracted financials cited back to the exact page and line they came from."
+title: "SEC + global filings"
+sidebarTitle: "SEC + global filings"
+description: "cf0 runs its own pipeline on top of SEC EDGAR and nine international regulators. Filings come in as structured sections, with extracted financials cited back to the exact page and line they came from."
+keywords: ["SEC", "EDGAR", "filings", "global filings", "ingestion pipeline", "section extraction", "MD&A", "Item 1A", "10-K", "10-Q", "8-K"]
 ---
 
-cf0 runs a proprietary pipeline on top of SEC EDGAR. Filings are parsed into discrete sections; financial figures are extracted into structured tables so Lab can reason over them precisely and cite them exactly. You aren't reading PDFs — you're reading a queryable graph of filings, sections, and figures.
+cf0 runs a proprietary pipeline on top of SEC EDGAR and nine international regulators. Filings are parsed into discrete sections; financial figures are extracted into structured tables so Lab can reason over them precisely and cite them exactly. You aren't reading PDFs — you're reading a queryable graph of filings, sections, and figures.
+
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#1d4ed8", "primaryTextColor": "#ffffff", "primaryBorderColor": "#172554", "lineColor": "#71717a", "fontFamily": "Inter Tight, -apple-system, sans-serif", "fontSize": "13px"}}}%%
+graph LR
+  E1[("SEC EDGAR")] --> P["cf0 pipeline<br/>parse + section split"]
+  E2[("9 global regulators<br/>FCA · SEDAR+ · EDINET · DART<br/>SEBI · ASX · HKEX · CNINFO · CVM")] --> P
+  P --> X["Extract financials<br/>tagged tables"]
+  P --> S["Sections<br/>Item 1A · MD&A · etc."]
+  X --> I[("Filing index<br/>queryable")]
+  S --> I
+  I --> L["Lab<br/>quotes verbatim<br/>cites the section"]
+
+  classDef ext fill:#fafafa,stroke:#d4d4d8,color:#18181b
+  classDef step fill:#1d4ed8,stroke:#172554,color:#ffffff
+  classDef store fill:#ffffff,stroke:#d4d4d8,color:#18181b
+  class E1,E2,L ext
+  class P,X,S step
+  class I store
+```
 
 ## What's available
 

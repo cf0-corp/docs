@@ -1,11 +1,10 @@
 ---
 title: "Integrations"
-description: "Connect cf0 to the tools your firm already uses — Microsoft 365, Google Workspace, Slack, Notion, Granola. Data flows into the brain automatically."
+description: "Connect cf0 to the tools your firm already uses — Microsoft 365, Google Workspace, Slack, Notion, Granola. Data flows into Lab automatically."
+keywords: ["integrations", "connectors", "Microsoft 365", "Google Workspace", "Slack", "Notion", "Granola", "OAuth"]
 ---
 
-Integrations let your firm's existing tooling feed cf0's brain. Once connected, the brain reads from these sources continuously — so when an analyst asks about a customer in Lab, the answer can pull from the Slack thread last week, the Notion deal page, the Gmail introduction from the founder, alongside the SEC filings.
-
-This is **layer 01 (Data)** of [the stack](/introduction), expanded beyond filings.
+Integrations let your firm's existing tooling become a queryable source inside cf0. Once connected, cf0 reads from these sources continuously — so when an analyst asks about a customer in Lab, the answer can pull from the Slack thread last week, the Notion deal page, the Gmail introduction from the founder, alongside the SEC filings.
 
 ## Available integrations
 
@@ -13,16 +12,16 @@ cf0 ships with five connector groups. Set them up under **Settings → Integrati
 
 <CardGroup cols={2}>
   <Card title="Microsoft 365" icon="briefcase">
-    Outlook, OneDrive, SharePoint. Firm email and shared documents become searchable by the brain.
+    Outlook, OneDrive, SharePoint. Firm email and shared documents become searchable.
   </Card>
   <Card title="Google Workspace" icon="folder">
-    Gmail and Google Drive. Customer comms and shared docs flow into the brain.
+    Gmail and Google Drive. Customer comms and shared docs flow into cf0.
   </Card>
   <Card title="Slack" icon="message-square">
     Channels you opt in to. Decisions, deal threads, and customer signal become structured context.
   </Card>
   <Card title="Notion" icon="book-open">
-    Internal wikis, CRM pages, deal memos. The brain reads page content and tracks updates.
+    Internal wikis, CRM pages, deal memos. cf0 reads page content and tracks updates.
   </Card>
   <Card title="Granola" icon="mic">
     Meeting transcripts. Calls with prospects, customers, and your team become queryable.
@@ -46,18 +45,18 @@ cf0 ships with five connector groups. Set them up under **Settings → Integrati
   </Step>
 </Steps>
 
-## What the brain does with integration data
+## What cf0 does with integration data
 
-Connector data is structured and added to the brain alongside SEC filings, transcripts, and uploaded documents. From an analyst's perspective in Lab, there is no separation — a question like *"What did the founder of $TICKER say about Q4 guidance, and how does it compare to the public 10-Q?"* can pull from a Granola meeting transcript, a Slack thread, and the actual filing in a single answer.
+Connector data is structured and joined to SEC filings, transcripts, and uploaded documents. From an analyst's perspective in Lab, there is no separation — a question like *"What did the founder of $TICKER say about Q4 guidance, and how does it compare to the public 10-Q?"* can pull from a Granola meeting transcript, a Slack thread, and the actual filing in a single answer.
 
-The brain tracks **provenance** for every fact: which integration it came from, when it was last updated, and the conversation or document it originated in.
+cf0 tracks **provenance** for every fact: which integration it came from, when it was last updated, and the conversation or document it originated in.
 
 ## Scope and privacy
 
 - **Org-scoped**: connections live at the organisation level. Every member of the org sees data from connected sources in Lab (subject to your firm's own access policies in the underlying tool).
 - **No training**: cf0 never uses your connected data to train any model.
-- **Revocable**: disconnect any integration at any time from the same panel. The brain stops reading from that source immediately; previously ingested data is purged on the next sync cycle.
+- **Revocable**: disconnect any integration at any time from the same panel. cf0 stops reading from that source immediately; previously ingested data is purged on the next sync cycle.
 
 ## Documents path (for content not in a connector)
 
-If you have material that doesn't live in one of the supported tools — a pitch deck, a one-off PDF, a CSV from your data vendor — upload it directly via [Documents](/features/documents). It joins the same brain context as connector data.
+If you have material that doesn't live in one of the supported tools — a pitch deck, a one-off PDF, a CSV from your data vendor — upload it directly via [Documents](/features/documents). It joins the same Lab context as connector data.

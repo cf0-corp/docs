@@ -1,6 +1,7 @@
 ---
-title: "Head-to-head comparison"
+title: "Head-to-head"
 description: "Compare two megacap names on free cash flow margin over five years and ship a one-pager to the PM. Real Lab thread, real Reports flow, no spreadsheets."
+keywords: ["AAPL", "MSFT", "FCF margin", "comparison", "walkthrough", "PM brief"]
 ---
 
 A common analyst task: *"Compare AAPL and MSFT free cash flow margins over the last five years and flag any quarter where the gap inverted. Then ship a one-pager to the PM."*
@@ -17,7 +18,7 @@ Open **Lab** from the left sidebar. Type the question:
   <img src="/images/lab-aapl-fundamentals-light.jpg" alt="Lab thread on Apple fundamentals — Revenue, Margin Expansion, Profitability tiles, Investment Thesis card" />
 </Frame>
 
-Lab routes the query through the brain, pulls the relevant 10-Ks and 10-Qs, calculates the FCF margins per quarter, and streams:
+Lab parses the request, pulls the relevant 10-Ks and 10-Qs, calculates the FCF margins per quarter, and streams:
 
 - A **table** with quarterly revenue, free cash flow, FCF margin, and the AAPL–MSFT spread for each quarter
 - A **chart** showing both companies' margin trajectories over the five-year window
@@ -68,12 +69,13 @@ Now anyone on the team can run the same workflow in one slash command:
 
 cf0 substitutes the variables (`AAPL`, `MSFT`, `5y`) and runs the full pipeline — pull → compute → chart → cite → draft report — exactly the same way every time.
 
-## What just happened, layered
+## What just happened
 
-This example touched every layer of [the stack](/introduction):
+This example used every part of cf0:
 
-- **Data** — the AAPL and MSFT 10-Ks and 10-Qs from SEC EDGAR, parsed into structured sections.
-- **Brain** — the world-model that knew which filings to pull, which figures to extract, which quarters to compare.
+- **SEC + global filings** — the AAPL and MSFT 10-Ks and 10-Qs from SEC EDGAR, parsed into structured sections.
 - **Lab** — the surface where the question came in, the on-demand UI for the chart and table, and the report draft.
+- **Reports** — branded PDF assembly from the Lab thread.
+- **Skills** — captured the workflow so the next run is one slash command.
 
-Skills capture the workflow for next time. Citations trace every number back to source. Reports go out in your firm's brand template. That's a research session in cf0.
+Citations trace every number back to source. Reports go out in your firm's brand template. That's a research session in cf0.

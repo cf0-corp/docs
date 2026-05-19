@@ -1,9 +1,12 @@
 ---
 title: "Introduction"
-description: "The financial intelligence stack. Data feeds a brain that feeds Lab — where analysts ask anything and ship cited reports in minutes."
+description: "The financial intelligence stack for analysts. Ask anything in plain English, get cited charts, tables, and PDF reports in minutes."
+keywords: ["financial intelligence", "equity research", "SEC filings", "global filings", "DCF", "LBO", "IC memo", "analyst workflow", "Lab", "Reports", "Skills"]
 ---
 
-Analysts at hedge funds and family offices spend 87% of their day on data gathering, copy-paste, and cross-checking. cf0 is the **financial intelligence stack** that collapses that work: data feeds a brain that feeds Lab, and you ship cited reports in minutes.
+Analysts at hedge funds and family offices spend 87% of their day on data gathering, copy-paste, and cross-checking. cf0 is the **financial intelligence stack** that collapses that work: ask a question, get a cited answer, ship a branded PDF.
+
+In one Lab thread an analyst can pull a <Tooltip tip="Discounted cash flow — a valuation model that projects future free cash flow and discounts it to present value">DCF</Tooltip> on a name, swap the <Tooltip tip="Weighted average cost of capital — the discount rate used in DCF">WACC</Tooltip>, run a sensitivity, draft a <Tooltip tip="Investment committee — the partners who approve trade ideas at hedge funds">IC</Tooltip> memo, and export the PDF in the firm's brand template. The <Tooltip tip="Management's Discussion and Analysis — the narrative section of a 10-K explaining the year's results">MD&A</Tooltip> passage that anchors every figure is one click away.
 
 ```mermaid
 %%{init: {
@@ -28,44 +31,51 @@ Analysts at hedge funds and family offices spend 87% of their day on data gather
 graph LR
   subgraph sources [" "]
     direction TB
-    A1["SEC filings"]
+    A1["SEC + global filings"]
     A2["Earnings transcripts"]
     A3["Customer comms<br/>Slack · Gmail · HubSpot"]
     A4["Internal docs<br/>Notion · Drive"]
     A5["News & research feeds"]
   end
-  D["01 · Data"]
-  B["02 · Brain<br/>world-model wiki"]
-  L["03 · Lab<br/>ask anything"]
-  A1 --> D
-  A2 --> D
-  A3 --> D
-  A4 --> D
-  A5 --> D
-  D --> B
-  B --> L
-  L -.-> D
+  subgraph outputs [" "]
+    direction TB
+    O1["Cited charts & tables"]
+    O2["Branded PDF reports"]
+    O3["Audit trails"]
+  end
+  L["Lab<br/>ask anything"]
+  A1 --> L
+  A2 --> L
+  A3 --> L
+  A4 --> L
+  A5 --> L
+  L --> O1
+  L --> O2
+  L --> O3
+  O1 -.-> A1
 
   classDef source fill:#ffffff,stroke:#e4e4e7,stroke-width:1px,color:#18181b
   classDef layer fill:#1d4ed8,stroke:#172554,stroke-width:1px,color:#ffffff
+  classDef output fill:#fafafa,stroke:#d4d4d8,stroke-width:1px,color:#18181b
   class A1,A2,A3,A4,A5 source
-  class D,B,L layer
-  linkStyle 7 stroke:#a1a1aa,stroke-dasharray:4 4
+  class L layer
+  class O1,O2,O3 output
+  linkStyle 8 stroke:#a1a1aa,stroke-dasharray:4 4
 ```
 
-*Dashed line from Lab back to Data: every figure Lab surfaces is cited back to its source.*
+*Dashed line from outputs back to source: every figure cf0 surfaces is cited back to the exact filing, page, and section.*
 
-## The three layers
+## What ships in production
 
 <CardGroup cols={3}>
-  <Card title="01 · Data" icon="database">
-    SEC filings, earnings transcripts, customer comms (Slack, Gmail, HubSpot), internal docs (Notion, Drive), news, research feeds. Everything your firm reads flows in, structured.
+  <Card title="Lab" icon="message-square" href="/features/lab">
+    The research surface. Plain English in, streaming charts, tables, and cited paragraphs out. The model picks the UI the answer needs.
   </Card>
-  <Card title="02 · Brain" icon="brain">
-    A world-model that compounds. Tracks companies, people, deals, decisions, citations, warnings. Each new source sharpens the next answer.
+  <Card title="Reports" icon="file-text" href="/features/reports">
+    Branded PDFs with numbered footnotes, a Sources Table, and a Key Assumptions table. Ready for IC.
   </Card>
-  <Card title="03 · Lab" icon="message-square">
-    Ask anything. Agents pull from the brain, generate on-demand UI matching the question, ship cited reports your PM can read in 30 seconds.
+  <Card title="Skills" icon="zap" href="/features/skills">
+    Reusable workflows — DCF, LBO, comps, IC memos, earnings recaps — invoked with `/skill-name` from any thread.
   </Card>
 </CardGroup>
 
@@ -78,8 +88,8 @@ graph LR
   <Card title="Reports" icon="file-text" href="/features/reports">
     Branded PDFs with numbered footnotes, a Sources Table, and a Key Assumptions table.
   </Card>
-  <Card title="Filings" icon="search" href="/features/filings">
-    Every major SEC form structured to section level, plus directory coverage across the global regulators. See [Filings coverage](#filings-coverage) below.
+  <Card title="SEC + global filings" icon="search" href="/features/filings">
+    Every major SEC form structured to section level, plus directory coverage across the global regulators. See [coverage](#sec--global-filings-coverage) below.
   </Card>
   <Card title="Documents" icon="upload" href="/features/documents">
     PDFs, spreadsheets, decks, images — parsed and queryable in the same Lab thread.
@@ -87,11 +97,14 @@ graph LR
   <Card title="Skills" icon="zap" href="/features/skills">
     Reusable workflows — DCF, LBO, comps, IC memos, earnings recaps — invoked with `/skill-name`.
   </Card>
+  <Card title="Knowledge" icon="share-2" href="/features/knowledge">
+    Topics, notes, sources, and a force-directed graph that explain what cf0 has compiled and where every claim came from.
+  </Card>
 </CardGroup>
 
-## Filings coverage
+## SEC + global filings coverage
 
-cf0 ingests and structures every filing form an analyst is likely to pull, across ten regulator-backed markets — not just SEC EDGAR.
+cf0 ingests and structures every filing form an analyst is likely to pull, across ten regulator-backed markets — SEC EDGAR plus nine international regulators.
 
 ### SEC forms (US)
 
@@ -152,7 +165,7 @@ See [Security overview](/security/overview) for the full posture.
     Anthropic's Claude Sonnet 4.6 as the orchestrator and Claude Haiku 4.5 for sub-agents — both via AWS Bedrock. The trace records the exact model version per turn so you can verify after the fact. See [Observability](/security/observability#whats-traced-per-turn).
   </Accordion>
   <Accordion title="How is this different from giving ChatGPT a PDF?" icon="zap">
-    Four ways. (1) **Numbers** are computed in Python templates, not generated by the model. (2) **Citations** trace every figure to the exact filing page. (3) **Audit trails** export per thread. (4) **The brain** compounds your firm's filings + transcripts + comms across sessions, so the next question is sharper than the last. ChatGPT does none of this for institutional research.
+    Four ways. (1) **Numbers** are computed in deterministic Python templates, not generated by the model. (2) **Citations** trace every figure to the exact filing page. (3) **Audit trails** export per thread. (4) **Compounding context** — every shared document, integration, and memory entry sharpens the next answer across sessions. ChatGPT does none of this for institutional research.
   </Accordion>
 </AccordionGroup>
 

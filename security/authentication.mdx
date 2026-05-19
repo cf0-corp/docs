@@ -1,6 +1,7 @@
 ---
 title: "Authentication"
 description: "How to sign in to cf0, accept an organisation invitation, and recover access when you're locked out. Authentication runs through Clerk; sessions are scoped to your active organisation."
+keywords: ["sign in", "authentication", "Clerk", "invitation", "password reset", "organisation"]
 ---
 
 cf0 authentication runs through [Clerk](https://clerk.com). You sign in at [cf0.ai](https://cf0.ai), and every session is scoped to your active organisation — you only ever see your firm's data.
@@ -47,7 +48,3 @@ Two-factor authentication can be enabled at the Clerk-instance level by your org
 <Warning>
 cf0 support cannot bypass organisation access controls on your behalf. All membership decisions are managed by your organisation's admins.
 </Warning>
-
-## API access
-
-For programmatic access, see [API → Authentication](/api/authentication). API tokens come from your Clerk session via `window.Clerk.session.getToken()` — there are no separate API keys to manage.

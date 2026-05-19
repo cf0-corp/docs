@@ -1,6 +1,7 @@
 ---
 title: "Documents"
 description: "Upload PDFs, spreadsheets, and images to your cf0 workspace and make them available for AI analysis in Lab — with team sharing controls for org admins."
+keywords: ["documents", "upload", "PDF", "DOCX", "XLSX", "PPTX", "OCR", "workspace", "team sharing"]
 ---
 
 Documents lets you bring your own files into cf0 so the AI in Lab can read and analyse them alongside live financial data. You can upload PDFs, spreadsheets, and images, browse your workspace filesystem, and — if you are an org admin — approve documents for sharing across your team.
@@ -57,6 +58,29 @@ The Documents page has three tabs:
 ## Workspace browser
 
 The **Workspace** tab shows a full filesystem view of your cf0 environment. You can see every file that is available to the AI in your Lab sessions, including uploaded documents and files generated during previous conversations.
+
+A typical workspace tree:
+
+<Tree>
+  <Tree.Folder name="documents" defaultOpen>
+    <Tree.Folder name="org">
+      <Tree.File name="firm-policy.pdf" />
+      <Tree.File name="model-template.xlsx" />
+    </Tree.Folder>
+    <Tree.Folder name="personal">
+      <Tree.File name="nvda-q3-earnings.pdf" />
+      <Tree.File name="meeting-notes.docx" />
+    </Tree.Folder>
+  </Tree.Folder>
+  <Tree.Folder name="outputs">
+    <Tree.File name="nvda-dcf-base.pdf" />
+    <Tree.File name="aapl-msft-fcf.png" />
+    <Tree.File name="comps-sheet.xlsx" />
+  </Tree.Folder>
+  <Tree.Folder name="reports">
+    <Tree.File name="nio-ic-memo-2026-05.pdf" />
+  </Tree.Folder>
+</Tree>
 
 ## Analyse documents in Lab
 

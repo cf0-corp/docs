@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "luma",
   "name": "cf0",
-  "description": "The financial intelligence stack. Data feeds a brain that feeds Lab \u2014 the place analysts ask anything and ship cited reports in minutes.",
+  "description": "The financial intelligence stack for analysts. Ask anything in plain English, get cited charts, tables, and PDF reports in minutes.",
   "colors": {
     "primary": "#1d4ed8",
     "light": "#2563eb",
@@ -107,7 +107,56 @@
   "footer": {
     "socials": {
       "x": "https://x.com/cf0ai"
-    }
+    },
+    "links": [
+      {
+        "header": "Product",
+        "items": [
+          { "label": "Lab", "href": "/features/lab" },
+          { "label": "Reports", "href": "/features/reports" },
+          { "label": "Filings", "href": "/features/filings" },
+          { "label": "Documents", "href": "/features/documents" },
+          { "label": "Skills", "href": "/features/skills" },
+          { "label": "Knowledge", "href": "/features/knowledge" }
+        ]
+      },
+      {
+        "header": "Resources",
+        "items": [
+          { "label": "Quickstart", "href": "/quickstart" },
+          { "label": "Account setup", "href": "/account-setup" },
+          { "label": "Walkthroughs", "href": "/examples/head-to-head" },
+          { "label": "Changelog", "href": "/changelog" }
+        ]
+      },
+      {
+        "header": "Trust",
+        "items": [
+          { "label": "Security overview", "href": "/security/overview" },
+          { "label": "Data governance", "href": "/security/data-governance" },
+          { "label": "Observability", "href": "/security/observability" },
+          { "label": "Status", "href": "https://status.cf0.ai" }
+        ]
+      },
+      {
+        "header": "Company",
+        "items": [
+          { "label": "Home", "href": "https://cf0.ai" },
+          { "label": "Sign in", "href": "https://cf0.ai" },
+          { "label": "Contact", "href": "mailto:filippo@cf0.ai" },
+          { "label": "@cf0ai on X", "href": "https://x.com/cf0ai" }
+        ]
+      }
+    ]
+  },
+  "banner": {
+    "content": "[New] docs.cf0.ai is live — every cf0 surface, the API, and the analyst walkthroughs. [Read the changelog →](/changelog)",
+    "dismissible": true
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
   },
   "navigation": {
     "global": {
@@ -141,7 +190,8 @@
               "features/reports",
               "features/filings",
               "features/documents",
-              "features/skills"
+              "features/skills",
+              "features/knowledge"
             ]
           },
           {
@@ -184,31 +234,6 @@
           "examples/dcf-walkthrough",
           "examples/ic-memo",
           "examples/published-research"
-        ]
-      },
-      {
-        "tab": "API reference",
-        "icon": "code",
-        "groups": [
-          {
-            "group": "Overview",
-            "icon": "info",
-            "pages": [
-              "api/overview",
-              "api/authentication"
-            ]
-          },
-          {
-            "group": "Endpoints",
-            "icon": "plug",
-            "pages": [
-              "api/lab",
-              "api/reports",
-              "api/filings",
-              "api/documents",
-              "api/skills"
-            ]
-          }
         ]
       },
       {

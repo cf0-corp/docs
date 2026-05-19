@@ -1,9 +1,29 @@
 ---
 title: "Reports"
 description: "Turn any Lab thread into a publication-ready PDF with numbered footnotes, a Sources Table, and a Key Assumptions table. Ready for IC."
+keywords: ["reports", "PDF export", "Excel export", "PowerPoint export", "IC memo", "branded reports", "Sources Table", "Key Assumptions"]
 ---
 
 Reports turns a Lab research thread into a publication-ready PDF. The chart, table, and citation work you did in the thread becomes the body of the report; cf0 assembles the cover, sections, footnotes, and Sources Table.
+
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#1d4ed8", "primaryTextColor": "#ffffff", "primaryBorderColor": "#172554", "lineColor": "#71717a", "fontFamily": "Inter Tight, -apple-system, sans-serif", "fontSize": "13px"}}}%%
+graph LR
+  T["Lab thread<br/>charts + cites"] --> G["Generate report"]
+  G --> S["Section draft<br/>cover · thesis · risks"]
+  S --> E["Edit inline<br/>or @-mention"]
+  E --> X{"Export"}
+  X --> P["PDF<br/>(branded)"]
+  X --> XL["Excel"]
+  X --> PP["PowerPoint"]
+
+  classDef io fill:#ffffff,stroke:#d4d4d8,color:#18181b
+  classDef step fill:#1d4ed8,stroke:#172554,color:#ffffff
+  classDef out fill:#fafafa,stroke:#d4d4d8,color:#18181b
+  class T,E io
+  class G,S,X step
+  class P,XL,PP out
+```
 
 <Frame caption="Reports browser with a PDF preview open — cover page in the firm's brand template, dated entries, pages and word counts per report.">
   <img src="/images/reports-browser-light.jpg" alt="cf0 Reports — browser with PDF preview" />

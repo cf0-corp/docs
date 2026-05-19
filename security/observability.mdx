@@ -1,9 +1,28 @@
 ---
 title: "Observability"
 description: "Every Lab turn is fully traced — system prompts, tools, model I/O, rendered output. Visible to engineers and, increasingly, to the analyst in-product."
+keywords: ["observability", "tracing", "Langfuse", "audit", "model I/O", "tool calls", "latency"]
 ---
 
 Every Lab turn is fully traced. When you ask a question, cf0 captures the system prompt, the tools called, the model inputs and outputs, the tool execution results, and what was rendered. Traces stream into [Langfuse](https://langfuse.com) and surface back inside the product via the in-app Trace panel.
+
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#1d4ed8", "primaryTextColor": "#ffffff", "primaryBorderColor": "#172554", "lineColor": "#71717a", "fontFamily": "Inter Tight, -apple-system, sans-serif", "fontSize": "13px"}}}%%
+sequenceDiagram
+  autonumber
+  participant U as Analyst
+  participant L as Lab
+  participant M as Claude (Bedrock)
+  participant T as Tools<br/>(filings · templates · charts)
+  participant F as Langfuse
+  U->>L: Plain-English question
+  L->>M: System prompt + tool defs
+  M->>T: Tool call (filings.read, consensus.get…)
+  T-->>M: Structured result
+  M-->>L: Streamed answer + render calls
+  L-->>U: Chart · table · cited prose
+  L->>F: Full trace (prompt, I/O, latency, bytes)
+```
 
 ## What's traced, per turn
 

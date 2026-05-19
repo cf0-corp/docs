@@ -1,6 +1,7 @@
 ---
-title: "Run a DCF"
+title: "DCF walkthrough"
 description: "Build a discounted-cash-flow valuation on a name in one Lab thread, with the WACC built from live market data and a clarifying gate on the assumptions that move the answer."
+keywords: ["DCF", "WACC", "valuation", "three-stage", "terminal growth", "fair value", "NVDA"]
 ---
 
 A standard analyst task: *"Build a DCF on NVDA. Use the last five years of 10-Ks for the historical, current consensus for forward revenue, and a 10% / 7% / 4% three-stage growth schedule. WACC from market data. Show Bear / Base / Bull fair value."*
@@ -55,15 +56,16 @@ cf0 reads the conversation and drafts the report. Edit any section inline before
 
 If "run a DCF with our firm's WACC build and ship a one-pager" is recurring, save it as a custom Skill from the [Skills](/features/skills) page. Org admins can share it across the team. Future runs invoke with `/firm-dcf AAPL` — same WACC build, same three-stage schedule, same one-pager template.
 
-## Layered back to the stack
+## What this used
 
-This example touched every layer of [the stack](/introduction):
+This example used every part of cf0:
 
-- **Data** — NVDA 10-Ks, consensus revenue, current market data feed.
-- **Brain** — the world-model that knew which filings to pull, which beta to apply, which sector multiple to anchor.
+- **SEC + global filings** — NVDA 10-Ks, consensus revenue, current market data feed.
 - **Lab** — the surface where the question came in, the WACC build that rendered live, the report draft.
+- **Reports** — branded PDF assembly from the Lab thread.
+- **Skills** — saved the firm's specific WACC and three-stage schedule for the next run.
 
-Skills encode the workflow for next time. Citations trace every number to source. Reports go out in your firm's brand template.
+Citations trace every number to source. Reports go out in your firm's brand template.
 
 ## Next walkthrough
 

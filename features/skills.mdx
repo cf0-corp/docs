@@ -1,9 +1,25 @@
 ---
 title: "Skills"
 description: "Skills are reusable prompt templates for recurring research workflows. Invoke any Skill in Lab with a slash command to run your firm's workflows instantly."
+keywords: ["skills", "slash command", "DCF", "LBO", "comps", "IC memo", "earnings recap", "monte carlo", "workflows", "templates"]
 ---
 
 Skills are reusable prompt workflows that you invoke in [Lab](/features/lab) with a single slash command. Save the instructions once, call it with `/skill-name` whenever you need it. cf0 ships with a catalogue of named system workflows covering the institutional research stack — DCF, LBO, comps, IC memos, earnings recaps, debt covenant reviews, monte carlo, sector scans — and you can encode any process your firm runs as a personal or org-wide Skill.
+
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#1d4ed8", "primaryTextColor": "#ffffff", "primaryBorderColor": "#172554", "lineColor": "#71717a", "fontFamily": "Inter Tight, -apple-system, sans-serif", "fontSize": "13px"}}}%%
+graph LR
+  U["Type /<br/>in Lab"] --> P["Skills palette<br/>System · Org · Mine"]
+  P --> I["Invoke<br/>/dcf NVDA"]
+  I --> R["Run with<br/>your variables"]
+  R --> O["Streaming output<br/>chart · table · memo"]
+  O --> S["Optional → Save<br/>as new Skill"]
+
+  classDef io fill:#ffffff,stroke:#d4d4d8,color:#18181b
+  classDef step fill:#1d4ed8,stroke:#172554,color:#ffffff
+  class U,O,S io
+  class P,I,R step
+```
 
 <Frame caption="Type `/` in Lab to open the Skills palette. Categories — Commands, Research, Alerts, Earnings, Screening, Credit, Management — group the catalogue; the keyboard footer (↑↓ navigate · → open · ⇥ open · esc close) keeps the flow keys-only.">
   <img src="/images/skills-palette-light.png" alt="cf0 Skills slash-command palette in Lab, grouped by category" />
