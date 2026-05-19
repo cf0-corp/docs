@@ -15,12 +15,12 @@ Analysts at hedge funds and family offices spend 87% of their day on data gather
     "secondaryColor": "#ffffff",
     "tertiaryColor": "#fafafa",
     "lineColor": "#71717a",
-    "textColor": "#18181b",
+    "textColor": "#52525b",
     "mainBkg": "#1d4ed8",
     "secondBkg": "#ffffff",
     "clusterBkg": "transparent",
     "clusterBorder": "#e4e4e7",
-    "edgeLabelBackground": "#ffffff",
+    "edgeLabelBackground": "transparent",
     "fontFamily": "Inter Tight, -apple-system, sans-serif",
     "fontSize": "14px"
   }
@@ -44,13 +44,16 @@ graph LR
   A5 --> D
   D --> B
   B --> L
-  L -.->|cites back| D
+  L -.-> D
 
   classDef source fill:#ffffff,stroke:#e4e4e7,stroke-width:1px,color:#18181b
   classDef layer fill:#1d4ed8,stroke:#172554,stroke-width:1px,color:#ffffff
   class A1,A2,A3,A4,A5 source
   class D,B,L layer
+  linkStyle 7 stroke:#a1a1aa,stroke-dasharray:4 4
 ```
+
+*Dashed line from Lab back to Data: every figure Lab surfaces is cited back to its source.*
 
 ## The three layers
 
@@ -90,35 +93,34 @@ graph LR
 
 cf0 ingests and structures every filing form an analyst is likely to pull, across ten regulator-backed markets — not just SEC EDGAR.
 
-<CardGroup cols={2}>
-  <Card title="SEC forms (US)" icon="file-text">
-    | Form | What it carries |
-    |---|---|
-    | **10-K** | Annual report — financials, MD&A, risk factors |
-    | **10-Q** | Quarterly report — interim financials |
-    | **8-K** | Material events — earnings, leadership, M&A |
-    | **S-1** | IPO prospectus |
-    | **DEF 14A** | Proxy — exec comp, board, governance |
-    | **13-F** | Institutional holdings (quarterly) |
-    | **N-PORT** | Fund holdings |
-    | **N-CSR** | Fund certified shareholder reports |
-    | **N-PX** | Fund proxy voting records |
-  </Card>
-  <Card title="Global markets" icon="globe">
-    | Market | Regulator |
-    |---|---|
-    | **US** | SEC EDGAR |
-    | **UK** | FCA / Companies House |
-    | **Canada** | SEDAR+ |
-    | **Japan** | EDINET |
-    | **South Korea** | DART |
-    | **India** | SEBI |
-    | **Australia** | ASX |
-    | **Hong Kong** | HKEX |
-    | **China** | CNINFO |
-    | **Brazil** | CVM |
-  </Card>
-</CardGroup>
+### SEC forms (US)
+
+| Form | What it carries |
+|---|---|
+| **10-K** | Annual report — financials, MD&A, risk factors |
+| **10-Q** | Quarterly report — interim financials |
+| **8-K** | Material events — earnings, leadership, M&A |
+| **S-1** | IPO prospectus |
+| **DEF 14A** | Proxy — exec comp, board, governance |
+| **13-F** | Institutional holdings (quarterly) |
+| **N-PORT** | Fund holdings |
+| **N-CSR** | Fund certified shareholder reports |
+| **N-PX** | Fund proxy voting records |
+
+### Global markets
+
+| Market | Regulator |
+|---|---|
+| **US** | SEC EDGAR |
+| **UK** | FCA / Companies House |
+| **Canada** | SEDAR+ |
+| **Japan** | EDINET |
+| **South Korea** | DART |
+| **India** | SEBI |
+| **Australia** | ASX |
+| **Hong Kong** | HKEX |
+| **China** | CNINFO |
+| **Brazil** | CVM |
 
 US filings get full section-level extraction (Item 1A risk factors, Item 7 MD&A, etc.) so Lab can quote the exact passage a figure came from. International coverage is directory + filing-list today, with selected markets advancing to full section ingestion — Brazil is the most recent. See [SEC filings](/data/sec-filings) for the full pipeline detail.
 
