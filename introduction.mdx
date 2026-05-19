@@ -6,8 +6,27 @@ description: "The financial intelligence stack. Data feeds a brain that feeds La
 Analysts at hedge funds and family offices spend 87% of their day on data gathering, copy-paste, and cross-checking. cf0 is the **financial intelligence stack** that collapses that work: data feeds a brain that feeds Lab, and you ship cited reports in minutes.
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "primaryColor": "#1d4ed8",
+    "primaryTextColor": "#ffffff",
+    "primaryBorderColor": "#172554",
+    "secondaryColor": "#ffffff",
+    "tertiaryColor": "#fafafa",
+    "lineColor": "#71717a",
+    "textColor": "#18181b",
+    "mainBkg": "#1d4ed8",
+    "secondBkg": "#ffffff",
+    "clusterBkg": "transparent",
+    "clusterBorder": "#e4e4e7",
+    "edgeLabelBackground": "#ffffff",
+    "fontFamily": "Inter Tight, -apple-system, sans-serif",
+    "fontSize": "14px"
+  }
+}}%%
 graph LR
-  subgraph " "
+  subgraph sources [" "]
     direction TB
     A1["SEC filings"]
     A2["Earnings transcripts"]
@@ -26,6 +45,11 @@ graph LR
   D --> B
   B --> L
   L -.->|cites back| D
+
+  classDef source fill:#ffffff,stroke:#e4e4e7,stroke-width:1px,color:#18181b
+  classDef layer fill:#1d4ed8,stroke:#172554,stroke-width:1px,color:#ffffff
+  class A1,A2,A3,A4,A5 source
+  class D,B,L layer
 ```
 
 ## The three layers
