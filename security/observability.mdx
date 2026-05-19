@@ -1,0 +1,25 @@
+---
+title: "Observability"
+description: "Every Lab turn is fully traced — system prompts, tools, model I/O, rendered output. Visible to engineers and, increasingly, to the analyst in-product."
+---
+
+Every Lab turn is fully traced. When you ask a question, cf0 captures the system prompt, the tools called, the model inputs and outputs, the tool execution results, and what was rendered. Traces stream into [Langfuse](https://langfuse.com) and surface back inside the product via the in-app Trace panel.
+
+## What's traced, per turn
+
+- **System prompt** — the framing cf0 gives the model
+- **Tool definitions** — which tools were available
+- **Tool calls** — which tools the model invoked, with arguments
+- **Tool results** — what each call returned, with byte size for context-bloat detection
+- **Model inputs and outputs** — every token in, every token out
+- **Render output** — what was streamed to the chat UI
+
+## Per-agent metrics
+
+cf0 tracks per-agent token usage, tool latency, and rate-limit events. Optimisation decisions are data-driven, not anecdotal.
+
+## What you can do with it
+
+- **As an analyst** — open the Trace panel from any thread to see exactly what the model read before it answered.
+- **As an org admin** — review per-member token usage and tool patterns on the [Dashboard](/workspace/dashboard).
+- **In an audit** — pair traces with the [audit trail export](/security/citations-and-audit) for a turn-by-turn record of how an output was produced.

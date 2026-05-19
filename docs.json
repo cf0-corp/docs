@@ -144,6 +144,9 @@
             "pages": [
               "security/overview",
               "security/authentication",
+              "security/data-governance",
+              "security/observability",
+              "security/guardrails",
               "security/citations-and-audit"
             ]
           }

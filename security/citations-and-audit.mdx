@@ -3,85 +3,81 @@ title: "Citations and audit trail"
 description: "Every figure cf0 surfaces traces to the exact filing, page, and section. Threads export as compliance-ready audit trails for IC and regulatory review."
 ---
 
-cf0's trust posture rests on one principle: **every quantitative claim has a source, and the source is one click away.** This page covers how citations are generated, how to inspect them, how to export an audit trail, and what your compliance team gets.
+cf0's trust posture rests on one principle: **every quantitative claim has a source, and the source is one click away.** This page covers how citations are generated, how to inspect them, and how to export an audit trail.
 
 ## How citations work
 
-For every number Lab surfaces — revenue, margin, growth rate, multiple, free cash flow — cf0 stores the source it came from at extraction time. The citation captures:
+For every number Lab surfaces, cf0 stores the source at extraction time. The citation captures:
 
 - **Company and filing type** — e.g. `NVDA · 10-K`
-- **Filing date and period covered** — `filed 2025-02-21, FY2025`
-- **The specific section** — `Part II · Item 7 · MD&A`
-- **A pointer to the exact passage** — page and paragraph in the filing
+- **Filing date and period covered** — e.g. `filed 2025-02-21, FY2025`
+- **Section** — e.g. `Part II · Item 7 · MD&A`
+- **Passage pointer** — page and paragraph
 
-For narrative claims — risk-factor quotes, MD&A commentary, transcript excerpts — Lab reads the raw text and quotes it verbatim where precision matters. The quote is stored alongside the citation, not just the section header.
+For narrative claims (risk factors, MD&A, transcript excerpts), the cited quote is stored alongside the section header so you can read what the model read.
+
+## Report-grade citations
+
+When you generate a report from a Lab thread, every figure in the PDF carries a **numbered footnote** that resolves to a **Sources Table** in the appendix. Each row in the table includes:
+
+| Column | What it carries |
+|---|---|
+| `#` | Footnote number used in the body |
+| Source | Title — e.g. "Company Annual Report 2025, Item 5" |
+| Type | Primary, secondary, market data, or transcript |
+| Used for | The body claim(s) it supports |
+| Link | Clickable URL to the underlying filing or feed |
+
+Inline: *"The company's EV market share reached 18% in 2025¹."*
+Footnote 1: *Company Annual Report 2025, Item 5. Primary source. See Source #1.*
+
+## Key Assumptions table
+
+Every valuation in a cf0 report is preceded by a **Key Assumptions** table — WACC, growth, terminal multiple, and the inputs each row depends on. Swap an input, see what drives the model. No hidden assumptions.
 
 ## Inspecting a citation
 
-In Lab and in generated reports, citations appear as inline references next to the figure. Click the reference to open the source pane on the right:
+In Lab and in reports, citations appear as inline references next to the figure. Click the reference to open the source pane on the right:
 
 - The relevant section opens to the cited passage, with the figure highlighted.
-- The filing metadata (company, filing type, date, period) shows at the top of the pane.
 - For tables, the cell coordinates highlight (e.g. row "Free cash flow", column "Q4 FY2025").
+- Derived metrics show their derivation explicitly, with each input citation linked.
 
-If a number doesn't have a citation — for example, a derived metric computed from cited inputs — the derivation is shown explicitly, with each input citation linked. cf0 doesn't surface uncited figures.
+If a number can't be grounded in a source, cf0 doesn't surface it. See [Guardrails → Refuse to fabricate](/security/guardrails#refuse-to-fabricate).
 
 ## Exporting an audit trail
 
-Every Lab thread can be exported as a compliance-ready audit trail. The export captures:
-
-- The full conversation (user prompts and agent responses)
-- Every tool call and its result
-- Every assumption gate and how it was resolved
-- Every citation, with the source link
-- Timestamps and the model version that ran each turn
-
-To export from Lab:
+Every Lab thread can be exported as a compliance-ready audit trail. The export captures the full conversation, every tool call and its result, every assumption gate and how it was resolved, every citation with source link, timestamps, and the model version that ran each turn.
 
 <Steps>
   <Step title="Open the thread">
-    Find the thread in the sidebar and open it.
+    Find the thread in the sidebar.
   </Step>
   <Step title="Export the audit trail">
-    Click the thread menu and choose **Export audit trail**. Pick Markdown or PDF.
+    Click the thread menu and choose **Export audit trail** — pick Markdown or PDF.
   </Step>
-  <Step title="Attach to your committee or compliance review">
-    The audit trail accompanies the polished report. The report is what the committee reads; the trail is what survives review.
+  <Step title="Pair with the report">
+    The polished report goes to the committee; the audit trail survives review.
   </Step>
 </Steps>
 
 Programmatically: `GET /api/lab/threads/{thread_id}/audit-trail?format=pdf` — see the [Lab API](/api/lab#audit-trail).
 
-## What regulators and compliance teams get
+## Org isolation
 
-- **Provenance for every figure**: traceable to the exact filing page.
-- **Source-of-truth reads**: cf0 reads SEC filings and structured data feeds; the agent doesn't invent numbers, and uncited figures are not surfaced.
-- **Methodology transparency**: the assumption gates (WACC, growth, terminal multiple) are captured in the audit trail along with the user's accept/override choice.
-- **Model attribution**: every turn records the underlying model used (currently `us.anthropic.claude-sonnet-4-6` and `us.anthropic.claude-haiku-4-5`). Model versions are tracked.
-
-## Data isolation
-
-- **Org-scoped**: research threads, uploaded documents, generated reports, and saved skills live within your organisation's workspace. There is no cross-org visibility.
-- **Thread privacy within an org**: thread bodies are user-scoped. Org admins see aggregate activity (counts per member) on the [Dashboard](/workspace/dashboard), but never the contents of an analyst's threads.
+- **Org-scoped**: research threads, documents, and reports live within your organisation's workspace. No cross-org visibility.
+- **Thread privacy within an org**: thread bodies are user-scoped. Org admins see aggregate activity (counts per member) on the [Dashboard](/workspace/dashboard), never message contents.
 - **Authentication**: every session is scoped to the active organisation via Clerk. Tokens are short-lived (~1 minute) and refreshed automatically.
-
-## Retention
-
-- Threads, documents, and reports persist while your subscription is active.
-- Thread deletion is immediate from the user's view; underlying storage is purged on the next sync cycle (within 24 hours).
-- Account deletion removes the user's threads, profile, and personal documents. Org-shared documents are not affected by individual account deletion.
 
 ## What cf0 will not do
 
-These constraints exist by design so the platform stays trustworthy under regulatory review:
-
-- **No financial advice.** cf0 produces research and analysis; it doesn't tell you to buy or sell.
-- **No model-generated math.** Calculations route through deterministic backend templates (DCF, LBO, comps, sensitivity matrices). The LLM frames the question; the math comes from a tested code path.
-- **No training on your data.** cf0 never uses your firm's research, documents, or threads to train any model.
-- **No uncited claims.** If the agent can't ground a figure in a source, it surfaces the gap rather than hallucinating.
+- **No financial advice.** cf0 produces research and analysis. It doesn't tell you to buy or sell.
+- **No model-generated math.** Calculations route through deterministic Python templates. See [Guardrails](/security/guardrails).
+- **No training on your data.** Customer threads, documents, and reports are never used to train any AI model.
+- **No uncited claims.** If the model can't ground a figure, it surfaces the gap rather than inventing one.
 
 ## Related
 
-- [Authentication](/security/authentication) — sign-in and session model
-- [Security overview](/security/overview) — encryption, access controls, compliance posture
-- [Lab API → audit-trail](/api/lab#audit-trail) — programmatic export
+- [Data governance](/security/data-governance) — sub-processors, storage, boundaries
+- [Observability](/security/observability) — every turn traced
+- [Guardrails](/security/guardrails) — defense in depth

@@ -1,0 +1,36 @@
+---
+title: "Guardrails"
+description: "Defense in depth. Python computes the numbers, sandboxes isolate code, schemas validate every model output, missing inputs refuse to be fabricated."
+---
+
+cf0's posture on accuracy is defense in depth. No single layer is asked to be perfect. The model orchestrates; math runs in code; outputs are schema-validated; missing inputs surface as missing, not invented.
+
+## The model doesn't do math
+
+Financial calculations — DCF, WACC, multiples, sensitivities, monte carlo — route through Python templates, not LLM inference. The model frames the question and reads the result; the result itself comes from a tested code path. cf0's numbers are reproducible: same question, same inputs, same answer.
+
+## Schema-validated output
+
+Every model output that reaches storage or the UI passes through Pydantic schema validation. Free-form prose that doesn't match a known structure doesn't get persisted. Hallucinated fields are caught before they propagate.
+
+## Isolated execution sandbox
+
+Any code-execution path runs in an isolated E2B microVM, per user. The sandbox cannot reach the wider cf0 infrastructure or other users' workspaces.
+
+## Refuse to fabricate
+
+When a required input is missing, cf0 says so rather than inventing it. From an actual generated report:
+
+> *"EV/Sales requires enterprise value; since debt/cash and shares outstanding are not provided here, EV/Sales is not computed. PEG requires forward growth; not provided, so PEG is omitted."*
+
+## Methodology gates
+
+Before producing a DCF or valuation, cf0 pauses on the assumptions that swing the answer — WACC, terminal growth, forward revenue growth — and asks the analyst to accept or override. See [Run a DCF](/examples/dcf-walkthrough).
+
+## Regression gate
+
+cf0 ships against an internal evaluation harness of analyst-style research questions. Releases that regress on the eval bank don't ship.
+
+## Honest about limits
+
+LLMs can still hallucinate at the prose layer. The guardrails above keep the math sound, schemas tight, and sources cited. They don't eliminate every wrong sentence — they make wrong sentences findable, citable, and challengeable. See [Citations and audit trail](/security/citations-and-audit) for how every claim resolves to its source.

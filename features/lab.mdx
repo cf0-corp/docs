@@ -1,51 +1,34 @@
 ---
 title: "Lab"
-description: "Lab is where you ask. Plain English in, streaming charts and tables and cited paragraphs out. Agents pull from the brain; UI renders to match the question; every figure traces back to its source."
+description: "Lab is where you ask. Plain English in, streaming charts and tables and cited paragraphs out. Every figure traces back to source data."
 ---
 
-Lab is layer 03 of [the stack](/introduction) — the place an analyst goes to ask a question. Type it in English, get back structured analysis: chart, table, narrative, with citations on every number. There is no template to fill in, no dashboard to build, no formula to write. Lab decides what UI the answer needs and renders it inline.
+Lab is layer 03 of [the stack](/introduction) — the surface an analyst goes to when there's a question. Type it in English, get back structured analysis: chart, table, narrative, with citations on every number. No template to fill, no dashboard to build, no formula to write. Lab picks the UI the answer needs and renders it inline.
 
-<Frame caption="Lab — NVDA DCF with Bear / Base / Bull fair-value cards, WACC build, and follow-up questions. Dark theme.">
-  <img src="/images/lab-nvda-dcf-dark.jpg" alt="cf0 Lab — NVDA DCF analysis with fair-value scenarios" />
+<Frame caption="Lab — NVDA DCF with Bear / Base / Bull fair-value cards, WACC build, and follow-up questions.">
+  <img src="/images/lab-nvda-dcf-dark.jpg" alt="cf0 Lab — NVDA DCF analysis" />
 </Frame>
 
 > *"Compare AAPL and MSFT free cash flow margins over the last 5 years and flag any quarter where the gap inverted."*
 
-That is a full Lab prompt. The thread streams a margin time-series chart, a side-by-side table with `tnum`-aligned digits, a paragraph identifying the inversion quarters, and citations linking each margin number to the 10-K or 10-Q it came from. End-to-end: under a minute.
+That's a full Lab prompt. The thread streams a margin time-series chart, a side-by-side table with `tnum`-aligned digits, a paragraph identifying the inversion quarters, and citations linking each margin number to the underlying 10-K or 10-Q. End-to-end: under a minute.
 
 ## What ships in a response
 
 <CardGroup cols={2}>
   <Card title="On-demand UI" icon="layout-dashboard">
-    Charts, tables, metric tiles, timelines — whichever component matches the question. Components are real React, not screenshots; you can hover, sort, drill in.
+    Charts, tables, metric tiles, timelines — whichever component matches the question. Real React, not screenshots; hover, sort, drill in.
   </Card>
   <Card title="Cited paragraphs" icon="link">
-    Every figure is anchored to a source — the exact filing, page, and section. Click any citation to open the underlying document.
+    Every figure anchors to a source — the exact filing, page, and section. Click to open the underlying document.
   </Card>
   <Card title="Persistent threads" icon="layers">
-    Each session lives in its own thread. Close the tab, come back tomorrow, the context is intact. Switch threads from the sidebar.
+    Each session lives in its own thread. Come back tomorrow, the context is intact.
   </Card>
   <Card title="Slash-command workflows" icon="zap">
     Type `/` to invoke any Skill — your firm's reusable research moves bound to a slug. See [Skills](/features/skills).
   </Card>
 </CardGroup>
-
-## Run your first thread
-
-<Steps>
-  <Step title="Open Lab">
-    Click **Lab** in the left sidebar.
-  </Step>
-  <Step title="Ask in plain English">
-    Type the question. Be specific. "Tesla Q4 2025 revenue and gross margin, with YoY delta" beats "Tell me about Tesla."
-  </Step>
-  <Step title="Read as it streams">
-    Tokens stream in real time. Charts and tables render progressively — you can read the lead while the model is still building the table below it.
-  </Step>
-  <Step title="Follow up">
-    Lab retains the full thread context. Ask follow-ups by reference: "Now do the same for AMD," or "Pull the relevant 10-K paragraph for the margin inversion."
-  </Step>
-</Steps>
 
 ## Threads
 
@@ -56,23 +39,19 @@ Each Lab session is a thread. Threads persist across sessions and live under you
 - **Rename thread** — click the thread title and type
 
 <Note>
-Thread *content* is private to your user — org admins cannot read individual thread bodies. The **Dashboard** (admin only) shows aggregate activity counts per member, never the messages themselves.
+Thread content is private to your user. Org admins see aggregate activity counts on the [Dashboard](/workspace/dashboard), never message bodies.
 </Note>
 
-## Citations and source tracing
+## Citations
 
-Every quantitative claim Lab makes links back to a source — the company, filing type (10-K, 10-Q, 8-K, transcript), filing date, and the specific section or table the figure came from. For narrative sections (MD&A, risk factors), Lab reads the raw text and quotes verbatim where precision matters.
+Every quantitative claim Lab makes links to a source — company, filing type (10-K, 10-Q, 8-K, transcript), filing date, and the specific section or table. For narrative claims, Lab reads the raw text and quotes verbatim where precision matters.
 
-cf0's structured extraction hits 90%+ accuracy on standard financial statements. Where the model is unsure, it surfaces the source quote so you can verify before citing.
-
-## Streaming, not waiting
-
-Lab streams responses token by token. Charts and tables appear progressively — you see partial output while the model is still working. This matters because it lets you cancel early if the model is going in the wrong direction, before paying for a full response.
+See [Citations and audit trail](/security/citations-and-audit) for how source-of-truth is generated and exported.
 
 ## Skills
 
-Repeating workflows — earnings recaps, debt covenant checks, sector comp tables, IC memos — become **Skills**. Save the prompt once, invoke with `/skill-name` from any thread.
+Repeating workflows — DCF, comps, IC memos, earnings recaps, debt covenant checks — become **Skills**. Save the prompt once, invoke with `/skill-name` from any thread.
 
 <Tip>
-Type `/` in Lab to see all available Skills filtered live. cf0 ships with a catalogue of named system workflows covering the institutional research stack — DCF, LBO, comps, IC memos, earnings recaps, debt covenant reviews, monte carlo — and your org admin can encode any process your team runs. See [Skills](/features/skills).
+Type `/` in Lab to see all available Skills filtered live. cf0 ships with a catalogue of named system workflows — DCF, LBO, comps, IC memos, earnings recaps, monte carlo — and your org admin can encode any process your team runs. See [Skills](/features/skills).
 </Tip>

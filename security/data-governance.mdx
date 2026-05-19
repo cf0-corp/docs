@@ -1,0 +1,42 @@
+---
+title: "Data governance"
+description: "Where your firm's data lives, what cf0 stores, what it doesn't, and which sub-processors touch each piece."
+---
+
+cf0 is built so analysts can put their name on the output. That starts with knowing exactly where data lives and who touches it.
+
+## Storage
+
+| What | Where |
+|---|---|
+| Threads, messages, generated reports | AWS S3 — per-org, immutable artifacts |
+| User accounts, org membership, roles | Clerk + Aurora Serverless v2 Postgres |
+| Uploaded documents | AWS S3 — org-scoped |
+| SEC filings index | AWS S3 + Aurora Postgres |
+
+Threads and reports live in S3 as the canonical record, not in a database or codebase. Deletion is immediate from the user's view; backing storage is purged on the next sync cycle.
+
+## Sub-processors
+
+cf0 currently uses:
+
+- **AWS** (S3, ECS, Bedrock) — primary infrastructure, US-East-1
+- **Clerk** — identity and organisation management
+- **Temporal Cloud** — durable workflow orchestration
+- **Vercel** — frontend hosting
+- **Tinybird** — product analytics
+- **Langfuse** — LLM observability (see [Observability](/security/observability))
+- **Pinecone** — vector retrieval index
+- **Anthropic** (via AWS Bedrock) — Claude Sonnet 4.6 and Haiku 4.5 inference
+
+For data feeds (read-only ingest into the brain): Exa, Finnhub, Alpha Vantage, SnapTrade. These don't process customer data.
+
+## Boundaries
+
+- **Org isolation** — every thread, document, and report is scoped to your organisation. There is no cross-org visibility.
+- **No training on your data** — cf0 never uses customer threads, documents, or reports to train any AI model.
+- **Inference inside AWS** — Claude models run on Bedrock; customer data does not leave AWS to reach a model.
+
+## Compliance
+
+For regulated workflows or a DPA, contact [hello@cf0.ai](mailto:hello@cf0.ai).

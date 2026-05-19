@@ -1,15 +1,9 @@
 ---
 title: "Introduction"
-description: "Data feeds a brain that feeds Lab. cf0 reads everything your firm reads, remembers it, and lets analysts ask anything in plain English — with citations on every number."
+description: "The financial intelligence stack. Data feeds a brain that feeds Lab — where analysts ask anything and ship cited reports in minutes."
 ---
 
-cf0 is **the financial intelligence stack**. Three layers, one moat.
-
-**Data** is what your firm reads: SEC filings, earnings transcripts, customer comms, internal docs. **Brain** compounds those sources into a wiki that knows your customers, deals, and decisions — and remembers across sessions. **Lab** is where you ask it anything, with agents pulling from the brain and on-demand UI rendering the answer in seconds.
-
-Each layer is a defensible product on its own. The compounding effect — Data feeding Brain feeding Lab that ships cited reports — is the part competitors can't replicate by gluing tools together.
-
-## The three layers
+Analysts at hedge funds and family offices spend 87% of their day on data gathering, copy-paste, and cross-checking. cf0 is the **financial intelligence stack** that collapses that work: data feeds a brain that feeds Lab, and you ship cited reports in minutes.
 
 ```mermaid
 graph LR
@@ -34,15 +28,17 @@ graph LR
   L -.->|cites back| D
 ```
 
+## The three layers
+
 <CardGroup cols={3}>
   <Card title="01 · Data" icon="database">
-    SEC EDGAR (10-Ks, 10-Qs, 8-Ks, S-1s, proxies), earnings transcripts, customer comms via Slack/Gmail/HubSpot, internal docs in Notion/Drive, news and research feeds. Everything your firm reads or writes about a name flows in, structured.
+    SEC filings, earnings transcripts, customer comms (Slack, Gmail, HubSpot), internal docs (Notion, Drive), news, research feeds. Everything your firm reads flows in, structured.
   </Card>
   <Card title="02 · Brain" icon="brain">
-    A world-model that compounds. Tracks companies, people, deals, decisions and their rationale, citations, warnings, suggestions, activity, and provenance. Each new source sharpens the next answer.
+    A world-model that compounds. Tracks companies, people, deals, decisions, citations, warnings. Each new source sharpens the next answer.
   </Card>
   <Card title="03 · Lab" icon="message-square">
-    Ask it anything. Agents pull from the brain, generate the on-demand UI matching the question, and ship cited reports your principals can read in 30 seconds. No dashboards. No templates.
+    Ask anything. Agents pull from the brain, generate on-demand UI matching the question, ship cited reports your PM can read in 30 seconds.
   </Card>
 </CardGroup>
 
@@ -50,29 +46,29 @@ graph LR
 
 <CardGroup cols={2}>
   <Card title="Lab" icon="message-square" href="/features/lab">
-    AI chat for financial research. Ask in plain English, get back structured tables, charts, and citations — all in one streaming thread.
+    Plain English in, streaming charts and tables and cited paragraphs out.
   </Card>
   <Card title="Reports" icon="file-text" href="/features/reports">
-    Branded equity research PDFs with charts, financial models, and inline citations. Generated from a Lab thread; editable in place; exportable for distribution.
+    Branded PDFs with numbered footnotes, a Sources Table, and a Key Assumptions table.
   </Card>
   <Card title="Filings" icon="search" href="/features/filings">
-    Deep SEC coverage with structured 10-K / 10-Q / 8-K extraction, plus directory data across the major global markets your team reaches into. Jump to the exact section a figure came from.
+    SEC EDGAR with structured 10-K, 10-Q, 8-K extraction, plus international directory coverage.
   </Card>
   <Card title="Documents" icon="upload" href="/features/documents">
-    Drop in PDFs, spreadsheets, decks, images. cf0 parses and indexes them so Lab can answer questions across your private docs alongside public data.
+    PDFs, spreadsheets, decks, images — parsed and queryable in the same Lab thread.
   </Card>
   <Card title="Skills" icon="zap" href="/features/skills">
-    Reusable prompt workflows for your firm's recurring research moves — DCF, comps, earnings recaps, IC memos. Invoke with `/skill-name` in Lab.
+    Reusable workflows — DCF, LBO, comps, IC memos, earnings recaps — invoked with `/skill-name`.
   </Card>
 </CardGroup>
 
-## How a research session runs
+## Trust
 
-1. **Ask in Lab.** Type a question in plain English — for example, *"Compare NVDA and AMD gross margin trajectory over the last eight quarters."* Lab routes the query through the brain, pulls the relevant filings and transcripts, and streams structured output: chart, table, narrative.
-2. **Verify every number.** Each figure links back to its source — the exact filing, page, and section. Click to inspect provenance directly.
-3. **Generate a report.** When the thread is tight enough to share, ask Lab to generate a report. cf0 assembles a branded PDF with sections, charts, and inline citations.
-4. **Encode it as a Skill.** If the workflow is one you'll run again, save it as a Skill. Your whole team can run it with one slash-command.
+- Every figure traces to the exact filing, page, and section. Click to verify.
+- Reports include numbered footnotes resolving to a Sources Table, plus a Key Assumptions table before every valuation.
+- Threads export as compliance-ready audit trails.
+- Org-scoped data, never used to train AI models.
 
-<Note>
-cf0 never trains on your data and never shares it across organisations. Filings, documents, and reports are scoped to your org workspace. Access controls run at the org level via Clerk.
-</Note>
+See [Security overview](/security/overview) for the full posture.
+
+**Next:** [Set up your account →](/quickstart)

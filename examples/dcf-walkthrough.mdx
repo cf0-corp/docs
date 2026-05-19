@@ -12,7 +12,7 @@ In Excel that's a half-day with manual data pulls. In cf0 it's three prompts.
 Open **Lab** from the left sidebar. Either type the question in plain English, or invoke the system Skill directly:
 
 ```
-/dcf NVDA
+/dcf-model NVDA
 ```
 
 The Skill runs but cf0 doesn't just ship a number — it pauses on the assumptions that change the answer the most.
@@ -49,17 +49,7 @@ cf0 reads the conversation and drafts the report. Edit any section inline before
 
 ## Step 5 — save the workflow as a Skill
 
-If "run a DCF and ship a one-pager" is recurring for your firm, save the thread as a custom Skill scoped to your assumptions:
-
-```
-/save-skill --name firm-dcf --share-org
-```
-
-Now anyone on the team runs the same workflow — same WACC build, same three-stage schedule, same one-pager template — with a slash command and a ticker:
-
-```
-/firm-dcf AAPL
-```
+If "run a DCF with our firm's WACC build and ship a one-pager" is recurring, save it as a custom Skill from the [Skills](/features/skills) page. Org admins can share it across the team. Future runs invoke with `/firm-dcf AAPL` — same WACC build, same three-stage schedule, same one-pager template.
 
 ## Layered back to the stack
 
