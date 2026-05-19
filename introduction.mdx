@@ -11,6 +11,29 @@ Each layer is a defensible product on its own. The compounding effect — Data f
 
 ## The three layers
 
+```mermaid
+graph LR
+  subgraph " "
+    direction TB
+    A1["SEC filings"]
+    A2["Earnings transcripts"]
+    A3["Customer comms<br/>Slack · Gmail · HubSpot"]
+    A4["Internal docs<br/>Notion · Drive"]
+    A5["News & research feeds"]
+  end
+  D["01 · Data"]
+  B["02 · Brain<br/>world-model wiki"]
+  L["03 · Lab<br/>ask anything"]
+  A1 --> D
+  A2 --> D
+  A3 --> D
+  A4 --> D
+  A5 --> D
+  D --> B
+  B --> L
+  L -.->|cites back| D
+```
+
 <CardGroup cols={3}>
   <Card title="01 · Data" icon="database">
     SEC EDGAR (10-Ks, 10-Qs, 8-Ks, S-1s, proxies), earnings transcripts, customer comms via Slack/Gmail/HubSpot, internal docs in Notion/Drive, news and research feeds. Everything your firm reads or writes about a name flows in, structured.

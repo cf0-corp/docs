@@ -94,6 +94,7 @@
         "groups": [
           {
             "group": "Get started",
+            "icon": "rocket",
             "pages": [
               "introduction",
               "quickstart",
@@ -102,6 +103,7 @@
           },
           {
             "group": "Core features",
+            "icon": "sparkles",
             "pages": [
               "features/lab",
               "features/reports",
@@ -112,6 +114,7 @@
           },
           {
             "group": "Workspace",
+            "icon": "users",
             "pages": [
               "workspace/organizations",
               "workspace/settings",
@@ -120,6 +123,7 @@
           },
           {
             "group": "Data & sources",
+            "icon": "database",
             "pages": [
               "data/overview",
               "data/sec-filings",
@@ -128,6 +132,7 @@
           },
           {
             "group": "Security & privacy",
+            "icon": "shield",
             "pages": [
               "security/overview",
               "security/authentication",
@@ -151,6 +156,7 @@
         "groups": [
           {
             "group": "Overview",
+            "icon": "info",
             "pages": [
               "api/overview",
               "api/authentication"
@@ -158,6 +164,7 @@
           },
           {
             "group": "Endpoints",
+            "icon": "plug",
             "pages": [
               "api/lab",
               "api/reports",

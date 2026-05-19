@@ -126,6 +126,30 @@ while (true) {
 }
 ```
 
+```python httpx
+import httpx
+import json
+
+with httpx.Client(timeout=None) as client:
+    with client.stream(
+        "POST",
+        "https://api.cf0.ai/api/lab/chat",
+        headers={"Authorization": f"Bearer {token}"},
+        json={
+            "prompt": "What is NVIDIA's revenue growth over the last 4 quarters?",
+            "threadId": "jr-abc123",
+        },
+    ) as response:
+        for line in response.iter_lines():
+            if not line.startswith("data: "):
+                continue
+            event = json.loads(line[6:])
+            if event.get("type") == "text_delta":
+                print(event.get("text", ""), end="", flush=True)
+            if event.get("type") == "done":
+                break
+```
+
 </CodeGroup>
 
 ---
