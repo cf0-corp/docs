@@ -229,11 +229,23 @@
       {
         "tab": "Examples",
         "icon": "compass",
-        "pages": [
-          "examples/head-to-head",
-          "examples/dcf-walkthrough",
-          "examples/ic-memo",
-          "examples/published-research"
+        "groups": [
+          {
+            "group": "Workflow walkthroughs",
+            "pages": [
+              "examples/head-to-head",
+              "examples/dcf-walkthrough",
+              "examples/ic-memo"
+            ]
+          },
+          {
+            "group": "Published research",
+            "pages": [
+              "examples/published-research",
+              "examples/bricks-beat-bytes",
+              "examples/fertilizer-supply-chain"
+            ]
+          }
         ]
       },
       {
