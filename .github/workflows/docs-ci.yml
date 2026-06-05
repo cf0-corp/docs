@@ -1,0 +1,47 @@
+name: Docs CI
+
+# Pre-merge gate for docs.cf0.ai. Mintlify auto-deploys `main` on push, so the
+# job that matters is keeping `main` always-valid: `mint validate` is the strict
+# build check, `mint broken-links` catches dead internal links. Both run on PRs
+# (so a broken build is caught before merge) and on push to main (belt + braces).
+
+on:
+  pull_request:
+    paths:
+      - "**/*.mdx"
+      - "**/*.md"
+      - "docs.json"
+      - "snippets/**"
+      - ".github/workflows/docs-ci.yml"
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Cancel superseded runs on the same ref so a rapid push series doesn't pile up.
+concurrency:
+  group: docs-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22" # mint is unsupported on Node 25+; 22 LTS is the safe max
+
+      # Float the major (mint@4) rather than hard-pin: tracks the renderer
+      # Mintlify actually ships to docs.cf0.ai, while guarding against a breaking 5.x.
+      - name: Install Mintlify CLI
+        run: npm install -g mint@4
+
+      - name: Validate build (strict — fails on warnings or errors)
+        run: mint validate
+
+      - name: Check internal links
+        run: mint broken-links

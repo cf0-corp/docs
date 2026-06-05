@@ -1,0 +1,72 @@
+name: Docs drift check
+
+# Scheduled drift signal between the docs and the live product. The docs link out
+# to cf0.ai surfaces (sign-in, status, feature pages) and depend on docs.json
+# redirects. When the app renames or removes a surface, those links rot — that's
+# drift. This job checks external links, redirects, and anchors weekly and opens
+# (or comments on) a tracking issue when something breaks, so docs↔app drift gets
+# noticed without a human remembering to look.
+#
+# Note: this catches *link-level* drift, which is reliable in plain CI. Deeper
+# semantic drift (a documented feature the app no longer has) needs a human or an
+# LLM pass — run the `cf0-docs-cross-compare` workflow for that.
+
+on:
+  schedule:
+    - cron: "17 13 * * 1" # Mondays 13:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: docs-drift
+  cancel-in-progress: false
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Install Mintlify CLI
+        run: npm install -g mint@4
+
+      - name: Check external links, redirects, and anchors
+        id: links
+        run: |
+          set +e
+          mint broken-links --check-external --check-redirects --check-anchors 2>&1 | tee links.log
+          echo "exit=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Open or update drift issue on failure
+        if: always() && steps.links.outputs.exit != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const log = fs.readFileSync('links.log', 'utf8').slice(-5000);
+            const title = 'Docs drift: broken external link, redirect, or anchor';
+            const body = [
+              'The scheduled drift check found a broken external link, redirect, or anchor in the docs.',
+              '',
+              'This usually means the app (cf0.ai) moved, renamed, or removed a surface the docs still point at.',
+              '',
+              '```',
+              log,
+              '```',
+              '',
+              `_Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}_`,
+            ].join('\n');
+            const { owner, repo } = context.repo;
+            const existing = await github.rest.issues.listForRepo({ owner, repo, state: 'open', labels: 'docs-drift' });
+            if (existing.data.length) {
+              await github.rest.issues.createComment({ owner, repo, issue_number: existing.data[0].number, body });
+            } else {
+              await github.rest.issues.create({ owner, repo, title, body, labels: ['docs-drift'] });
+            }
